@@ -1,0 +1,75 @@
+
+
+#ifndef QUAD_COMBATAI_H
+#define QUAD_COMBATAI_H
+
+#include "CreatureAI.h"
+#include "CreatureAIImpl.h"
+
+class Creature;
+
+class QUAD_DLL_DECL AggressorAI : public CreatureAI
+{
+    public:
+        explicit AggressorAI(Creature *c) : CreatureAI(c) {}
+
+        void UpdateAI(const uint32);
+        static int Permissible(const Creature *);
+};
+
+typedef std::vector<uint32> SpellVct;
+
+class QUAD_DLL_SPEC CombatAI : public CreatureAI
+{
+    public:
+        explicit CombatAI(Creature *c) : CreatureAI(c) {}
+
+        void InitializeAI();
+        void Reset();
+        void EnterCombat(Unit* who);
+        void JustDied(Unit *killer);
+        void UpdateAI(const uint32 diff);
+        static int Permissible(const Creature *);
+    protected:
+        EventMap events;
+        SpellVct spells;
+};
+
+class QUAD_DLL_SPEC CasterAI : public CombatAI
+{
+    public:
+        explicit CasterAI(Creature *c) : CombatAI(c) { m_attackDist = MELEE_RANGE; }
+        void InitializeAI();
+        void AttackStart(Unit * victim) { AttackStartCaster(victim, m_attackDist); }
+        void UpdateAI(const uint32 diff);
+        void EnterCombat(Unit *who);
+    private:
+        float m_attackDist;
+};
+
+struct QUAD_DLL_SPEC ArchorAI : public CreatureAI
+{
+    public:
+        explicit ArchorAI(Creature *c);
+        void AttackStart(Unit *who);
+        void UpdateAI(const uint32 diff);
+
+        static int Permissible(const Creature *);
+    protected:
+        float m_minRange;
+};
+
+struct QUAD_DLL_SPEC TurretAI : public CreatureAI
+{
+    public:
+        explicit TurretAI(Creature *c);
+        bool CanAIAttack(const Unit *who) const;
+        void AttackStart(Unit *who);
+        void UpdateAI(const uint32 diff);
+
+        static int Permissible(const Creature *);
+    protected:
+        float m_minRange;
+};
+
+#endif
