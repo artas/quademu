@@ -5,6 +5,9 @@
 #include "precompiled.h"
 
 //custom
+extern void AddSC_teleguy();
+extern void AddSC_paymounts();
+extern void AddSC_npc_acherus_taxi();
 
 //examples
 extern void AddSC_example_creature();
@@ -447,7 +450,10 @@ extern void AddSC_onevents();
 void AddScripts()
 {
     //custom
-
+    AddSC_teleguy();
+    AddSC_paymounts();
+    AddSC_npc_acherus_taxi();
+	
     //examples
     AddSC_example_creature();
     AddSC_example_escort();

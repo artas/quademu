@@ -2691,6 +2691,14 @@
 					RelativePath="..\scripts\custom\on_events.cpp"
 					>
 				</File>
+ 				<File
+					RelativePath="..\scripts\custom\teleguy.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\scripts\custom\paymounts.cpp"
+					>
+				</File>								
 			</Filter>
 		</Filter>
 		<Filter
