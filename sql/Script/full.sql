@@ -2306,7 +2306,7 @@ CREATE TABLE `script_waypoint` (
   point_comment text,
   PRIMARY KEY (entry, pointid)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Creature waypoints';
-*/
+
 
 -- 
 -- Not sure why we don't just run
