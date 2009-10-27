@@ -7699,6 +7699,7 @@ update creature_template set scriptname = "boss_flame_leviathan_safety_container
 -- --------
 -- WINTERGRASP
 -- --------
+UPDATE `creature_template` SET `spell2`='50990' WHERE `entry`=27881;
 DELETE FROM `game_event` WHERE `entry` IN (50,51);
 INSERT INTO `game_event` (`entry`, `description`, `world_event`) VALUES
 (50, 'Wintergrasp Alliance Defence', 5),
