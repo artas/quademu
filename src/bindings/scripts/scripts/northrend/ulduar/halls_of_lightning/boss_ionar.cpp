@@ -50,14 +50,11 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
     boss_ionarAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = pCreature->GetInstanceData();
-        m_bIsHeroic = pCreature->GetMap()->IsHeroic();
     }
 
     ScriptedInstance* m_pInstance;
 
     std::list<uint64> m_lSparkGUIDList;
-
-    bool m_bIsHeroic;
 
     bool m_bIsSplitPhase;
     uint32 m_uiSplit_Timer;
@@ -96,7 +93,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
         AttackStart(pAttacker);
     }
 
-    void Aggro(Unit* who)
+    void EnterCombat(Unit* who)
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -186,7 +183,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
     {
         if (pSummoned->GetEntry() == NPC_SPARK_OF_IONAR)
         {
-            pSummoned->CastSpell(pSummoned, m_bIsHeroic ? SPELL_SPARK_VISUAL_TRIGGER_H : SPELL_SPARK_VISUAL_TRIGGER_N, true);
+            pSummoned->CastSpell(pSummoned, HEROIC(SPELL_SPARK_VISUAL_TRIGGER_N,SPELL_SPARK_VISUAL_TRIGGER_H), true);
 
             Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
@@ -250,7 +247,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
         if (m_uiStaticOverload_Timer < uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                DoCast(pTarget, m_bIsHeroic ? SPELL_STATIC_OVERLOAD_H : SPELL_STATIC_OVERLOAD_N);
+                DoCast(pTarget, HEROIC(SPELL_STATIC_OVERLOAD_N,SPELL_STATIC_OVERLOAD_H));
 
             m_uiStaticOverload_Timer = 5000 + rand()%1000;
         }
@@ -259,7 +256,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
 
         if (m_uiBallLightning_Timer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), m_bIsHeroic ? SPELL_BALL_LIGHTNING_H : SPELL_BALL_LIGHTNING_N);
+            DoCast(m_creature->getVictim(), HEROIC(SPELL_BALL_LIGHTNING_N,SPELL_BALL_LIGHTNING_H));
             m_uiBallLightning_Timer = 10000 + rand()%1000;
         }
         else

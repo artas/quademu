@@ -169,6 +169,37 @@ bool GossipSelect_npc_thorim(Player* pPlayer, Creature* pCreature, uint32 uiSend
     return true;
 }
 
+/*######
+## npc_goblin_prisoner
+######*/
+
+enum eGoblinPrisoner
+{
+    GO_RUSTY_CAGE = 191544
+};
+
+struct QUAD_DLL_DECL npc_goblin_prisonerAI : public ScriptedAI
+{
+    npc_goblin_prisonerAI(Creature* pCreature) : ScriptedAI (pCreature){}
+
+    void Reset()
+    {
+        m_creature->SetReactState(REACT_PASSIVE);
+
+        if(GameObject* pGO = m_creature->FindNearestGameObject(GO_RUSTY_CAGE,5.0f))
+        {
+            if(pGO->GetGoState() == GO_STATE_ACTIVE)
+                pGO->SetGoState(GO_STATE_READY);
+        }
+    }
+
+};
+
+CreatureAI* GetAI_npc_goblin_prisoner(Creature* pCreature)
+{
+    return new npc_goblin_prisonerAI(pCreature);
+}
+
 void AddSC_storm_peaks()
 {
     Script* newscript;
@@ -191,4 +222,9 @@ void AddSC_storm_peaks()
     newscript->pGossipHello = &GossipHello_npc_thorim;
     newscript->pGossipSelect = &GossipSelect_npc_thorim;
     newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_goblin_prisoner";
+    newscript->GetAI = &GetAI_npc_goblin_prisoner;
+    newscript->RegisterSelf();	
 }

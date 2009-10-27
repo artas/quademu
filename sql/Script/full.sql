@@ -1,3 +1,16 @@
+REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99001, 0, 0, 0, 18, 0, 18, 0, 'Slappy McFry', 'The Teleport Guy', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'teleguy');
+REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99002, 0, 0, 0, 21473, 0, 21473, 0, 'Playmounts', 'mounts', '', 81, 81, 10000, 10000, 10000, 10000, 10029, 35, 35, 1, 1.15, 1, 1, 1200, 1620, 0, 1208, 1, 1600, 1760, 0, 0, 0, 0, 0, 0, 0, 0, 57.728, 79.376, 100, 7, 138936390, 0, 0, 0, 999, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 1500, 1700, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'paymounts');
+--- fix Doodad_Nox_portal
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191538, 1, 6699, 'Doodad_Nox_portal_purple_bossroom01', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191539, 1, 6699, 'Doodad_Nox_portal_purple_bossroom17', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990001, 6, 6699, 'Doodad_Nox_portal_purple_bossroom02', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53098, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990002, 6, 6699, 'Doodad_Nox_portal_purple_bossroom03', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53822, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
+
+-- 
+-- quadscript_script_texts.sql Contains data for table `script_texts` mainly used in C++ parts.
+-- valid entries for table are between -1000000 and -1999999
+-- 
 
 -- ALTER TABLE `script_texts` ADD COLUMN `npc_entry` mediumint(8)  NOT NULL DEFAULT 0 COMMENT 'creature_template entry' FIRST;
 /*
@@ -22,14 +35,6 @@ CREATE TABLE `script_texts` (
   PRIMARY KEY  (`npc_entry`,`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Texts';
 */
-REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99001, 0, 0, 0, 18, 0, 18, 0, 'Slappy McFry', 'The Teleport Guy', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'teleguy');
-REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99002, 0, 0, 0, 21473, 0, 21473, 0, 'Playmounts', 'mounts', '', 81, 81, 10000, 10000, 10000, 10000, 10029, 35, 35, 1, 1.15, 1, 1, 1200, 1620, 0, 1208, 1, 1600, 1760, 0, 0, 0, 0, 0, 0, 0, 0, 57.728, 79.376, 100, 7, 138936390, 0, 0, 0, 999, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 1500, 1700, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'paymounts');
---- fix Doodad_Nox_portal
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191538, 1, 6699, 'Doodad_Nox_portal_purple_bossroom01', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191539, 1, 6699, 'Doodad_Nox_portal_purple_bossroom17', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990001, 6, 6699, 'Doodad_Nox_portal_purple_bossroom02', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53098, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990002, 6, 6699, 'Doodad_Nox_portal_purple_bossroom03', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53822, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-
 -- 
 -- -1 000 000 First 100 entries are reserved for special use, do not add regular text here.
 -- 
@@ -2292,8 +2297,8 @@ DELETE FROM `npc_option` WHERE `id`=51;
 INSERT INTO `npc_option` (`id`,`gossip_id`,`npcflag`,`icon`,`action`,`box_money`,`coded`,`option_text`,`box_text`) VALUES
    ('51','0','16','0','18','10000000','0','Purchase a Dual Talent Specialization.','Are you sure you wish to purchase a Dual Talent Specialization?');
 
---- world_script_waypoints
 
+-- This file contains all waypoints used by escortAI scripts
 /*
 DROP TABLE IF EXISTS script_waypoint;
 CREATE TABLE `script_waypoint` (
@@ -2306,7 +2311,7 @@ CREATE TABLE `script_waypoint` (
   point_comment text,
   PRIMARY KEY (entry, pointid)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Creature waypoints';
-
+*/
 
 -- 
 -- Not sure why we don't just run
@@ -3983,8 +3988,9 @@ REPLACE INTO `creature_addon` ( `guid` ) SELECT `id_old` FROM `waypoint_data`;
 UPDATE `creature_addon`,`waypoint_data` SET `creature_addon`.`path_id` = `waypoint_data`.`id` WHERE `creature_addon`.`guid`=`waypoint_data`.`id_old`;
 
 ALTER TABLE `waypoint_data` DROP COLUMN `id_old`;   
----  world_scripts_full
 
+
+-- Cleanup first
 UPDATE `creature_template` SET `ScriptName`='';
 
 /* WORLD BOSS */
@@ -4763,6 +4769,7 @@ UPDATE `creature_template` SET `ScriptName`='npc_maghar_captive' WHERE `entry`=1
 UPDATE `instance_template` SET `script`='instance_naxxramas' WHERE `map`=533;
 UPDATE `creature_template` SET `ScriptName`='boss_anubrekhan' WHERE `entry`=15956;
 UPDATE `creature_template` SET `ScriptName`='boss_faerlina' WHERE `entry`=15953;
+UPDATE `creature_template` SET `ScriptName`='mob_worshipper' WHERE `entry`=16506;
 UPDATE `creature_template` SET `ScriptName`='boss_maexxna' WHERE `entry`=15952;
 UPDATE `creature_template` SET `ScriptName`='mob_webwrap' WHERE `entry`=16486;
 UPDATE `creature_template` SET `ScriptName`='boss_noth' WHERE `entry`=15954;
@@ -4779,8 +4786,6 @@ UPDATE `creature_template` SET `ScriptName`='boss_gluth' WHERE `entry`=15932;
 UPDATE `creature_template` SET `ScriptName`='boss_thaddius' WHERE `entry`=15928;
 UPDATE `creature_template` SET `ScriptName`='mob_stalagg' WHERE `entry`=15929;
 UPDATE `creature_template` SET `ScriptName`='mob_feugen' WHERE `entry`=15930;
-UPDATE `creature_template` SET `ScriptName`='boss_stalagg' WHERE `entry`=15929;
-UPDATE `creature_template` SET `ScriptName`='boss_fugen' WHERE `entry`=15930;
 UPDATE `creature_template` SET `ScriptName`='boss_sapphiron' WHERE `entry`=15989;
 UPDATE `creature_template` SET `ScriptName`='boss_kelthuzad' WHERE `entry`=15990;
 UPDATE `creature_template` SET `ScriptName`='' WHERE `entry` IN (16062,30000);
@@ -4952,6 +4957,8 @@ UPDATE `creature_template` SET `ScriptName`='npc_kaya_flathoof' WHERE `entry`=11
 UPDATE `creature_template` SET `ScriptName`='npc_agnetta_tyrsdottar' WHERE `entry`=30154;
 UPDATE `creature_template` SET `ScriptName`='npc_frostborn_scout' WHERE `entry`=29811;
 UPDATE `creature_template` SET `ScriptName`='npc_thorim' WHERE `entry`=29445;
+UPDATE `creature_template` SET `ScriptName`='npc_goblin_prisoner' WHERE `entry`=29446;
+UPDATE `gameobject_template` SET ScriptName = 'go_rusty_cage' WHERE `entry`=191544;
 
 /* STORMWIND CITY */
 UPDATE `creature_template` SET `ScriptName`='npc_archmage_malin' WHERE `entry`=2708;
@@ -5439,8 +5446,19 @@ INSERT INTO `creature_ai_texts`
    (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`)
 VALUES 
    (-980, 'Kroshius live? Kroshius crush!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, NULL);
----world_spell_full
 
+-- --------
+-- LINKED
+-- --------
+-- spell1 / spell2 / type
+-- + + 0 caster casts 2 when casts 1
+-- + - 0 caster removes aura 2 when casts 1
+-- + + 1 target casts 2 on self (originalCaster = caster) when 1 casted by caster hits target
+-- + - 1 target removes aura 2 when hit by 1
+-- + + 2 when aura 1 is applied, aura 2 is also applied; when 1 is removed, 2 is also removed
+-- + - 2 when aura 1 is applied, target is immune to spell 2, until 1 is removed
+-- - + 0 target casts 2 on self (originalCaster = caster) when aura 1 casted by caster is removed
+-- - - 0 aura 2 is removed when aura 1 is removed
 
 TRUNCATE TABLE `spell_linked_spell`;
 INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES
@@ -5948,15 +5966,18 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 
 -- Zul'Drak
 DELETE FROM `spell_script_target` WHERE `entry` IN (55083,55223,59951,59952);
-INSERT INTO `spell_script_target` VALUES (55083, 1, 29700),(55223, 1, 29686),(59951, 1, 29686),(59952, 1, 29686);
+INSERT INTO `spell_script_target` VALUES
+(55083, 1, 29700),(55223, 1, 29686),
+(59951, 1, 29686),(59952, 1, 29686);
 
 -- --------
 -- POSITION
 -- --------
 DELETE FROM spell_target_position WHERE `id` IN (46019, 46020, 53360);
-INSERT INTO spell_target_position () VALUES (46019, 580, 1704.34, 928.17, -74.558, 0);
-INSERT INTO spell_target_position () VALUES (46020, 580, 1704.34, 928.17, 53.079, 0);
-INSERT INTO spell_target_position () VALUES (53360, 571, 5807.829, 587.960, 660.939, 1.663);
+INSERT INTO spell_target_position () VALUES
+(46019, 580, 1704.34, 928.17, -74.558, 0),
+(46020, 580, 1704.34, 928.17, 53.079, 0),
+(53360, 571, 5807.829, 587.960, 660.939, 1.663);
 
 -- positions for teleports in acherus
 DELETE FROM `spell_target_position` WHERE `id` IN (54744,54746);
@@ -6517,6 +6538,9 @@ INSERT INTO `spell_proc_event` (`entry`, `SchoolMask`, `SpellFamilyName`, `Spell
 ( 44546, 0x00,   3, 0x00100220, 0x00001000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Brain Freeze (Rank 1)
 ( 44548, 0x00,   3, 0x00100220, 0x00001000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Brain Freeze (Rank 2)
 ( 44549, 0x00,   3, 0x00100220, 0x00001000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Brain Freeze (Rank 3)
+( 44557, 0x00,   3, 0x00000020, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Enduring Winter (Rank 1)
+( 44560, 0x00,   3, 0x00000020, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Enduring Winter (Rank 2)
+( 44561, 0x00,   3, 0x00000020, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Enduring Winter (Rank 3)
 ( 44745, 0x00,   3, 0x00000000, 0x00000001, 0x00000000, 0x00004000, 0x00002000,   0,   0,   0), -- Shattered Barrier (Rank 1)
 ( 44835, 0x00,   7, 0x00000000, 0x00000080, 0x00000000, 0x00000010, 0x00000000,   0,   0,   0), -- Maim Interrupt
 ( 45054, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,  15), -- Augment Pain
@@ -7553,13 +7577,14 @@ UPDATE creature_template SET spell1=52435,spell2=52576,spell5=52588,VehicleId=79
 UPDATE `creature_template` SET vehicleid=87 WHERE (`entry`='28817'); -- mine car
 
 DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
--- insert into spell_script_target values (53658, 1, 29173);
-insert into spell_script_target values (53679, 1, 29183);
-insert into spell_script_target values (53701, 1, 29175);
-insert into spell_script_target values (53705, 1, 29183);
-insert into spell_script_target values (53706, 1, 29183);
-insert into spell_script_target values (53677, 1, 29227);
-insert into spell_script_target values (53685, 1, 29175);
+insert into spell_script_target values
+-- (53658, 1, 29173),
+(53679, 1, 29183),
+(53701, 1, 29175),
+(53705, 1, 29183),
+(53706, 1, 29183),
+(53677, 1, 29227),
+(53685, 1, 29175);
 
 -- --------
 -- NAXXARAMAS
@@ -7740,7 +7765,6 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 UPDATE creature_template SET VehicleId = 165 , spell1 = 56091,spell2 = 56092,spell3 = 57090,spell4 = 57143 ,spell5 = 57108,spell6=57403, unit_class = 1, minhealth = 100000, maxhealth = 100000 WHERE entry = 32535;
 UPDATE creature_template SET armor = 9729, mindmg = 422, maxdmg=586, minrangedmg=345, maxrangedmg=509, attackpower=642, rangedattackpower=103 WHERE entry = 32535;
 update creature set DeathState = 0 where id = 26219;
----world_quad_string_full
 
 TRUNCATE TABLE `quad_string`;
 INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`) VALUES
