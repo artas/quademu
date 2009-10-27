@@ -4769,7 +4769,6 @@ UPDATE `creature_template` SET `ScriptName`='npc_maghar_captive' WHERE `entry`=1
 UPDATE `instance_template` SET `script`='instance_naxxramas' WHERE `map`=533;
 UPDATE `creature_template` SET `ScriptName`='boss_anubrekhan' WHERE `entry`=15956;
 UPDATE `creature_template` SET `ScriptName`='boss_faerlina' WHERE `entry`=15953;
-UPDATE `creature_template` SET `ScriptName`='mob_worshipper' WHERE `entry`=16506;
 UPDATE `creature_template` SET `ScriptName`='boss_maexxna' WHERE `entry`=15952;
 UPDATE `creature_template` SET `ScriptName`='mob_webwrap' WHERE `entry`=16486;
 UPDATE `creature_template` SET `ScriptName`='boss_noth' WHERE `entry`=15954;
@@ -4957,7 +4956,7 @@ UPDATE `creature_template` SET `ScriptName`='npc_kaya_flathoof' WHERE `entry`=11
 UPDATE `creature_template` SET `ScriptName`='npc_agnetta_tyrsdottar' WHERE `entry`=30154;
 UPDATE `creature_template` SET `ScriptName`='npc_frostborn_scout' WHERE `entry`=29811;
 UPDATE `creature_template` SET `ScriptName`='npc_thorim' WHERE `entry`=29445;
-UPDATE `creature_template` SET `ScriptName`='npc_goblin_prisoner' WHERE `entry`=29446;
+UPDATE `creature_template` SET `ScriptName`='npc_goblin_prisoner' WHERE `entry`=29466;
 UPDATE `gameobject_template` SET ScriptName = 'go_rusty_cage' WHERE `entry`=191544;
 
 /* STORMWIND CITY */
