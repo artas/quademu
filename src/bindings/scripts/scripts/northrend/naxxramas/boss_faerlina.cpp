@@ -30,7 +30,6 @@ enum Yells
     SAY_SLAY_2      = -1533015,
     SAY_DEATH       = -1533016
 };
-
 //#define SOUND_RANDOM_AGGRO  8955                            //soundId containing the 4 aggro sounds, we not using this
 
 enum Spells
@@ -55,7 +54,7 @@ enum Events
 
 enum Creatures
 {
-    NPC_WORSHIPPER              = 16506	
+    NPC_WORSHIPPER              = 16506
 };
 
 struct QUAD_DLL_DECL boss_faerlinaAI : public BossAI
@@ -112,15 +111,15 @@ struct QUAD_DLL_DECL boss_faerlinaAI : public BossAI
                     events.ScheduleEvent(EVENT_POISON, urand(12000,15000));
                     return;
                 case EVENT_FIRE:
-                    if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                        DoCast(target, HEROIC(SPELL_RAIN_OF_FIRE,H_SPELL_RAIN_OF_FIRE));
+                    if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
+                        DoCast(pTarget, HEROIC(SPELL_RAIN_OF_FIRE,H_SPELL_RAIN_OF_FIRE));
                     events.ScheduleEvent(EVENT_FIRE, urand(6000,18000));
                     return;
                 case EVENT_FRENZY:
                     DoCast(me,HEROIC(SPELL_FRENZY,H_SPELL_FRENZY));
                     return;
-		        case EVENT_AFTERENRAGE:
-		            events.ScheduleEvent(EVENT_FRENZY, urand(60000,80000));					
+		case EVENT_AFTERENRAGE:
+		    events.ScheduleEvent(EVENT_FRENZY, urand(60000,80000));
             }
         }
 
@@ -131,39 +130,14 @@ struct QUAD_DLL_DECL boss_faerlinaAI : public BossAI
     {
         if (caster->GetEntry() == NPC_WORSHIPPER && spell->Id == HEROIC(SPELL_FRENZY,H_SPELL_FRENZY))
             events.ScheduleEvent(EVENT_FRENZY, urand(60000,80000));
-    }	
+    }
 };
 
 CreatureAI* GetAI_boss_faerlina(Creature* pCreature)
 {
     return new boss_faerlinaAI (pCreature);
 }
-/*
-struct QUAD_DLL_DECL mob_worshipperAI : public ScriptedAI
-{
-    mob_worshipperAI(Creature *c) : ScriptedAI(c)
-    {
-        pInstance = c->GetInstanceData();
-    }
-    
-    ScriptedInstance *pInstance;
-    
-    void JustDied(Unit *pKiller)
-    {
-        if (pInstance)
-	    if (Creature* pFaerlina = pInstance->instance->GetCreature(NPC_FAERLINA))
-	    {
-	        DoCast(pFaerlina,HEROIC(SPELL_WIDOWS_EMBRACE,H_SPELL_WIDOWS_EMBRACE));
-	        CAST_AI(boss_faerlinaAI,pFaerlina->AI())->DispellEnrage();
-	    }
-    }
-};
 
-CreatureAI* GetAI_mob_worshipper(Creature* pCreature)
-{
-    return new mob_worshipperAI (pCreature);
-}
-*/
 void AddSC_boss_faerlina()
 {
     Script *newscript;
@@ -171,10 +145,6 @@ void AddSC_boss_faerlina()
     newscript->Name = "boss_faerlina";
     newscript->GetAI = &GetAI_boss_faerlina;
     newscript->RegisterSelf();
-   /* 
-    newscript = new Script;
-    newscript->Name = "mob_worshipper";
-    newscript->GetAI = &GetAI_mob_worshipper;
-    newscript->RegisterSelf();	
-	*/
 }
+
+

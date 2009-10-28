@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -149,12 +161,10 @@ bool GossipHello_npc_aged_dying_ancient_kodo(Player* pPlayer, Creature* pCreatur
 ## go_iruxos. Quest 5381
 ######*/
 
-bool GOHello_go_iruxos(Player *player, GameObject* _GO)
+bool GOHello_go_iruxos(Player *pPlayer, GameObject* pGO)
 {
-        if (player->GetQuestStatus(5381) == QUEST_STATUS_INCOMPLETE)
-        {
-            player->SummonCreature(11876, player->GetInnPosX(),player->GetInnPosY(),player->GetInnPosZ(),0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,10000);
-        }
+        if (pPlayer->GetQuestStatus(5381) == QUEST_STATUS_INCOMPLETE)
+            pPlayer->SummonCreature(11876, pPlayer->GetInnPosX(),pPlayer->GetInnPosY(),pPlayer->GetInnPosZ(),0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,10000);
 
         return true;
 }

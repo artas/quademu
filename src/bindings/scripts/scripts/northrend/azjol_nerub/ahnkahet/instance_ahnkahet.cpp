@@ -262,9 +262,9 @@ struct QUAD_DLL_DECL instance_ahnkahet : public ScriptedInstance
         saveStream << "A K " << m_auiEncounter[0] << " " << m_auiEncounter[1] << " "
             << m_auiEncounter[2] << " " << m_auiEncounter[3] << " " << m_auiEncounter[4] << " "
             << spheres[0] << " " << spheres[1];
-			
-        str_data = saveStream.str();
 
+        str_data = saveStream.str();
+        
         OUT_SAVE_INST_DATA_COMPLETE;
         return str_data;
     }
@@ -300,7 +300,7 @@ struct QUAD_DLL_DECL instance_ahnkahet : public ScriptedInstance
             spheres[0] = data5;
             spheres[1] = data6;
 
-        }else OUT_LOAD_INST_DATA_FAIL;
+        } else OUT_LOAD_INST_DATA_FAIL;
 
         OUT_LOAD_INST_DATA_COMPLETE;
     }

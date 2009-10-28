@@ -68,7 +68,7 @@ struct QUAD_DLL_DECL boss_kazrogalAI : public hyjal_trashAI
 
     void KilledUnit(Unit *victim)
     {
-        switch(rand()%3)
+        switch (urand(0,2))
         {
             case 0:
                 DoPlaySoundToSet(m_creature, SOUND_ONSLAY1);
@@ -90,9 +90,9 @@ struct QUAD_DLL_DECL boss_kazrogalAI : public hyjal_trashAI
         pos = i;
         if (i == 7 && pInstance)
         {
-            Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_THRALL));
-            if (target && target->isAlive())
-                m_creature->AddThreat(target,0.0);
+            Unit *pTarget = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_THRALL));
+            if (pTarget && pTarget->isAlive())
+                m_creature->AddThreat(pTarget,0.0);
         }
     }
 
@@ -133,21 +133,21 @@ struct QUAD_DLL_DECL boss_kazrogalAI : public hyjal_trashAI
         if (!UpdateVictim())
             return;
 
-        if (CleaveTimer < diff)
+        if (CleaveTimer <= diff)
         {
             DoCast(m_creature, SPELL_CLEAVE);
             CleaveTimer = 6000+rand()%15000;
-        }else CleaveTimer -= diff;
+        } else CleaveTimer -= diff;
 
-        if (WarStompTimer < diff)
+        if (WarStompTimer <= diff)
         {
             DoCast(m_creature, SPELL_WARSTOMP);
             WarStompTimer = 60000;
-        }else WarStompTimer -= diff;
+        } else WarStompTimer -= diff;
 
         if (m_creature->HasAura(SPELL_MARK))
             m_creature->RemoveAurasDueToSpell(SPELL_MARK);
-        if (MarkTimer < diff)
+        if (MarkTimer <= diff)
         {
             //cast dummy, useful for bos addons
             m_creature->CastCustomSpell(m_creature, SPELL_MARK, NULL, NULL, NULL, false, NULL, NULL, m_creature->GetGUID());
@@ -155,17 +155,17 @@ struct QUAD_DLL_DECL boss_kazrogalAI : public hyjal_trashAI
             std::list<HostilReference *> t_list = m_creature->getThreatManager().getThreatList();
             for (std::list<HostilReference *>::iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
             {
-                Unit *target = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
-                if (target && target->GetTypeId() == TYPEID_PLAYER && target->getPowerType() == POWER_MANA)
+                Unit *pTarget = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
+                if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER && pTarget->getPowerType() == POWER_MANA)
                 {
-                    target->CastSpell(target, SPELL_MARK,true);//only cast on mana users
+                    pTarget->CastSpell(pTarget, SPELL_MARK,true);//only cast on mana users
                 }
             }
             MarkTimerBase -= 5000;
             if (MarkTimerBase < 5500)
                 MarkTimerBase = 5500;
             MarkTimer = MarkTimerBase;
-            switch(rand()%3)
+            switch (urand(0,2))
             {
                 case 0:
                     DoPlaySoundToSet(m_creature, SOUND_MARK1);
@@ -176,7 +176,7 @@ struct QUAD_DLL_DECL boss_kazrogalAI : public hyjal_trashAI
                     m_creature->MonsterYell(SAY_MARK2, LANG_UNIVERSAL, NULL);
                     break;
             }
-        }else MarkTimer -= diff;
+        } else MarkTimer -= diff;
 
         DoMeleeAttackIfReady();
     }

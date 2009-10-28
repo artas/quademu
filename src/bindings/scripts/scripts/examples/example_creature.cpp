@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -117,7 +129,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
         if (!m_creature->getVictim())
         {
             //Random Say timer
-            if (m_uiSay_Timer < uiDiff)
+            if (m_uiSay_Timer <= uiDiff)
             {
                 //Random switch between 5 outcomes
                 DoScriptText(RAND(SAY_RANDOM_0,SAY_RANDOM_1,SAY_RANDOM_2,SAY_RANDOM_3,SAY_RANDOM_4), m_creature);
@@ -128,7 +140,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
                 m_uiSay_Timer -= uiDiff;
 
             //Rebuff timer
-            if (m_uiRebuff_Timer < uiDiff)
+            if (m_uiRebuff_Timer <= uiDiff)
             {
                 DoCast(m_creature, SPELL_BUFF);
                 m_uiRebuff_Timer = 900000;                  //Rebuff agian in 15 minutes
@@ -142,7 +154,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
             return;
 
         //Spell 1 timer
-        if (m_uiSpell_1_Timer < uiDiff)
+        if (m_uiSpell_1_Timer <= uiDiff)
         {
             //Cast spell one on our current target.
             if (rand()%50 > 10)
@@ -156,7 +168,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
             m_uiSpell_1_Timer -= uiDiff;
 
         //Spell 2 timer
-        if (m_uiSpell_2_Timer < uiDiff)
+        if (m_uiSpell_2_Timer <= uiDiff)
         {
             //Cast spell one on our current target.
             DoCast(m_creature->getVictim(), SPELL_TWO);
@@ -169,7 +181,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
         if (m_uiPhase > 1)
         {
             //Spell 3 timer
-            if (m_uiSpell_3_Timer < uiDiff)
+            if (m_uiSpell_3_Timer <= uiDiff)
             {
                 //Cast spell one on our current target.
                 DoCast(m_creature->getVictim(), SPELL_THREE);
@@ -179,7 +191,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
             else
                 m_uiSpell_3_Timer -= uiDiff;
 
-            if (m_uiBeserk_Timer < uiDiff)
+            if (m_uiBeserk_Timer <= uiDiff)
             {
                 //Say our line then cast uber death spell
                 DoScriptText(SAY_BESERK, m_creature, m_creature->getVictim());
@@ -193,7 +205,7 @@ struct QUAD_DLL_DECL example_creatureAI : public ScriptedAI
         }
         else if (m_uiPhase == 1)                            //Phase timer
         {
-            if (m_uiPhase_Timer < uiDiff)
+            if (m_uiPhase_Timer <= uiDiff)
             {
                 //Go to next phase
                 ++m_uiPhase;

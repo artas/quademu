@@ -70,7 +70,7 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
         SpellVoidShiftTimer = 15000;
         SpellSummonVoidTimer = 12000;
 
-        shiftcast = false;		
+        shiftcast = false;
     }
 
     void EnterCombat(Unit* who)
@@ -92,8 +92,8 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
         //Return since we have no target
         if (!UpdateVictim())
             return;
-			
-        if(SpellSummonVoidTimer < diff)
+
+        if (SpellSummonVoidTimer <= diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_SUMMON_VOID_SENTRY,false);
             SpellSummonVoidTimer = 20000;
@@ -106,7 +106,7 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
             shiftcast = false;
         } else SpellVoidShiftedTimer -=diff;
 
-        if(SpellVoidShiftTimer < diff)
+        if (SpellVoidShiftTimer <= diff)
         {
             Shifted =  SelectUnit(SELECT_TARGET_RANDOM, 0);
             if (Shifted)
@@ -118,7 +118,7 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
             SpellVoidShiftedTimer = 5000;
         } else SpellVoidShiftTimer -=diff;
 
-        if(SpellShroudOfDarknessTimer < diff)
+        if (SpellShroudOfDarknessTimer <= diff)
         {
             DoCast(m_creature->getVictim(), HEROIC(SPELL_SHROUD_OF_DARKNESS, H_SPELL_SHROUD_OF_DARKNESS));
             SpellShroudOfDarknessTimer = 20000;
@@ -126,7 +126,7 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
 
         DoMeleeAttackIfReady();
     }
-	
+
     void JustDied(Unit* killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
@@ -159,7 +159,7 @@ struct QUAD_DLL_DECL boss_zuramatAI : public ScriptedAI
         summon->AI()->AttackStart(m_creature->getVictim());
         summon->AI()->DoCastAOE(HEROIC(SPELL_ZUMARAT_ADD_2, H_SPELL_ZUMARAT_ADD_2));
         summon->SetPhaseMask(17,true);
-    }	
+    }
 };
 
 CreatureAI* GetAI_boss_zuramat(Creature* pCreature)

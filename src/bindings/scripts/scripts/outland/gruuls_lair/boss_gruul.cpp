@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -104,7 +116,7 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
         {
             if (pTarget->GetTypeId() == TYPEID_PLAYER)
             {
-                switch(rand()%2)
+                switch (urand(0,1))
                 {
                     case 0: pTarget->CastSpell(pTarget, SPELL_MAGNETIC_PULL, true, NULL, NULL, m_creature->GetGUID()); break;
                     case 1: pTarget->CastSpell(pTarget, SPELL_KNOCK_BACK, true, NULL, NULL, m_creature->GetGUID()); break;
@@ -144,7 +156,7 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
 
         // Growth
         // Gruul can cast this spell up to 30 times
-        if (m_uiGrowth_Timer < uiDiff)
+        if (m_uiGrowth_Timer <= uiDiff)
         {
             DoScriptText(EMOTE_GROW, m_creature);
             DoCast(m_creature,SPELL_GROWTH);
@@ -155,7 +167,7 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
 
         if (m_bPerformingGroundSlam)
         {
-            if (m_uiGroundSlamTimer < uiDiff)
+            if (m_uiGroundSlamTimer <= uiDiff)
             {
                 m_uiGroundSlamTimer =120000;
                 m_uiHurtfulStrike_Timer= 8000;
@@ -171,12 +183,12 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
         else
         {
             // Hurtful Strike
-            if (m_uiHurtfulStrike_Timer < uiDiff)
+            if (m_uiHurtfulStrike_Timer <= uiDiff)
             {
-                Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
+                Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO,1);
 
-                if (target && m_creature->IsWithinMeleeRange(m_creature->getVictim()))
-                    DoCast(target,SPELL_HURTFUL_STRIKE);
+                if (pTarget && m_creature->IsWithinMeleeRange(m_creature->getVictim()))
+                    DoCast(pTarget,SPELL_HURTFUL_STRIKE);
                 else
                     DoCast(m_creature->getVictim(),SPELL_HURTFUL_STRIKE);
 
@@ -186,7 +198,7 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
                 m_uiHurtfulStrike_Timer -= uiDiff;
 
             // Reverberation
-            if (m_uiReverberation_Timer < uiDiff)
+            if (m_uiReverberation_Timer <= uiDiff)
             {
                 DoCast(m_creature->getVictim(), SPELL_REVERBERATION, true);
                 m_uiReverberation_Timer = 15000 + rand()%10000;
@@ -195,10 +207,10 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
                 m_uiReverberation_Timer -= uiDiff;
 
             // Cave In
-            if (m_uiCaveIn_Timer < uiDiff)
+            if (m_uiCaveIn_Timer <= uiDiff)
             {
-                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
-                    DoCast(target,SPELL_CAVE_IN);
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
+                    DoCast(pTarget,SPELL_CAVE_IN);
 
                 if (m_uiCaveIn_StaticTimer >= 4000)
                     m_uiCaveIn_StaticTimer -= 2000;
@@ -209,7 +221,7 @@ struct QUAD_DLL_DECL boss_gruulAI : public ScriptedAI
                 m_uiCaveIn_Timer -= uiDiff;
 
             // Ground Slam, Gronn Lord's Grasp, Stoned, Shatter
-            if (m_uiGroundSlamTimer < uiDiff)
+            if (m_uiGroundSlamTimer <= uiDiff)
             {
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->GetMotionMaster()->MoveIdle();

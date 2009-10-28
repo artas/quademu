@@ -678,6 +678,6 @@ void AddSC_go_scripts()
     newscript = new Script;
     newscript->Name = "go_rusty_cage";
     newscript->pGOHello =           &GOHello_go_rusty_cage;
-    newscript->RegisterSelf();	
+    newscript->RegisterSelf();
 }
 

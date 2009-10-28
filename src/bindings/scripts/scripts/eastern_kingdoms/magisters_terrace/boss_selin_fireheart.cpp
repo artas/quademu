@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -98,7 +110,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
                                                             // Small door opened after event are expected to be closed by default
             // Set Inst data for encounter
             pInstance->SetData(DATA_SELIN_EVENT, NOT_STARTED);
-        }else error_log(ERROR_INST_DATA);
+        } else error_log(ERROR_INST_DATA);
 
         DrainLifeTimer = 3000 + rand()%4000;
         DrainManaTimer = DrainLifeTimer + 5000;
@@ -227,7 +239,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
             uint32 maxPowerMana = m_creature->GetMaxPower(POWER_MANA);
             if (maxPowerMana && ((m_creature->GetPower(POWER_MANA)*100 / maxPowerMana) < 10))
             {
-                if (DrainLifeTimer < diff)
+                if (DrainLifeTimer <= diff)
                 {
                     DoCast(SelectUnit(SELECT_TARGET_RANDOM, 0), SPELL_DRAIN_LIFE);
                     DrainLifeTimer = 10000;
@@ -236,7 +248,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
                 // Heroic only
                 if (Heroic)
                 {
-                    if (DrainManaTimer < diff)
+                    if (DrainManaTimer <= diff)
                     {
                         DoCast(SelectUnit(SELECT_TARGET_RANDOM, 1), SPELL_DRAIN_MANA);
                         DrainManaTimer = 10000;
@@ -244,7 +256,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
                 }
             }
 
-            if (FelExplosionTimer < diff)
+            if (FelExplosionTimer <= diff)
             {
                 if (!m_creature->IsNonMeleeSpellCasted(false))
                 {
@@ -257,7 +269,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
             maxPowerMana = m_creature->GetMaxPower(POWER_MANA);
             if (maxPowerMana && ((m_creature->GetPower(POWER_MANA)*100 / maxPowerMana) < 10))
             {
-                if (DrainCrystalTimer < diff)
+                if (DrainCrystalTimer <= diff)
                 {
                     SelectNearestCrystal();
                     if (Heroic) DrainCrystalTimer = 10000 + rand()%5000;
@@ -269,7 +281,7 @@ struct QUAD_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
         {
             if (IsDraining)
             {
-                if (EmpowerTimer < diff)
+                if (EmpowerTimer <= diff)
                 {
                     IsDraining = false;
                     DrainingCrystal = false;

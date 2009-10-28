@@ -56,7 +56,7 @@ struct QUAD_DLL_DECL mob_jadespine_basiliskAI : public ScriptedAI
             return;
 
         //Cslumber_Timer
-        if (Cslumber_Timer < diff)
+        if (Cslumber_Timer <= diff)
         {
             //Cast
             // DoCast(m_creature->getVictim(),SPELL_CSLUMBER);
@@ -73,7 +73,7 @@ struct QUAD_DLL_DECL mob_jadespine_basiliskAI : public ScriptedAI
             if (Target)
                 m_creature->TauntApply(Target);
 
-        }else Cslumber_Timer -= diff;
+        } else Cslumber_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

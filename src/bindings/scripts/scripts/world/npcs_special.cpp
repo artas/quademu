@@ -278,11 +278,11 @@ struct QUAD_DLL_DECL npc_chicken_cluckAI : public ScriptedAI
         // Reset flags after a certain time has passed so that the next player has to start the 'event' again
         if (m_creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
         {
-            if (ResetFlagTimer < diff)
+            if (ResetFlagTimer <= diff)
             {
                 EnterEvadeMode();
                 return;
-            }else ResetFlagTimer -= diff;
+            } else ResetFlagTimer -= diff;
         }
 
         if (UpdateVictim())
@@ -373,7 +373,7 @@ struct QUAD_DLL_DECL npc_dancing_flamesAI : public ScriptedAI
                 active = true;
                 can_iteract = 3500;
                 m_creature->HandleEmoteCommand(EMOTE_ONESHOT_DANCE);
-            }else can_iteract -= diff;
+            } else can_iteract -= diff;
         }
     }
 
@@ -732,7 +732,7 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
 
     if (Event)
     {
-        if (SummonPatient_Timer < diff)
+        if (SummonPatient_Timer <= diff)
         {
             Creature* Patient = NULL;
             Location* Point = NULL;
@@ -770,8 +770,8 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
                 Coordinates.erase(itr);
             }
             SummonPatient_Timer = 10000;
-            SummonPatientCount++;
-        }else SummonPatient_Timer -= diff;
+            ++SummonPatientCount;
+        } else SummonPatient_Timer -= diff;
     }
 }
 
@@ -989,7 +989,7 @@ struct QUAD_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
                     EnterEvadeMode();                       //something went wrong
 
                 RunAwayTimer = 30000;
-            }else RunAwayTimer -= diff;
+            } else RunAwayTimer -= diff;
         }
 
     npc_escortAI::UpdateAI(diff);
@@ -1414,7 +1414,7 @@ struct QUAD_DLL_DECL npc_tonk_mineAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (ExplosionTimer < diff)
+        if (ExplosionTimer <= diff)
         {
             m_creature->CastSpell(m_creature, SPELL_TONK_MINE_DETONATE, true);
             m_creature->setDeathState(DEAD); // unsummon it
@@ -1442,11 +1442,11 @@ bool ReceiveEmote_npc_winter_reveler(Player* pPlayer, Creature* pCreature, uint3
     {
         pCreature->CastSpell(pCreature, 26218, false);
         pPlayer->CastSpell(pPlayer, 26218, false);
-        switch(rand()%3)
+        switch (urand(0,2))
         {
-        case 0: pCreature->CastSpell(pPlayer, 26207, false); break;
-        case 1: pCreature->CastSpell(pPlayer, 26206, false); break;
-        case 2: pCreature->CastSpell(pPlayer, 45036, false); break;
+            case 0: pCreature->CastSpell(pPlayer, 26207, false); break;
+            case 1: pCreature->CastSpell(pPlayer, 26206, false); break;
+            case 2: pCreature->CastSpell(pPlayer, 45036, false); break;
         }
     }
     return true;
@@ -1553,7 +1553,7 @@ struct QUAD_DLL_DECL npc_snake_trap_serpentsAI : public ScriptedAI
             return;
         }
 
-        if (SpellTimer < diff)
+        if (SpellTimer <= diff)
         {
             if (IsViper) //Viper
             {
@@ -1576,7 +1576,7 @@ struct QUAD_DLL_DECL npc_snake_trap_serpentsAI : public ScriptedAI
                     DoCast(m_creature->getVictim(),SPELL_DEADLY_POISON);
                 SpellTimer = VENOMOUS_SNAKE_TIMER + (rand() %5)*100;
             }
-        }else SpellTimer-=diff;
+        } else SpellTimer-=diff;
         DoMeleeAttackIfReady();
     }
 };
@@ -1614,7 +1614,7 @@ struct QUAD_DLL_DECL mob_mojoAI : public ScriptedAI
     {
         if (m_creature->HasAura(20372,0))
         {
-            if (hearts<diff)
+            if (hearts<= diff)
             {
                 m_creature->RemoveAurasDueToSpell(20372);
                 hearts = 15000;
@@ -1837,7 +1837,7 @@ struct QUAD_DLL_DECL npc_training_dummy : Scripted_NoMovementAI
         {
             EnterEvadeMode();
             ResetTimer = 10000;
-        }else ResetTimer -= diff;
+        } else ResetTimer -= diff;
         return;
     }
     void MoveInLineOfSight(Unit *who){return;}

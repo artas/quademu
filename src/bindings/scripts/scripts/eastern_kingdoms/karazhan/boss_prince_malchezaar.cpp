@@ -288,15 +288,15 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
         if (!t_list.size())
             return;
 
-        //begin + 1 , so we don't target the one with the highest threat
+        //begin + 1, so we don't target the one with the highest threat
         std::list<HostilReference *>::iterator itr = t_list.begin();
         std::advance(itr, 1);
         for (; itr!= t_list.end(); ++itr)                   //store the threat list in a different container
         {
-            Unit *target = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
+            Unit *pTarget = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
                                                             //only on alive players
-            if (target && target->isAlive() && target->GetTypeId() == TYPEID_PLAYER)
-                targets.push_back(target);
+            if (pTarget && pTarget->isAlive() && pTarget->GetTypeId() == TYPEID_PLAYER)
+                targets.push_back(pTarget);
         }
 
         //cut down to size if we have more than 5 targets
@@ -306,14 +306,14 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
         int i = 0;
         for (std::vector<Unit *>::iterator iter = targets.begin(); iter!= targets.end(); ++iter, ++i)
         {
-            Unit *target = *iter;
-            if (target)
+            Unit *pTarget = *iter;
+            if (pTarget)
             {
-                enfeeble_targets[i] = target->GetGUID();
-                enfeeble_health[i] = target->GetHealth();
+                enfeeble_targets[i] = pTarget->GetGUID();
+                enfeeble_health[i] = pTarget->GetHealth();
 
-                target->CastSpell(target, SPELL_ENFEEBLE, true, 0, 0, m_creature->GetGUID());
-                target->SetHealth(1);
+                pTarget->CastSpell(pTarget, SPELL_ENFEEBLE, true, 0, 0, m_creature->GetGUID());
+                pTarget->SetHealth(1);
             }
         }
 
@@ -323,9 +323,9 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
     {
         for (uint8 i = 0; i < 5; ++i)
         {
-            Unit *target = Unit::GetUnit(*m_creature, enfeeble_targets[i]);
-            if (target && target->isAlive())
-                target->SetHealth(enfeeble_health[i]);
+            Unit *pTarget = Unit::GetUnit(*m_creature, enfeeble_targets[i]);
+            if (pTarget && pTarget->isAlive())
+                pTarget->SetHealth(enfeeble_health[i]);
             enfeeble_targets[i] = 0;
             enfeeble_health[i] = 0;
         }
@@ -372,7 +372,7 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
         {
             EnfeebleResetHealth();
             EnfeebleResetTimer=0;
-        }else EnfeebleResetTimer -= diff;
+        } else EnfeebleResetTimer -= diff;
 
         if (m_creature->hasUnitState(UNIT_STAT_STUNNED))     //While shifting to phase 2 malchezaar stuns himself
             return;
@@ -408,7 +408,7 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
 
                 m_creature->SetBaseWeaponDamage(OFF_ATTACK, MINDAMAGE, cinfo->mindmg);
                 m_creature->SetBaseWeaponDamage(OFF_ATTACK, MAXDAMAGE, cinfo->maxdmg);
-                //Sigh, updating only works on main attack , do it manually ....
+                //Sigh, updating only works on main attack, do it manually ....
                 m_creature->SetFloatValue(UNIT_FIELD_MINOFFHANDDAMAGE, cinfo->mindmg);
                 m_creature->SetFloatValue(UNIT_FIELD_MAXOFFHANDDAMAGE, cinfo->maxdmg);
 
@@ -430,8 +430,8 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
 
                 DoScriptText(SAY_AXE_TOSS2, m_creature);
 
-                Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-                for (uint32 i=0; i<2; ++i)
+                Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
+                for (uint8 i = 0; i < 2; ++i)
                 {
                     Creature *axe = m_creature->SummonCreature(MALCHEZARS_AXE, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
                     if (axe)
@@ -439,12 +439,12 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
                         axe->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                         axe->setFaction(m_creature->getFaction());
                         axes[i] = axe->GetGUID();
-                        if (target)
+                        if (pTarget)
                         {
-                            axe->AI()->AttackStart(target);
-                            // axe->getThreatManager().tauntApply(target); //Taunt Apply and fade out does not work properly
+                            axe->AI()->AttackStart(pTarget);
+                            //axe->getThreatManager().tauntApply(pTarget); //Taunt Apply and fade out does not work properly
                                                             // So we'll use a hack to add a lot of threat to our target
-                            axe->AddThreat(target, 10000000.0f);
+                            axe->AddThreat(pTarget, 10000000.0f);
                         }
                     }
                 }
@@ -455,95 +455,94 @@ struct QUAD_DLL_DECL boss_malchezaarAI : public ScriptedAI
                 return;
             }
 
-            if (SunderArmorTimer < diff)
+            if (SunderArmorTimer <= diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_SUNDER_ARMOR);
-                SunderArmorTimer = 10000 + rand()%8000;
+                SunderArmorTimer = urand(10000,18000);
 
-            }else SunderArmorTimer -= diff;
+            } else SunderArmorTimer -= diff;
 
-            if (Cleave_Timer < diff)
+            if (Cleave_Timer <= diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_CLEAVE);
-                Cleave_Timer = 6000 + rand()%6000;
+                Cleave_Timer = urand(6000,12000);
 
-            }else Cleave_Timer -= diff;
+            } else Cleave_Timer -= diff;
         }
         else
         {
-            if (AxesTargetSwitchTimer < diff)
+            if (AxesTargetSwitchTimer <= diff)
             {
-                AxesTargetSwitchTimer = 7500 + rand()%12500 ;
+                AxesTargetSwitchTimer = urand(7500,20000);
 
-                Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-                if (target)
+                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                 {
                     for (uint8 i = 0; i < 2; ++i)
                     {
-                        Unit *axe = Unit::GetUnit(*m_creature, axes[i]);
-                        if (axe)
+                        if (Unit *axe = Unit::GetUnit(*m_creature, axes[i]))
                         {
                             float threat = 1000000.0f;
                             if (axe->getVictim())
                                 DoModifyThreatPercent(axe->getVictim(), -100);
-                            if (target)
-                                axe->AddThreat(target, threat);
+                            if (pTarget)
+                                axe->AddThreat(pTarget, threat);
                             //axe->getThreatManager().tauntFadeOut(axe->getVictim());
-                            //axe->getThreatManager().tauntApply(target);
+                            //axe->getThreatManager().tauntApply(pTarget);
                         }
                     }
                 }
             } else AxesTargetSwitchTimer -= diff;
 
-            if (AmplifyDamageTimer < diff)
+            if (AmplifyDamageTimer <= diff)
             {
-                DoCast(SelectUnit(SELECT_TARGET_RANDOM, 0), SPELL_AMPLIFY_DAMAGE);
-                AmplifyDamageTimer = 20000 + rand()%10000;
-            }else AmplifyDamageTimer -= diff;
+                if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                    DoCast(pTarget, SPELL_AMPLIFY_DAMAGE);
+                AmplifyDamageTimer = urand(20000,30000);
+            } else AmplifyDamageTimer -= diff;
         }
 
         //Time for global and double timers
-        if (InfernalTimer < diff)
+        if (InfernalTimer <= diff)
         {
             SummonInfernal(diff);
-            InfernalTimer =  phase == 3 ? 14500 : 44500;    //15 secs in phase 3, 45 otherwise
-        }else InfernalTimer -= diff;
+            InfernalTimer = phase == 3 ? 14500 : 44500;    //15 secs in phase 3, 45 otherwise
+        } else InfernalTimer -= diff;
 
-        if (ShadowNovaTimer < diff)
+        if (ShadowNovaTimer <= diff)
         {
             DoCast(m_creature->getVictim(), SPELL_SHADOWNOVA);
-            ShadowNovaTimer = phase == 3 ? 31000 : -1;
-        }else ShadowNovaTimer -= diff;
+            ShadowNovaTimer = phase == 3 ? 31000 : 4294967295;
+        } else ShadowNovaTimer -= diff;
 
         if (phase != 2)
         {
-            if (SWPainTimer < diff)
+            if (SWPainTimer <= diff)
             {
-                Unit* target = NULL;
+                Unit *pTarget = NULL;
                 if (phase == 1)
-                    target = m_creature->getVictim();       // the tank
-                else                                        //anyone but the tank
-                    target = SelectUnit(SELECT_TARGET_RANDOM, 1);
+                    pTarget = m_creature->getVictim();        // the tank
+                else                                         // anyone but the tank
+                    pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 100, true);
 
-                if (target)
-                    DoCast(target, SPELL_SW_PAIN);
+                if (pTarget)
+                    DoCast(pTarget, SPELL_SW_PAIN);
 
                 SWPainTimer = 20000;
-            }else SWPainTimer -= diff;
+            } else SWPainTimer -= diff;
         }
 
         if (phase != 3)
         {
-            if (EnfeebleTimer < diff)
+            if (EnfeebleTimer <= diff)
             {
                 EnfeebleHealthEffect();
                 EnfeebleTimer = 30000;
                 ShadowNovaTimer = 5000;
                 EnfeebleResetTimer = 9000;
-            }else EnfeebleTimer -= diff;
+            } else EnfeebleTimer -= diff;
         }
 
-        if (phase==2)
+        if (phase == 2)
             DoMeleeAttacksIfReady();
         else
             DoMeleeAttackIfReady();

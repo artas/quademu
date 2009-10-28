@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -178,7 +190,7 @@ struct QUAD_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
             {
                 SpawnAssassin();
                 Assassins_Timer = 0;
-            }else Assassins_Timer -= diff;
+            } else Assassins_Timer -= diff;
 
         if (InBlade)
         {
@@ -207,7 +219,7 @@ struct QUAD_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
                         (*m_creature).GetMotionMaster()->MovePoint(1,x,y,m_creature->GetPositionZ());
                         Wait_Timer = 0;
                     }
-                }else Wait_Timer -= diff;
+                } else Wait_Timer -= diff;
         }
         else
         {
@@ -220,36 +232,37 @@ struct QUAD_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
                     Blade_Dance_Timer = 0;
                     m_creature->SetSpeed(MOVE_RUN,4);
                     return;
-                }else Blade_Dance_Timer -= diff;
+                } else Blade_Dance_Timer -= diff;
 
             if (Charge_timer)
                 if (Charge_timer <= diff)
                 {
                     DoCast(SelectUnit(SELECT_TARGET_RANDOM,0),H_SPELL_CHARGE);
                     Charge_timer = 0;
-                }else Charge_timer -= diff;
+                } else Charge_timer -= diff;
 
-            if (Summon_Assistant_Timer < diff)
+            if (Summon_Assistant_Timer <= diff)
             {
-                Unit* target = NULL;
+                Unit *pTarget = NULL;
 
                 for (uint8 i = 0; i < summoned; ++i)
                 {
-                    switch(rand()%3)
+                    switch (urand(0,2))
                     {
                         case 0: m_creature->SummonCreature(MOB_HEARTHEN_GUARD,AddsEntrance[0],AddsEntrance[1], AddsEntrance[2], 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,30000); break;
                         case 1: m_creature->SummonCreature(MOB_SHARPSHOOTER_GUARD,AddsEntrance[0],AddsEntrance[1], AddsEntrance[2], 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,30000); break;
                         case 2: m_creature->SummonCreature(MOB_REAVER_GUARD,AddsEntrance[0],AddsEntrance[1], AddsEntrance[2], 0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,30000); break;
                     }
                 }
-                if (rand()%100 < 20) summoned++;
-                    Summon_Assistant_Timer = 25000 + (rand()%10000) ;
-            }else Summon_Assistant_Timer -= diff;
+                if (urand(0,9) < 2)
+                    ++summoned;
+                Summon_Assistant_Timer = urand(25000,35000);
+            } else Summon_Assistant_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
 
-        if (resetcheck_timer < diff)
+        if (resetcheck_timer <= diff)
         {
             uint32 tempx,tempy;
             tempx = uint32(m_creature->GetPositionX());
@@ -260,7 +273,7 @@ struct QUAD_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
                 return;
             }
             resetcheck_timer = 5000;
-        }else resetcheck_timer -= diff;
+        } else resetcheck_timer -= diff;
     }
 };
 

@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -132,7 +144,7 @@ struct QUAD_DLL_DECL boss_lokenAI : public ScriptedAI
         if (m_bIsAura)
         {
             // workaround for PULSING_SHOCKWAVE
-            if (m_uiPulsingShockwave_Timer < uiDiff)
+            if (m_uiPulsingShockwave_Timer <= uiDiff)
             {
                 Map* pMap = m_creature->GetMap();
                 if (pMap->IsDungeon())
@@ -157,11 +169,11 @@ struct QUAD_DLL_DECL boss_lokenAI : public ScriptedAI
                         }
                 }
                 m_uiPulsingShockwave_Timer = 2000;
-            }else m_uiPulsingShockwave_Timer -= uiDiff;
+            } else m_uiPulsingShockwave_Timer -= uiDiff;
         }
         else
         {
-            if (m_uiResumePulsingShockwave_Timer < uiDiff)
+            if (m_uiResumePulsingShockwave_Timer <= uiDiff)
             {
                 //breaks at movement, can we assume when it's time, this spell is casted and also must stop movement?
                 m_creature->CastSpell(m_creature, SPELL_PULSING_SHOCKWAVE_AURA, true);
@@ -174,7 +186,7 @@ struct QUAD_DLL_DECL boss_lokenAI : public ScriptedAI
                 m_uiResumePulsingShockwave_Timer -= uiDiff;
         }
 
-        if (m_uiArcLightning_Timer < uiDiff)
+        if (m_uiArcLightning_Timer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, SPELL_ARC_LIGHTNING);
@@ -184,7 +196,7 @@ struct QUAD_DLL_DECL boss_lokenAI : public ScriptedAI
         else
             m_uiArcLightning_Timer -= uiDiff;
 
-        if (m_uiLightningNova_Timer < uiDiff)
+        if (m_uiLightningNova_Timer <= uiDiff)
         {
             DoScriptText(RAND(SAY_NOVA_1,SAY_NOVA_2,SAY_NOVA_3), m_creature);
             DoScriptText(EMOTE_NOVA, m_creature);

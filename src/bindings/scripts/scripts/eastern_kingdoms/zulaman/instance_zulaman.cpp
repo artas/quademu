@@ -190,7 +190,7 @@ struct QUAD_DLL_DECL instance_zulaman : public ScriptedInstance
             BossKilled = data1;
             ChestLooted = data2;
             QuestMinute = data3;
-        }else error_log("QUADSCRIPT: Zul'aman: corrupted save data.");
+        } else error_log("QUADSCRIPT: Zul'aman: corrupted save data.");
     }
 
     void SetData(uint32 type, uint32 data)
@@ -243,7 +243,7 @@ struct QUAD_DLL_DECL instance_zulaman : public ScriptedInstance
             HandleGameObject(ZulJinDoorGUID, data != IN_PROGRESS);
             break;
         case DATA_CHESTLOOTED:
-            ChestLooted++;
+            ++ChestLooted;
             SaveToDB();
             break;
         case TYPE_RAND_VENDOR_1:
@@ -256,7 +256,7 @@ struct QUAD_DLL_DECL instance_zulaman : public ScriptedInstance
 
         if (data == DONE)
         {
-            BossKilled++;
+            ++BossKilled;
             if (QuestMinute && BossKilled >= 4)
             {
                 QuestMinute = 0;
@@ -288,7 +288,7 @@ struct QUAD_DLL_DECL instance_zulaman : public ScriptedInstance
     {
         if (QuestMinute)
         {
-            if (QuestTimer < diff)
+            if (QuestTimer <= diff)
             {
                 QuestMinute--;
                 SaveToDB();
@@ -297,7 +297,7 @@ struct QUAD_DLL_DECL instance_zulaman : public ScriptedInstance
                 {
                     DoUpdateWorldState(3104, 1);
                     DoUpdateWorldState(3106, QuestMinute);
-                }else DoUpdateWorldState(3104, 0);
+                } else DoUpdateWorldState(3104, 0);
             }
             QuestTimer -= diff;
         }

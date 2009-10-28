@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -164,11 +176,11 @@ struct QUAD_DLL_DECL boss_keristraszaAI : public ScriptedAI
             std::list<HostilReference*> ThreatList = m_creature->getThreatManager().getThreatList();
             for (std::list<HostilReference*>::const_iterator itr = ThreatList.begin(); itr != ThreatList.end(); itr++)
             {
-                Unit *target = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
-                if (!target || target->GetTypeId() != TYPEID_PLAYER)
+                Unit *pTarget = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
+                if (!pTarget || pTarget->GetTypeId() != TYPEID_PLAYER)
                     continue;
 
-                Aura *AuraIntenseCold = target->GetAura(SPELL_INTENSE_COLD_TRIGGERED);
+                Aura *AuraIntenseCold = pTarget->GetAura(SPELL_INTENSE_COLD_TRIGGERED);
                 if (AuraIntenseCold && AuraIntenseCold->GetStackAmount() > 2)
                 {
                     MoreThanTwoIntenseCold = true;
@@ -185,25 +197,25 @@ struct QUAD_DLL_DECL boss_keristraszaAI : public ScriptedAI
             Enrage = true;
         }
 
-        if (CRYSTALFIRE_BREATH_Timer < diff)
+        if (CRYSTALFIRE_BREATH_Timer <= diff)
         {
             DoCast(m_creature->getVictim(), HEROIC(SPELL_CRYSTALFIRE_BREATH_N, SPELL_CRYSTALFIRE_BREATH_H));
             CRYSTALFIRE_BREATH_Timer = 14000;
         } else CRYSTALFIRE_BREATH_Timer -=diff;
 
-        if (TAIL_SWEEP_Timer < diff)
+        if (TAIL_SWEEP_Timer <= diff)
         {
             DoCast(m_creature, SPELL_TAIL_SWEEP);
             TAIL_SWEEP_Timer = 5000;
         } else TAIL_SWEEP_Timer -=diff;
 
-        if (CRYSTAL_CHAINS_CRYSTALIZE_Timer < diff)
+        if (CRYSTAL_CHAINS_CRYSTALIZE_Timer <= diff)
         {
             DoScriptText(SAY_CRYSTAL_NOVA, m_creature);
             if (HeroicMode)
                 DoCast(m_creature, SPELL_CRYSTALIZE);
-            else if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
-                DoCast(target, SPELL_CRYSTAL_CHAINS);
+            else if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
+                DoCast(pTarget, SPELL_CRYSTAL_CHAINS);
             CRYSTAL_CHAINS_CRYSTALIZE_Timer = HEROIC(30000,11000);
         } else CRYSTAL_CHAINS_CRYSTALIZE_Timer -= diff;
 

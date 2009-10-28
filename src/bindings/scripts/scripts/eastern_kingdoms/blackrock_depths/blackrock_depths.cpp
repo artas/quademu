@@ -260,7 +260,7 @@ struct QUAD_DLL_DECL npc_grimstoneAI : public npc_escortAI
                         }
                     }
                 }
-            }else MobDeath_Timer -= diff;
+            } else MobDeath_Timer -= diff;
         }
 
         if (Event_Timer)
@@ -328,7 +328,7 @@ struct QUAD_DLL_DECL npc_grimstoneAI : public npc_escortAI
                     break;
                 }
                 ++EventPhase;
-            }else Event_Timer -= diff;
+            } else Event_Timer -= diff;
         }
 
         if (CanWalk)
@@ -374,28 +374,28 @@ struct QUAD_DLL_DECL mob_phalanxAI : public ScriptedAI
             return;
 
         //ThunderClap_Timer
-        if (ThunderClap_Timer < diff)
+        if (ThunderClap_Timer <= diff)
         {
             DoCast(m_creature->getVictim(),SPELL_THUNDERCLAP);
             ThunderClap_Timer = 10000;
-        }else ThunderClap_Timer -= diff;
+        } else ThunderClap_Timer -= diff;
 
         //FireballVolley_Timer
         if (m_creature->GetHealth()*100 / m_creature->GetMaxHealth() < 51)
         {
-            if (FireballVolley_Timer < diff)
+            if (FireballVolley_Timer <= diff)
             {
                 DoCast(m_creature->getVictim(),SPELL_FIREBALLVOLLEY);
                 FireballVolley_Timer = 15000;
-            }else FireballVolley_Timer -= diff;
+            } else FireballVolley_Timer -= diff;
         }
 
         //MightyBlow_Timer
-        if (MightyBlow_Timer < diff)
+        if (MightyBlow_Timer <= diff)
         {
             DoCast(m_creature->getVictim(),SPELL_MIGHTYBLOW);
             MightyBlow_Timer = 10000;
-        }else MightyBlow_Timer -= diff;
+        } else MightyBlow_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -720,12 +720,12 @@ struct QUAD_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
 
     void EnterCombat(Unit* who)
         {
-        switch(rand()%3)
-            {
-            case 0:m_creature->Say(SAY_WINDSOR_AGGRO1, LANG_UNIVERSAL, PlayerGUID);break;
-            case 1:m_creature->Say(SAY_WINDSOR_AGGRO2, LANG_UNIVERSAL, PlayerGUID);break;
-            case 2:m_creature->Say(SAY_WINDSOR_AGGRO3, LANG_UNIVERSAL, PlayerGUID);break;
-            }
+        switch (urand(0,2))
+        {
+            case 0: m_creature->Say(SAY_WINDSOR_AGGRO1, LANG_UNIVERSAL, PlayerGUID); break;
+            case 1: m_creature->Say(SAY_WINDSOR_AGGRO2, LANG_UNIVERSAL, PlayerGUID); break;
+            case 2: m_creature->Say(SAY_WINDSOR_AGGRO3, LANG_UNIVERSAL, PlayerGUID); break;
+        }
         }
 
     void Reset() {}
@@ -916,12 +916,12 @@ struct QUAD_DLL_DECL npc_marshal_reginald_windsorAI : public npc_escortAI
 
     void EnterCombat(Unit* who)
         {
-        switch(rand()%3)
-            {
-            case 0:m_creature->Say(SAY_WINDSOR_AGGRO1, LANG_UNIVERSAL, PlayerGUID);break;
-            case 1:m_creature->Say(SAY_WINDSOR_AGGRO2, LANG_UNIVERSAL, PlayerGUID);break;
-            case 2:m_creature->Say(SAY_WINDSOR_AGGRO3, LANG_UNIVERSAL, PlayerGUID);break;
-            }
+        switch (urand(0,2))
+        {
+            case 0: m_creature->Say(SAY_WINDSOR_AGGRO1, LANG_UNIVERSAL, PlayerGUID); break;
+            case 1: m_creature->Say(SAY_WINDSOR_AGGRO2, LANG_UNIVERSAL, PlayerGUID); break;
+            case 2: m_creature->Say(SAY_WINDSOR_AGGRO3, LANG_UNIVERSAL, PlayerGUID); break;
+        }
         }
     void Reset() {}
 
@@ -1199,7 +1199,7 @@ struct QUAD_DLL_DECL npc_rocknotAI : public npc_escortAI
                 DoGo(DATA_GO_BAR_KEG,0);
                 BreakKeg_Timer = 0;
                 BreakDoor_Timer = 1000;
-            }else BreakKeg_Timer -= diff;
+            } else BreakKeg_Timer -= diff;
         }
 
         if (BreakDoor_Timer)
@@ -1218,7 +1218,7 @@ struct QUAD_DLL_DECL npc_rocknotAI : public npc_escortAI
                 pInstance->SetData(TYPE_BAR,DONE);
 
                 BreakDoor_Timer = 0;
-            }else BreakDoor_Timer -= diff;
+            } else BreakDoor_Timer -= diff;
         }
 
         npc_escortAI::UpdateAI(diff);
@@ -1325,7 +1325,6 @@ void AddSC_blackrock_depths()
     newscript->GetAI = &GetAI_npc_marshal_reginald_windsor;
     newscript->RegisterSelf();
 */
-
      newscript = new Script;
      newscript->Name = "npc_rocknot";
      newscript->GetAI = &GetAI_npc_rocknot;

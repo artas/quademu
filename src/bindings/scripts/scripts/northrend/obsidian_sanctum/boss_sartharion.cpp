@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -360,7 +372,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
         // hard enrage
         if (!m_bIsHardEnraged)
         {
-            if (m_uiEnrageTimer < uiDiff)
+            if (m_uiEnrageTimer <= uiDiff)
             {
                 DoCast(m_creature, SPELL_PYROBUFFET, true);
                 m_bIsHardEnraged = true;
@@ -370,7 +382,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
         }
 
         // flame tsunami
-        if (m_uiFlameTsunamiTimer < uiDiff)
+        if (m_uiFlameTsunamiTimer <= uiDiff)
         {
             SendFlameTsunami();
             m_uiFlameTsunamiTimer = 30000;
@@ -379,7 +391,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiFlameTsunamiTimer -= uiDiff;
 
         // flame breath
-        if (m_uiFlameBreathTimer < uiDiff)
+        if (m_uiFlameBreathTimer <= uiDiff)
         {
             DoScriptText(SAY_SARTHARION_BREATH, m_creature);
             DoCast(m_creature->getVictim(), HEROIC(SPELL_FLAME_BREATH, SPELL_FLAME_BREATH_H));
@@ -389,7 +401,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiFlameBreathTimer -= uiDiff;
 
         // Tail Sweep
-        if (m_uiTailSweepTimer < uiDiff)
+        if (m_uiTailSweepTimer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), HEROIC(SPELL_TAIL_LASH, SPELL_TAIL_LASH_H));
             m_uiTailSweepTimer = urand(15000,20000);
@@ -398,7 +410,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiTailSweepTimer -= uiDiff;
 
         // Cleave
-        if (m_uiCleaveTimer < uiDiff)
+        if (m_uiCleaveTimer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_CLEAVE);
             m_uiCleaveTimer = urand(7000,10000);
@@ -407,7 +419,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiCleaveTimer -= uiDiff;
 
         // Lavas Strike
-        if (m_uiLavaStrikeTimer < uiDiff)
+        if (m_uiLavaStrikeTimer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
@@ -422,7 +434,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiLavaStrikeTimer -= uiDiff;
 
         // call tenebron
-        if (!m_bHasCalledTenebron && m_uiTenebronTimer < uiDiff)
+        if (!m_bHasCalledTenebron && m_uiTenebronTimer <= uiDiff)
         {
             CallDragon(DATA_TENEBRON);
             m_bHasCalledTenebron = true;
@@ -431,7 +443,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiTenebronTimer -= uiDiff;
 
         // call shadron
-        if (!m_bHasCalledShadron && m_uiShadronTimer < uiDiff)
+        if (!m_bHasCalledShadron && m_uiShadronTimer <= uiDiff)
         {
             CallDragon(DATA_SHADRON);
             m_bHasCalledShadron = true;
@@ -440,7 +452,7 @@ struct QUAD_DLL_DECL boss_sartharionAI : public ScriptedAI
             m_uiShadronTimer -= uiDiff;
 
         // call vesperon
-        if (!m_bHasCalledVesperon && m_uiVesperonTimer < uiDiff)
+        if (!m_bHasCalledVesperon && m_uiVesperonTimer <= uiDiff)
         {
             CallDragon(DATA_VESPERON);
             m_bHasCalledVesperon = true;
@@ -652,7 +664,7 @@ struct QUAD_DLL_DECL dummy_dragonAI : public ScriptedAI
     {
         if (m_bCanMoveFree && m_uiMoveNextTimer)
         {
-            if (m_uiMoveNextTimer < uiDiff)
+            if (m_uiMoveNextTimer <= uiDiff)
             {
                 if(m_uiWaypointId < MAX_WAYPOINT)
                     m_creature->GetMotionMaster()->MovePoint(m_uiWaypointId,
@@ -708,7 +720,7 @@ struct QUAD_DLL_DECL mob_tenebronAI : public dummy_dragonAI
         }
 
         // shadow fissure
-        if (m_uiShadowFissureTimer < uiDiff)
+        if (m_uiShadowFissureTimer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, HEROIC(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE));
@@ -719,7 +731,7 @@ struct QUAD_DLL_DECL mob_tenebronAI : public dummy_dragonAI
             m_uiShadowFissureTimer -= uiDiff;
 
         // shadow breath
-        if (m_uiShadowBreathTimer < uiDiff)
+        if (m_uiShadowBreathTimer <= uiDiff)
         {
             DoScriptText(SAY_TENEBRON_BREATH, m_creature);
             DoCast(m_creature->getVictim(), HEROIC(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
@@ -784,7 +796,7 @@ struct QUAD_DLL_DECL mob_shadronAI : public dummy_dragonAI
         }
 
         // shadow fissure
-        if (m_uiShadowFissureTimer < uiDiff)
+        if (m_uiShadowFissureTimer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, HEROIC(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE_H));
@@ -795,7 +807,7 @@ struct QUAD_DLL_DECL mob_shadronAI : public dummy_dragonAI
             m_uiShadowFissureTimer -= uiDiff;
 
         // shadow breath
-        if (m_uiShadowBreathTimer < uiDiff)
+        if (m_uiShadowBreathTimer <= uiDiff)
         {
             DoScriptText(SAY_SHADRON_BREATH, m_creature);
             DoCast(m_creature->getVictim(), HEROIC(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
@@ -854,7 +866,7 @@ struct QUAD_DLL_DECL mob_vesperonAI : public dummy_dragonAI
         }
 
         // shadow fissure
-        if (m_uiShadowFissureTimer < uiDiff)
+        if (m_uiShadowFissureTimer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, HEROIC(SPELL_SHADOW_FISSURE, SPELL_SHADOW_FISSURE_H));
@@ -865,7 +877,7 @@ struct QUAD_DLL_DECL mob_vesperonAI : public dummy_dragonAI
             m_uiShadowFissureTimer -= uiDiff;
 
         // shadow breath
-        if (m_uiShadowBreathTimer < uiDiff)
+        if (m_uiShadowBreathTimer <= uiDiff)
         {
             DoScriptText(SAY_VESPERON_BREATH, m_creature);
             DoCast(m_creature->getVictim(), HEROIC(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
@@ -1037,7 +1049,7 @@ struct QUAD_DLL_DECL mob_twilight_whelpAI : public ScriptedAI
             return;
 
         // twilight torment
-        if (m_uiFadeArmorTimer < uiDiff)
+        if (m_uiFadeArmorTimer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_FADE_ARMOR);
             m_uiFadeArmorTimer = urand(5000,10000);

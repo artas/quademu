@@ -90,9 +90,9 @@ struct QUAD_DLL_DECL boss_netherspiteAI : public ScriptedAI
     uint64 BeamerGUID[3]; // guid's of auxiliary beaming portals
     uint64 BeamTarget[3]; // guid's of portals' current targets
 
-    bool IsBetween(WorldObject* u1, WorldObject* target, WorldObject* u2) // the in-line checker
+    bool IsBetween(WorldObject* u1, WorldObject *pTarget, WorldObject* u2) // the in-line checker
     {
-        if(!u1 || !u2 || !target)
+        if(!u1 || !u2 || !pTarget)
             return false;
 
         float xn, yn, xp, yp, xh, yh;
@@ -100,8 +100,8 @@ struct QUAD_DLL_DECL boss_netherspiteAI : public ScriptedAI
         yn = u1->GetPositionY();
         xp = u2->GetPositionX();
         yp = u2->GetPositionY();
-        xh = target->GetPositionX();
-        yh = target->GetPositionY();
+        xh = pTarget->GetPositionX();
+        yh = pTarget->GetPositionY();
 
         // check if target is between (not checking distance from the beam yet)
         if(dist(xn,yn,xh,yh)>=dist(xn,yn,xp,yp) || dist(xp,yp,xh,yh)>=dist(xn,yn,xp,yp))
@@ -163,7 +163,7 @@ struct QUAD_DLL_DECL boss_netherspiteAI : public ScriptedAI
                 // the one who's been casted upon before
                 Unit *current = Unit::GetUnit(*portal, BeamTarget[j]);
                 // temporary store for the best suitable beam reciever
-                Unit *target = m_creature;
+                Unit *pTarget = m_creature;
 
                 if(Map* map = m_creature->GetMap())
                 {
@@ -174,41 +174,41 @@ struct QUAD_DLL_DECL boss_netherspiteAI : public ScriptedAI
                     {
                         Player* p = i->getSource();
                         if(p && p->isAlive() // alive
-                            && (!target || target->GetDistance2d(portal)>p->GetDistance2d(portal)) // closer than current best
+                            && (!pTarget || pTarget->GetDistance2d(portal)>p->GetDistance2d(portal)) // closer than current best
                             && !p->HasAura(PlayerDebuff[j],0) // not exhausted
                             && !p->HasAura(PlayerBuff[(j+1)%3],0) // not on another beam
                             && !p->HasAura(PlayerBuff[(j+2)%3],0)
                             && IsBetween(m_creature, p, portal)) // on the beam
-                            target = p;
+                            pTarget = p;
                     }
                 }
                 // buff the target
-                if(target->GetTypeId() == TYPEID_PLAYER)
-                    target->AddAura(PlayerBuff[j], target);
+                if(pTarget->GetTypeId() == TYPEID_PLAYER)
+                    pTarget->AddAura(PlayerBuff[j], pTarget);
                 else
-                    target->AddAura(NetherBuff[j], target);
+                    pTarget->AddAura(NetherBuff[j], pTarget);
                 // cast visual beam on the chosen target if switched
                 // simple target switching isn't working -> using BeamerGUID to cast (workaround)
-                if(!current || target != current)
+                if(!current || pTarget != current)
                 {
-                    BeamTarget[j] = target->GetGUID();
+                    BeamTarget[j] = pTarget->GetGUID();
                     // remove currently beaming portal
                     if(Creature *beamer = Unit::GetCreature(*portal, BeamerGUID[j]))
                     {
-                        beamer->CastSpell(target, PortalBeam[j], false);
+                        beamer->CastSpell(pTarget, PortalBeam[j], false);
                         beamer->DisappearAndDie();
                         BeamerGUID[j] = 0;
                     }
                     // create new one and start beaming on the target
                     if(Creature *beamer = portal->SummonCreature(PortalID[j],portal->GetPositionX(),portal->GetPositionY(),portal->GetPositionZ(),portal->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,60000))
                     {
-                        beamer->CastSpell(target, PortalBeam[j], false);
+                        beamer->CastSpell(pTarget, PortalBeam[j], false);
                         BeamerGUID[j] = beamer->GetGUID();
                     }
                 }
                 // aggro target if Red Beam
-                if(j==RED_PORTAL && m_creature->getVictim() != target && target->GetTypeId() == TYPEID_PLAYER)
-                    m_creature->getThreatManager().addThreat(target, 100000.0f+DoGetThreat(m_creature->getVictim()));
+                if(j==RED_PORTAL && m_creature->getVictim() != pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
+                    m_creature->getThreatManager().addThreat(pTarget, 100000.0f+DoGetThreat(m_creature->getVictim()));
             }
     }
 
@@ -263,73 +263,73 @@ struct QUAD_DLL_DECL boss_netherspiteAI : public ScriptedAI
             return;
 
         // Void Zone
-        if(VoidZoneTimer < diff)
+        if (VoidZoneTimer <= diff)
         {
             DoCast(SelectTarget(SELECT_TARGET_RANDOM,1,45,true),SPELL_VOIDZONE,true);
             VoidZoneTimer = 15000;
-        }else VoidZoneTimer -= diff;
+        } else VoidZoneTimer -= diff;
 
         // NetherInfusion Berserk
-        if(!Berserk && NetherInfusionTimer < diff)
+        if (!Berserk && NetherInfusionTimer <= diff)
         {
             m_creature->AddAura(SPELL_NETHER_INFUSION, m_creature);
             DoCast(m_creature, SPELL_NETHERSPITE_ROAR);
             Berserk = true;
-        }else NetherInfusionTimer -= diff;
+        } else NetherInfusionTimer -= diff;
 
         if(PortalPhase) // PORTAL PHASE
         {
             // Distribute beams and buffs
-            if(PortalTimer < diff)
+            if (PortalTimer <= diff)
             {
                 UpdatePortals();
                 PortalTimer = 1000;
-            }else PortalTimer -= diff;
+            } else PortalTimer -= diff;
 
             // Empowerment & Nether Burn
-            if(EmpowermentTimer < diff)
+            if (EmpowermentTimer <= diff)
             {
                 DoCast(m_creature, SPELL_EMPOWERMENT);
                 m_creature->AddAura(SPELL_NETHERBURN_AURA, m_creature);
                 EmpowermentTimer = 90000;
-            }else EmpowermentTimer -= diff;
+            } else EmpowermentTimer -= diff;
 
-            if(PhaseTimer < diff)
+            if (PhaseTimer <= diff)
             {
-                if(!m_creature->IsNonMeleeSpellCasted(false))
+                if (!m_creature->IsNonMeleeSpellCasted(false))
                 {
                     SwitchToBanishPhase();
                     return;
                 }
-            }else PhaseTimer -= diff;
+            } else PhaseTimer -= diff;
         }
         else // BANISH PHASE
         {
             // Netherbreath
-            if(NetherbreathTimer < diff)
+            if (NetherbreathTimer <= diff)
             {
-                if(Unit* target = SelectTarget(SELECT_TARGET_RANDOM,0,40,true))
-                    DoCast(target,SPELL_NETHERBREATH);
-                NetherbreathTimer = 5000+rand()%2000;
-            }else NetherbreathTimer -= diff;
+                if(Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM,0,40,true))
+                    DoCast(pTarget,SPELL_NETHERBREATH);
+                NetherbreathTimer = urand(5000,7000);
+            } else NetherbreathTimer -= diff;
 
-            if(PhaseTimer < diff)
+            if (PhaseTimer <= diff)
             {
-                if(!m_creature->IsNonMeleeSpellCasted(false))
+                if (!m_creature->IsNonMeleeSpellCasted(false))
                 {
                     SwitchToPortalPhase();
                     return;
                 }
-            }else PhaseTimer -= diff;
+            } else PhaseTimer -= diff;
         }
 
         DoMeleeAttackIfReady();
     }
 };
 
-CreatureAI* GetAI_boss_netherspite(Creature *_Creature)
+CreatureAI* GetAI_boss_netherspite(Creature *pCreature)
 {
-    return new boss_netherspiteAI(_Creature);
+    return new boss_netherspiteAI(pCreature);
 }
 
 void AddSC_boss_netherspite()

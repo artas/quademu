@@ -227,7 +227,7 @@ struct QUAD_DLL_DECL npc_sinkhole_kill_creditAI : public ScriptedAI
         if (!Phase)
             return;
 
-        if (Phase_Timer < diff)
+        if (Phase_Timer <= diff)
         {
             switch (Phase)
             {

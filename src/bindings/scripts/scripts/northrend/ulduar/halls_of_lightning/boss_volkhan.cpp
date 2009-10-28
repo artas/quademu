@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -218,7 +230,7 @@ struct QUAD_DLL_DECL boss_volkhanAI : public ScriptedAI
 
         if (m_bIsStriking)
         {
-            if (m_uiPause_Timer < uiDiff)
+            if (m_uiPause_Timer <= uiDiff)
             {
                 if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != TARGETED_MOTION_TYPE)
                 {
@@ -239,7 +251,7 @@ struct QUAD_DLL_DECL boss_volkhanAI : public ScriptedAI
         // When to start shatter? After 60, 40 or 20% hp?
         if (!m_bHasTemper && m_uiHealthAmountModifier >= 3)
         {
-            if (m_uiShatteringStomp_Timer < uiDiff)
+            if (m_uiShatteringStomp_Timer <= uiDiff)
             {
                 //should he stomp even if he has no brittle golem to shatter?
 
@@ -259,7 +271,7 @@ struct QUAD_DLL_DECL boss_volkhanAI : public ScriptedAI
         // Shatter Golems 3 seconds after Shattering Stomp
         if (m_bCanShatterGolem)
         {
-            if (m_uiShatter_Timer < uiDiff)
+            if (m_uiShatter_Timer <= uiDiff)
             {
                 ShatterGolem();
                 m_uiShatter_Timer = 3000;
@@ -423,7 +435,7 @@ struct QUAD_DLL_DECL mob_molten_golemAI : public ScriptedAI
         if (!UpdateVictim() || m_bIsFrozen)
             return;
 
-        if (m_uiBlast_Timer < uiDiff)
+        if (m_uiBlast_Timer <= uiDiff)
         {
             DoCast(m_creature, SPELL_BLAST_WAVE);
             m_uiBlast_Timer = 20000;
@@ -431,7 +443,7 @@ struct QUAD_DLL_DECL mob_molten_golemAI : public ScriptedAI
         else
             m_uiBlast_Timer -= uiDiff;
 
-        if (m_uiImmolation_Timer < uiDiff)
+        if (m_uiImmolation_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), m_bIsHeroic ? SPELL_IMMOLATION_STRIKE_H : SPELL_IMMOLATION_STRIKE_N);
             m_uiImmolation_Timer = 5000;

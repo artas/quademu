@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -135,7 +147,8 @@ struct QUAD_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
                     }
                     CageTimer = 0;
                     HandleGameObject(DoorGUID, true);
-                }break;
+                }
+                break;
             case IN_PROGRESS: // Event start.
                 if (m_auiEncounter[1] != IN_PROGRESS)
                 {
@@ -155,7 +168,8 @@ struct QUAD_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
                         CageTimer = 120000;
                     }
                     HandleGameObject(DoorGUID, false);
-                }break;
+                }
+                break;
             case DONE: // Add buff and check if all channelers are dead.
                 for (std::set<uint64>::iterator i = ChannelerGUID.begin(); i != ChannelerGUID.end(); ++i)
                 {
@@ -166,7 +180,8 @@ struct QUAD_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
                         data = IN_PROGRESS;
                         break;
                     }
-                }break;
+                }
+                break;
             }
             m_auiEncounter[1] = data;
             break;
@@ -200,7 +215,7 @@ struct QUAD_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
                     Magtheridon->AI()->AttackStart(Magtheridon->SelectNearestTarget(999));
                 }
                 CageTimer = 0;
-            }else CageTimer -= diff;
+            } else CageTimer -= diff;
         }
 
         if (RespawnTimer)
@@ -218,7 +233,7 @@ struct QUAD_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
                     }
                 }
                 RespawnTimer = 0;
-            }else RespawnTimer -= diff;
+            } else RespawnTimer -= diff;
         }
     }
 };

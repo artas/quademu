@@ -77,7 +77,7 @@ void ScriptsFree()
 }
 
 QUAD_DLL_EXPORT
-void ScriptsInit(char const* cfg_file = "quadcore.conf")
+void ScriptsInit(char const* cfg_file = _QUAD_SCRIPT_CONFIG)
 {
     //Quad Script startup
 outstring_log("_________________________________________________________________________");	
@@ -193,14 +193,16 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
                     pSource->MonsterWhisper(iTextEntry, pTarget->GetGUID());
                 else
                     error_log("QUADSCRIPT: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
-            }break;
+            }
+            break;
         case CHAT_TYPE_BOSS_WHISPER:
             {
                 if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                     pSource->MonsterWhisper(iTextEntry, pTarget->GetGUID(), true);
                 else
                     error_log("QUADSCRIPT: DoScriptText entry %i cannot whisper without target unit (TYPEID_PLAYER).", iTextEntry);
-            }break;
+            }
+            break;
         case CHAT_TYPE_ZONE_YELL:
             pSource->MonsterYellToZone(iTextEntry, pData->uiLanguage, pTarget ? pTarget->GetGUID() : 0);
             break;

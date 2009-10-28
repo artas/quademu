@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #ifndef QUAD_SHAREDDEFINES_H
 #define QUAD_SHAREDDEFINES_H
@@ -60,7 +78,7 @@ enum Classes
     CLASS_SHAMAN        = 7,
     CLASS_MAGE          = 8,
     CLASS_WARLOCK       = 9,
-    // CLASS_UNK2       = 10,unused
+    //CLASS_UNK           = 10,
     CLASS_DRUID         = 11,
 };
 
@@ -516,7 +534,7 @@ enum Language
     LANG_ZOMBIE         = 36,
     LANG_GNOMISH_BINARY = 37,
     LANG_GOBLIN_BINARY  = 38,
-    LANG_ADDON          = 0xFFFFFFFF                        // used by addons, in 2.4.0 not exit, replaced by messagetype?
+    LANG_ADDON          = 0xFFFFFFFF                        // used by addons, in 2.4.0 not exist, replaced by messagetype?
 };
 
 #define LANGUAGES_COUNT   19
@@ -1927,8 +1945,8 @@ enum CreatureTypeFlags
     CREATURE_TYPEFLAGS_UNK15           = 0x04000,           //? Possibly not in use
     CREATURE_TYPEFLAGS_ENGINEERLOOT    = 0x08000,           //can be looted by engineer
     CREATURE_TYPEFLAGS_EXOTIC          = 0x10000,           //can be tamed by hunter as exotic pet
-    CREATURE_TYPEFLAGS_UNK18           = 0x20000,           //? Related to veichles/pvp?
-    CREATURE_TYPEFLAGS_UNK19           = 0x40000,           //? Related to veichle/siege weapons?
+    CREATURE_TYPEFLAGS_UNK18           = 0x20000,           //? Related to vehicles/pvp?
+    CREATURE_TYPEFLAGS_UNK19           = 0x40000,           //? Related to vehicles/siege weapons?
     CREATURE_TYPEFLAGS_UNK20           = 0x80000
 };
 

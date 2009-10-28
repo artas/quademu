@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #include "GameEventMgr.h"
 #include "World.h"
@@ -1470,13 +1488,13 @@ bool GameEventMgr::hasGameObjectActiveEventExcept(uint32 go_id, uint16 event_id)
     return false;
 }
 
-void GameEventMgr::UpdateEventQuests(uint16 event_id, bool Activate)
+void GameEventMgr::UpdateEventQuests(uint16 event_id, bool activate)
 {
     QuestRelList::iterator itr;
     for (itr = mGameEventCreatureQuests[event_id].begin(); itr != mGameEventCreatureQuests[event_id].end(); ++itr)
     {
         QuestRelations &CreatureQuestMap = objmgr.mCreatureQuestRelations;
-        if (Activate)                                       // Add the pair(id,quest) to the multimap
+        if (activate)                                       // Add the pair(id,quest) to the multimap
             CreatureQuestMap.insert(QuestRelations::value_type(itr->first, itr->second));
         else
         {
@@ -1501,7 +1519,7 @@ void GameEventMgr::UpdateEventQuests(uint16 event_id, bool Activate)
     for (itr = mGameEventGameObjectQuests[event_id].begin(); itr != mGameEventGameObjectQuests[event_id].end(); ++itr)
     {
         QuestRelations &GameObjectQuestMap = objmgr.mGOQuestRelations;
-        if (Activate)                                       // Add the pair(id,quest) to the multimap
+        if (activate)                                       // Add the pair(id,quest) to the multimap
             GameObjectQuestMap.insert(QuestRelations::value_type(itr->first, itr->second));
         else
         {
@@ -1627,14 +1645,20 @@ void GameEventMgr::SendWorldStateUpdate(Player * plr, uint16 event_id)
     }
 }
 
-QUAD_DLL_SPEC bool IsHolidayActive( HolidayIds id )
+QUAD_DLL_SPEC bool IsHolidayActive(HolidayIds id)
 {
     GameEventMgr::GameEventDataMap const& events = gameeventmgr.GetEventMap();
     GameEventMgr::ActiveEvents const& ae = gameeventmgr.GetActiveEventList();
 
     for (GameEventMgr::ActiveEvents::const_iterator itr = ae.begin(); itr != ae.end(); ++itr)
-        if(events[*itr].holiday_id==id)
+        if(events[*itr].holiday_id == id)
             return true;
 
     return false;
+}
+
+QUAD_DLL_SPEC bool IsEventActive(uint16 event_id)
+{
+    GameEventMgr::ActiveEvents const& ae = gameeventmgr.GetActiveEventList();
+    return ae.find(event_id) != ae.end();
 }

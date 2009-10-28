@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -119,7 +131,7 @@ struct QUAD_DLL_DECL example_escortAI : public npc_escortAI
         //Combat check
         if (m_creature->getVictim())
         {
-            if (m_uiDeathCoilTimer < uiDiff)
+            if (m_uiDeathCoilTimer <= uiDiff)
             {
                 DoScriptText(SAY_SPELL, m_creature);
                 m_creature->CastSpell(m_creature->getVictim(), SPELL_DEATH_COIL, false);
@@ -133,7 +145,7 @@ struct QUAD_DLL_DECL example_escortAI : public npc_escortAI
             //Out of combat but being escorted
             if (HasEscortState(STATE_ESCORT_ESCORTING))
             {
-                if (m_uiChatTimer < uiDiff)
+                if (m_uiChatTimer <= uiDiff)
                 {
                     if (m_creature->HasAura(SPELL_ELIXIR_OF_FORTITUDE, 0))
                     {

@@ -55,29 +55,28 @@ struct QUAD_DLL_DECL mob_crystalcore_devastatorAI : public ScriptedAI
 
         //Check if we have a current target
         //Knockaway_Timer
-        if (Knockaway_Timer < diff)
+        if (Knockaway_Timer <= diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_KNOCKAWAY, true);
 
             // current aggro target is knocked away pick new target
-            Unit* Target = SelectUnit(SELECT_TARGET_TOPAGGRO, 0);
+            Unit* pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 0);
 
-            if (!Target || Target == m_creature->getVictim())
-                Target = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
+            if (!pTarget || pTarget == m_creature->getVictim())
+                pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1);
 
-            if (Target)
-                m_creature->TauntApply(Target);
+            if (pTarget)
+                m_creature->TauntApply(pTarget);
 
             Knockaway_Timer = 23000;
-        }
-        else Knockaway_Timer -= diff;
+        } else Knockaway_Timer -= diff;
 
         //Countercharge_Timer
-        if (Countercharge_Timer < diff)
+        if (Countercharge_Timer <= diff)
         {
-            DoCast(this->m_creature,SPELL_COUNTERCHARGE);
+            DoCast(m_creature,SPELL_COUNTERCHARGE);
             Countercharge_Timer = 45000;
-        }else Countercharge_Timer -= diff;
+        } else Countercharge_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

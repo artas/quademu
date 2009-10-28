@@ -226,5 +226,5 @@ void AddSC_storm_peaks()
     newscript = new Script;
     newscript->Name = "npc_goblin_prisoner";
     newscript->GetAI = &GetAI_npc_goblin_prisoner;
-    newscript->RegisterSelf();	
+    newscript->RegisterSelf();
 }

@@ -132,7 +132,7 @@ struct QUAD_DLL_DECL instance_temple_of_ahnqiraj : public ScriptedInstance
                 break;
 
             case DATA_BUG_TRIO_DEATH:
-                BugTrioDeathCount++;
+                ++BugTrioDeathCount;
                 break;
 
             case DATA_VEKLOR_DEATH:

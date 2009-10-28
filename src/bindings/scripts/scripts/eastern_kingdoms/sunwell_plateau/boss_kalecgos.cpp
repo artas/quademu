@@ -210,7 +210,7 @@ struct QUAD_DLL_DECL boss_kalecgosAI : public ScriptedAI
                 me->RemoveAllAuras();
                 me->DeleteThreatList();
                 me->CombatStop();
-                TalkSequence++;
+                ++TalkSequence;
             }
             if (TalkTimer <= diff)
             {
@@ -218,14 +218,14 @@ struct QUAD_DLL_DECL boss_kalecgosAI : public ScriptedAI
                     GoodEnding();
                 else
                     BadEnding();
-                TalkSequence++;
-            }else TalkTimer -= diff;
+                ++TalkSequence;
+            } else TalkTimer -= diff;
         }
         else
         {
             if(JustReseted)
             {
-                if (ResetTimer < diff)
+                if (ResetTimer <= diff)
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE + UNIT_FLAG_NOT_SELECTABLE);
                     me->RemoveUnitMovementFlag(MOVEMENTFLAG_LEVITATING);
@@ -233,13 +233,13 @@ struct QUAD_DLL_DECL boss_kalecgosAI : public ScriptedAI
                     me->SetStandState(UNIT_STAND_STATE_SLEEP);
                     ResetTimer = 10000;
                     JustReseted = false;
-                }else ResetTimer -= diff;
+                } else ResetTimer -= diff;
                 return;
             }
             if (!UpdateVictim())
                 return;
 
-            if (CheckTimer < diff)
+            if (CheckTimer <= diff)
             {
                 if(me->GetDistance(CENTER_X, CENTER_Y, DRAGON_REALM_Z) >= 75)
                 {
@@ -272,33 +272,33 @@ struct QUAD_DLL_DECL boss_kalecgosAI : public ScriptedAI
                     }
                 }
                 CheckTimer = 1000;
-            }else CheckTimer -= diff;
+            } else CheckTimer -= diff;
 
-            if (ArcaneBuffetTimer < diff)
+            if (ArcaneBuffetTimer <= diff)
             {
                 DoCastAOE(SPELL_ARCANE_BUFFET);
                 ArcaneBuffetTimer = 8000;
-            }else ArcaneBuffetTimer -= diff;
+            } else ArcaneBuffetTimer -= diff;
 
-            if (FrostBreathTimer < diff)
+            if (FrostBreathTimer <= diff)
             {
                 DoCastAOE(SPELL_FROST_BREATH);
                 FrostBreathTimer = 15000;
-            }else FrostBreathTimer -= diff;
+            } else FrostBreathTimer -= diff;
 
-            if (TailLashTimer < diff)
+            if (TailLashTimer <= diff)
             {
                 DoCastAOE(SPELL_TAIL_LASH);
                 TailLashTimer = 15000;
-            }else TailLashTimer -= diff;
+            } else TailLashTimer -= diff;
 
-            if (WildMagicTimer < diff)
+            if (WildMagicTimer <= diff)
             {
                 DoCastAOE(WildMagic[rand()%6]);
                 WildMagicTimer = 20000;
-            }else WildMagicTimer -= diff;
+            } else WildMagicTimer -= diff;
 
-            if (SpectralBlastTimer < diff)
+            if (SpectralBlastTimer <= diff)
             {
                 std::list<HostilReference*> &m_threatlist = me->getThreatManager().getThreatList();
                 std::list<Unit*> targetList;
@@ -316,8 +316,8 @@ struct QUAD_DLL_DECL boss_kalecgosAI : public ScriptedAI
                 {
                     (*i)->CastSpell((*i), SPELL_SPECTRAL_BLAST,true);
                     SpectralBlastTimer = 20000+rand()%5000;
-                }else SpectralBlastTimer = 1000;
-            }else SpectralBlastTimer -= diff;
+                } else SpectralBlastTimer = 1000;
+            } else SpectralBlastTimer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -483,9 +483,9 @@ struct QUAD_DLL_DECL boss_sathrovarrAI : public ScriptedAI
             damage = 0;
     }
 
-    void KilledUnit(Unit *target)
+    void KilledUnit(Unit *pTarget)
     {
-        if (target->GetGUID() == KalecGUID)
+        if (pTarget->GetGUID() == KalecGUID)
         {
             TeleportAllPlayersBack();
             if (Creature *Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
@@ -551,7 +551,7 @@ struct QUAD_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (CheckTimer < diff)
+        if (CheckTimer <= diff)
         {
             Creature *Kalec = Unit::GetCreature(*me, KalecGUID);
             if(!Kalec || (Kalec && !Kalec->isAlive()))
@@ -595,9 +595,9 @@ struct QUAD_DLL_DECL boss_sathrovarrAI : public ScriptedAI
                 }
             }
             CheckTimer = 1000;
-        }else CheckTimer -= diff;
+        } else CheckTimer -= diff;
 
-        if (ResetThreat < diff)
+        if (ResetThreat <= diff)
         {
             for (std::list<HostilReference*>::iterator itr = me->getThreatManager().getThreatList().begin(); itr != me->getThreatManager().getThreatList().end(); ++itr)
             {
@@ -610,29 +610,29 @@ struct QUAD_DLL_DECL boss_sathrovarrAI : public ScriptedAI
                 }
             }
             ResetThreat = 1000;
-        }else ResetThreat -= diff;
+        } else ResetThreat -= diff;
 
-        if (ShadowBoltTimer < diff)
+        if (ShadowBoltTimer <= diff)
         {
             if(!(rand()%5))DoScriptText(SAY_SATH_SPELL1, me);
             DoCast(me, SPELL_SHADOW_BOLT);
             ShadowBoltTimer = 7000+(rand()%3000);
-        }else ShadowBoltTimer -= diff;
+        } else ShadowBoltTimer -= diff;
 
-        if (AgonyCurseTimer < diff)
+        if (AgonyCurseTimer <= diff)
         {
-            Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-            if (!target) target = me->getVictim();
-            DoCast(target, SPELL_AGONY_CURSE);
+            Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+            if (!pTarget) pTarget = me->getVictim();
+            DoCast(pTarget, SPELL_AGONY_CURSE);
             AgonyCurseTimer = 20000;
-        }else AgonyCurseTimer -= diff;
+        } else AgonyCurseTimer -= diff;
 
-        if (CorruptionStrikeTimer < diff)
+        if (CorruptionStrikeTimer <= diff)
         {
             if(!(rand()%5))DoScriptText(SAY_SATH_SPELL2, me);
             DoCast(me->getVictim(), SPELL_CORRUPTION_STRIKE);
             CorruptionStrikeTimer = 13000;
-        }else CorruptionStrikeTimer -= diff;
+        } else CorruptionStrikeTimer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -684,26 +684,26 @@ struct QUAD_DLL_DECL boss_kalecAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (YellTimer < diff)
+        if (YellTimer <= diff)
         {
             switch(YellSequence)
             {
             case 0:
                 DoScriptText(SAY_GOOD_AGGRO, me);
-                YellSequence++;
+                ++YellSequence;
                 break;
             case 1:
                 if (HealthBelowPct(50))
                 {
                     DoScriptText(SAY_GOOD_NEAR_DEATH, me);
-                    YellSequence++;
+                    ++YellSequence;
                 }
                 break;
             case 2:
                 if (HealthBelowPct(10))
                 {
                     DoScriptText(SAY_GOOD_NEAR_DEATH2, me);
-                    YellSequence++;
+                    ++YellSequence;
                 }
                 break;
             default:
@@ -712,17 +712,17 @@ struct QUAD_DLL_DECL boss_kalecAI : public ScriptedAI
             YellTimer = 5000;
         }
 
-        if (RevitalizeTimer < diff)
+        if (RevitalizeTimer <= diff)
         {
             DoCast(me, SPELL_REVITALIZE);
             RevitalizeTimer = 5000;
-        }else RevitalizeTimer -= diff;
+        } else RevitalizeTimer -= diff;
 
-        if (HeroicStrikeTimer < diff)
+        if (HeroicStrikeTimer <= diff)
         {
             DoCast(me->getVictim(), SPELL_HEROIC_STRIKE);
             HeroicStrikeTimer = 2000;
-        }else HeroicStrikeTimer -= diff;
+        } else HeroicStrikeTimer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -737,7 +737,7 @@ bool GOkalecgos_teleporter(Player* pPlayer, GameObject* pGo)
     for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
     {
         if(i->getSource() && i->getSource()->GetPositionZ() < DEMON_REALM_Z + 5)
-            SpectralPlayers++;
+            ++SpectralPlayers;
     }
     if (pPlayer->HasAura(AURA_SPECTRAL_EXHAUSTION) || (MAX_PLAYERS_IN_SPECTRAL_REALM && SpectralPlayers >= MAX_PLAYERS_IN_SPECTRAL_REALM))
         pPlayer->GetSession()->SendNotification(GO_FAILED);

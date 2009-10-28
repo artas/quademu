@@ -466,7 +466,7 @@ struct QUAD_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
     {
         if (victim == m_creature) return;
         // TODO: Find better way to handle emote
-        switch(rand()%2)
+        switch (urand(0,1))
         {
         case 0:
             m_creature->MonsterYell(SAY_KILL1, LANG_UNIVERSAL, victim->GetGUID());
@@ -640,7 +640,7 @@ struct QUAD_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
         default:
             break;
         }
-        FlightCount++;
+        ++FlightCount;
     }
 
     void HandleTransformSequence()
@@ -688,7 +688,7 @@ struct QUAD_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
         }
         if (Phase == PHASE_TRANSFORM_SEQUENCE)
             Timer[EVENT_TRANSFORM_SEQUENCE] = DemonTransformation[TransformCount].timer;
-        TransformCount++;
+        ++TransformCount;
     }
 
     void UpdateAI(const uint32 diff)
@@ -782,10 +782,11 @@ struct QUAD_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
 
             case EVENT_PARASITIC_SHADOWFIEND:
                 {
-                    if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 200, true))
-                        m_creature->CastSpell(target, SPELL_PARASITIC_SHADOWFIEND, true);
+                    if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 1, 200, true))
+                        m_creature->CastSpell(pTarget, SPELL_PARASITIC_SHADOWFIEND, true);
                     Timer[EVENT_PARASITIC_SHADOWFIEND] = 35000 + rand()%10000;
-                }break;
+                }
+                break;
 
             case EVENT_PARASITE_CHECK:
                 Timer[EVENT_PARASITE_CHECK] = 0;
@@ -904,13 +905,13 @@ struct QUAD_DLL_DECL flame_of_azzinothAI : public ScriptedAI
 
     void ChargeCheck()
     {
-        Unit* target = SelectTarget(SELECT_TARGET_FARTHEST, 0, 200, false);
-        if (target && (!m_creature->IsWithinCombatRange(target, FLAME_CHARGE_DISTANCE)))
+        Unit *pTarget = SelectTarget(SELECT_TARGET_FARTHEST, 0, 200, false);
+        if (pTarget && (!m_creature->IsWithinCombatRange(pTarget, FLAME_CHARGE_DISTANCE)))
         {
-            m_creature->AddThreat(target, 5000000.0f);
-            AttackStart(target);
-            DoCast(target, SPELL_CHARGE);
-            m_creature->MonsterTextEmote(EMOTE_SETS_GAZE_ON, target->GetGUID());
+            m_creature->AddThreat(pTarget, 5000000.0f);
+            AttackStart(pTarget);
+            DoCast(pTarget, SPELL_CHARGE);
+            m_creature->MonsterTextEmote(EMOTE_SETS_GAZE_ON, pTarget->GetGUID());
         }
     }
 
@@ -923,8 +924,8 @@ struct QUAD_DLL_DECL flame_of_azzinothAI : public ScriptedAI
                 Glaive->InterruptNonMeleeSpells(true);
                 DoCast(m_creature, SPELL_FLAME_ENRAGE, true);
                 DoResetThreat();
-                Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0);
-                if (target && target->isAlive())
+                Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                if (pTarget && pTarget->isAlive())
                 {
                     m_creature->AddThreat(m_creature->getVictim(), 5000000.0f);
                     AttackStart(m_creature->getVictim());
@@ -945,20 +946,20 @@ struct QUAD_DLL_DECL flame_of_azzinothAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (FlameBlastTimer < diff)
+        if (FlameBlastTimer <= diff)
         {
             DoCast(m_creature->getVictim(), SPELL_BLAZE_SUMMON, true); //appear at victim
             DoCast(m_creature->getVictim(), SPELL_FLAME_BLAST);
             FlameBlastTimer = 15000; //10000 is official-like?
             DoZoneInCombat(); //in case someone is revived
-        }else FlameBlastTimer -= diff;
+        } else FlameBlastTimer -= diff;
 
-        if (CheckTimer < diff)
+        if (CheckTimer <= diff)
         {
             ChargeCheck();
             EnrageCheck();
             CheckTimer = 1000;
-        }else CheckTimer -= diff;
+        } else CheckTimer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -1156,7 +1157,7 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
                     CAST_AI(boss_illidan_stormrageAI, Illidan->AI())->DeleteFromThreatList(m_creature->GetGUID());
                 EnterEvadeMode();
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                WalkCount++;
+                ++WalkCount;
             }
             JustCreated = false;
             BeginWalk();
@@ -1222,7 +1223,7 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
             EnterPhase(PHASE_WALK);
             break;
         }
-        TalkCount++;
+        ++TalkCount;
     }
 
     void HandleChannelSequence()
@@ -1280,7 +1281,7 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
         default:
             break;
         }
-        ChannelCount++;
+        ++ChannelCount;
     }
 
     void HandleWalkSequence()
@@ -1306,7 +1307,7 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
         if (Phase == PHASE_WALK)
         {
             Timer = 0;
-            WalkCount++;
+            ++WalkCount;
             m_creature->GetMotionMaster()->MovePoint(WalkCount, AkamaWP[WalkCount].x, AkamaWP[WalkCount].y, AkamaWP[WalkCount].z);
         }
     }
@@ -1315,13 +1316,13 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
     {
         if(m_creature->GetVisibility() == VISIBILITY_OFF)
         {
-            if(Check_Timer < diff)
+            if (Check_Timer <= diff)
             {
                 if(pInstance && pInstance->GetData(DATA_ILLIDARICOUNCILEVENT) == DONE)
                     m_creature->SetVisibility(VISIBILITY_ON);
 
                 Check_Timer = 5000;
-            }else Check_Timer -= diff;
+            } else Check_Timer -= diff;
         }
         Event = false;
         if (Timer)
@@ -1359,7 +1360,8 @@ struct QUAD_DLL_DECL npc_akama_illidanAI : public ScriptedAI
                         DoCast(m_creature->getVictim(), SPELL_CHAIN_LIGHTNING);
                         Timer = 30000;
                     }
-                }break;
+                }
+                break;
             case PHASE_FIGHT_MINIONS:
                 {
                     float x, y, z;
@@ -1510,9 +1512,9 @@ struct QUAD_DLL_DECL boss_maievAI : public ScriptedAI
     {
         if (GETCRE(Illidan, IllidanGUID))
         {
-            Unit* target = CAST_AI(boss_illidan_stormrageAI, Illidan->AI())->SelectUnit(SELECT_TARGET_RANDOM, 0);
+            Unit *pTarget = CAST_AI(boss_illidan_stormrageAI, Illidan->AI())->SelectUnit(SELECT_TARGET_RANDOM, 0);
 
-            if (!target || !m_creature->IsWithinDistInMap(target, 80) || Illidan->IsWithinDistInMap(target, 20))
+            if (!pTarget || !m_creature->IsWithinDistInMap(pTarget, 80) || Illidan->IsWithinDistInMap(pTarget, 20))
             {
                 uint8 pos = rand()%4;
                 BlinkTo(HoverPosition[pos].x, HoverPosition[pos].y, HoverPosition[pos].z);
@@ -1520,7 +1522,7 @@ struct QUAD_DLL_DECL boss_maievAI : public ScriptedAI
             else
             {
                 float x, y, z;
-                target->GetPosition(x, y, z);
+                pTarget->GetPosition(x, y, z);
                 BlinkTo(x, y, z);
             }
         }
@@ -1551,7 +1553,8 @@ struct QUAD_DLL_DECL boss_maievAI : public ScriptedAI
                     Timer[EVENT_MAIEV_STEALTH] = 0;
                     BlinkToPlayer();
                     EnterPhase(Phase);
-                }break;
+                }
+                break;
             case EVENT_MAIEV_TAUNT:
                 {
                     uint32 random = rand()%4;
@@ -1560,7 +1563,8 @@ struct QUAD_DLL_DECL boss_maievAI : public ScriptedAI
                     m_creature->MonsterYell(text, LANG_UNIVERSAL, 0);
                     DoPlaySoundToSet(m_creature, sound);
                     Timer[EVENT_MAIEV_TAUNT] = 22000 + rand()%21 * 1000;
-                }break;
+                }
+                break;
             case EVENT_MAIEV_SHADOW_STRIKE:
                 DoCast(m_creature->getVictim(), SPELL_SHADOW_STRIKE);
                 Timer[EVENT_MAIEV_SHADOW_STRIKE] = 60000;
@@ -1668,7 +1672,7 @@ struct QUAD_DLL_DECL cage_trap_triggerAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         if (DespawnTimer)
-            if (DespawnTimer < diff)
+            if (DespawnTimer <= diff)
                 m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             else DespawnTimer -= diff;
 
@@ -1710,8 +1714,8 @@ struct QUAD_DLL_DECL shadow_demonAI : public ScriptedAI
 
     void JustDied(Unit *killer)
     {
-        if (Unit* target = Unit::GetUnit((*m_creature), TargetGUID))
-            target->RemoveAurasDueToSpell(SPELL_PARALYZE);
+        if (Unit *pTarget = Unit::GetUnit((*m_creature), TargetGUID))
+            pTarget->RemoveAurasDueToSpell(SPELL_PARALYZE);
     }
 
     void UpdateAI(const uint32 diff)
@@ -1778,8 +1782,8 @@ struct QUAD_DLL_DECL mob_parasitic_shadowfiendAI : public ScriptedAI
     {
         if (!m_creature->getVictim())
         {
-            if (Unit *target = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true))
-                AttackStart(target);
+            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true))
+                AttackStart(pTarget);
             else
             {
                 m_creature->SetVisibility(VISIBILITY_OFF);
@@ -1788,7 +1792,7 @@ struct QUAD_DLL_DECL mob_parasitic_shadowfiendAI : public ScriptedAI
             }
         }
 
-        if (CheckTimer < diff)
+        if (CheckTimer <= diff)
         {
             GETUNIT(Illidan, IllidanGUID);
             if (!Illidan || CAST_CRE(Illidan)->IsInEvadeMode())
@@ -1796,8 +1800,8 @@ struct QUAD_DLL_DECL mob_parasitic_shadowfiendAI : public ScriptedAI
                 m_creature->SetVisibility(VISIBILITY_OFF);
                 m_creature->setDeathState(JUST_DIED);
                 return;
-            }else CheckTimer = 5000;
-        }else CheckTimer -= diff;
+            } else CheckTimer = 5000;
+        } else CheckTimer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -1874,19 +1878,21 @@ void boss_illidan_stormrageAI::JustSummoned(Creature* summon)
                 summon->setDeathState(JUST_DIED);
                 return;
             }
-            Unit *target = SelectTarget(SELECT_TARGET_TOPAGGRO, 0, 999, true);
-            if (!target || target->HasAura(SPELL_PARASITIC_SHADOWFIEND)
-                || target->HasAura(SPELL_PARASITIC_SHADOWFIEND2))
-                target = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true);
-            if (target)
-                summon->AI()->AttackStart(target);
-        }break;
+            Unit *pTarget = SelectTarget(SELECT_TARGET_TOPAGGRO, 0, 999, true);
+            if (!pTarget || pTarget->HasAura(SPELL_PARASITIC_SHADOWFIEND)
+                || pTarget->HasAura(SPELL_PARASITIC_SHADOWFIEND2))
+                pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true);
+            if (pTarget)
+                summon->AI()->AttackStart(pTarget);
+        }
+        break;
     case SHADOW_DEMON:
-        if (Unit *target = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true)) // only on players.
+        if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 999, true)) // only on players.
         {
-            summon->AddThreat(target, 5000000.0f);
-            summon->AI()->AttackStart(target);
-        }break;
+            summon->AddThreat(pTarget, 5000000.0f);
+            summon->AI()->AttackStart(pTarget);
+        }
+        break;
     case MAIEV_SHADOWSONG:
         {
             summon->SetVisibility(VISIBILITY_OFF); // Leave her invisible until she has to talk
@@ -1894,11 +1900,13 @@ void boss_illidan_stormrageAI::JustSummoned(Creature* summon)
             MaievGUID = summon->GetGUID();
             CAST_AI(boss_maievAI, summon->AI())->GetIllidanGUID(m_creature->GetGUID());
             summon->AI()->DoAction(PHASE_TALK_SEQUENCE);
-        }break;
+        }
+        break;
     case FLAME_OF_AZZINOTH:
         {
             summon->AI()->AttackStart(summon->SelectNearestTarget(999));
-        }break;
+        }
+        break;
     default:
         break;
     }
@@ -1938,7 +1946,8 @@ void boss_illidan_stormrageAI::HandleTalkSequence()
             m_creature->SetInFront(Maiev); // Face her, so it's not rude =P
             Maiev->GetMotionMaster()->MoveIdle();
             m_creature->GetMotionMaster()->MoveIdle();
-        }break;
+        }
+        break;
     case 14:
         if (GETCRE(Maiev, MaievGUID))
         {
@@ -1947,7 +1956,8 @@ void boss_illidan_stormrageAI::HandleTalkSequence()
             Maiev->AddThreat(m_creature, 10000000.0f); // Have Maiev add a lot of threat on us so that players don't pull her off if they damage her via AOE
             Maiev->AI()->AttackStart(m_creature); // Force Maiev to attack us.
             EnterPhase(PHASE_NORMAL_MAIEV);
-        }break;
+        }
+        break;
     case 15:
         DoCast(m_creature, SPELL_DEATH); // Animate his kneeling + stun him
         Summons.DespawnAll();
@@ -1984,7 +1994,7 @@ void boss_illidan_stormrageAI::HandleTalkSequence()
     }
     if (Phase == PHASE_TALK_SEQUENCE)
         Talk(TalkCount); // This function does most of the talking
-    TalkCount++;
+    ++TalkCount;
 }
 
 void boss_illidan_stormrageAI::CastEyeBlast()

@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -72,7 +84,7 @@ struct  QUAD_DLL_DECL boss_curatorAI : public ScriptedAI
             return;
 
         //always decrease BerserkTimer
-        if (BerserkTimer < diff)
+        if (BerserkTimer <= diff)
         {
             //if evocate, then break evocate
             if (Evocating)
@@ -91,7 +103,7 @@ struct  QUAD_DLL_DECL boss_curatorAI : public ScriptedAI
 
             //don't know if he's supposed to do summon/evocate after hard enrage (probably not)
             Enraged = true;
-        }else BerserkTimer -= diff;
+        } else BerserkTimer -= diff;
 
         if (Evocating)
         {
@@ -104,17 +116,17 @@ struct  QUAD_DLL_DECL boss_curatorAI : public ScriptedAI
 
         if (!Enraged)
         {
-            if (AddTimer < diff)
+            if (AddTimer <= diff)
             {
                 //Summon Astral Flare
                 Creature* AstralFlare = DoSpawnCreature(17096, rand()%37, rand()%37, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                Unit* target = NULL;
-                target = SelectUnit(SELECT_TARGET_RANDOM, 0);
+                Unit *pTarget = NULL;
+                pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
 
-                if (AstralFlare && target)
+                if (AstralFlare && pTarget)
                 {
                     AstralFlare->CastSpell(AstralFlare, SPELL_ASTRAL_FLARE_PASSIVE, false);
-                    AstralFlare->AI()->AttackStart(target);
+                    AstralFlare->AI()->AttackStart(pTarget);
                 }
 
                 //Reduce Mana by 10% of max health
@@ -143,7 +155,7 @@ struct  QUAD_DLL_DECL boss_curatorAI : public ScriptedAI
                 }
 
                 AddTimer = 10000;
-            }else AddTimer -= diff;
+            } else AddTimer -= diff;
 
             if (m_creature->GetHealth()*100 / m_creature->GetMaxHealth() <= 15)
             {
@@ -153,17 +165,17 @@ struct  QUAD_DLL_DECL boss_curatorAI : public ScriptedAI
             }
         }
 
-        if (HatefulBoltTimer < diff)
+        if (HatefulBoltTimer <= diff)
         {
             if (Enraged)
                 HatefulBoltTimer = 7000;
             else
                 HatefulBoltTimer = 15000;
 
-            if (Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO, 1))
-                DoCast(target, SPELL_HATEFUL_BOLT);
+            if (Unit *pTarget = SelectUnit(SELECT_TARGET_TOPAGGRO, 1))
+                DoCast(pTarget, SPELL_HATEFUL_BOLT);
 
-        }else HatefulBoltTimer -= diff;
+        } else HatefulBoltTimer -= diff;
 
         DoMeleeAttackIfReady();
     }

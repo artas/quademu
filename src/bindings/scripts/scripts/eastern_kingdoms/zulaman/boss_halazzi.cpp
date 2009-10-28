@@ -185,17 +185,18 @@ struct QUAD_DLL_DECL boss_halazziAI : public ScriptedAI
             TotemTimer = 12000;
             break;
         case PHASE_MERGE:
-            if (Unit *Lynx = Unit::GetUnit(*m_creature, LynxGUID))
+            if (Unit *pLynx = Unit::GetUnit(*m_creature, LynxGUID))
             {
                 m_creature->MonsterYell(YELL_MERGE, LANG_UNIVERSAL, NULL);
                 DoPlaySoundToSet(m_creature, SOUND_MERGE);
-                Lynx->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                Lynx->GetMotionMaster()->Clear();
-                Lynx->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
+                pLynx->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                pLynx->GetMotionMaster()->Clear();
+                pLynx->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
                 m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveFollow(Lynx, 0, 0);
-                TransformCount++;
-            }break;
+                m_creature->GetMotionMaster()->MoveFollow(pLynx, 0, 0);
+                ++TransformCount;
+            }
+            break;
         default:
             break;
         }
@@ -207,62 +208,62 @@ struct QUAD_DLL_DECL boss_halazziAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (BerserkTimer < diff)
+        if (BerserkTimer <= diff)
         {
             m_creature->MonsterYell(YELL_BERSERK, LANG_UNIVERSAL, NULL);
             DoPlaySoundToSet(m_creature, SOUND_BERSERK);
             DoCast(m_creature, SPELL_BERSERK, true);
             BerserkTimer = 60000;
-        }else BerserkTimer -= diff;
+        } else BerserkTimer -= diff;
 
         if (Phase == PHASE_LYNX || Phase == PHASE_ENRAGE)
         {
-            if (SaberlashTimer < diff)
+            if (SaberlashTimer <= diff)
             {
                 // A tank with more than 490 defense skills should receive no critical hit
                 //m_creature->CastSpell(m_creature, 41296, true);
                 m_creature->CastSpell(m_creature->getVictim(), SPELL_SABER_LASH, true);
                 //m_creature->RemoveAurasDueToSpell(41296);
                 SaberlashTimer = 30000;
-            }else SaberlashTimer -= diff;
+            } else SaberlashTimer -= diff;
 
-            if (FrenzyTimer < diff)
+            if (FrenzyTimer <= diff)
             {
                 DoCast(m_creature, SPELL_FRENZY);
                 FrenzyTimer = (10+rand()%5)*1000;
-            }else FrenzyTimer -= diff;
+            } else FrenzyTimer -= diff;
 
             if (Phase == PHASE_LYNX)
-                if (CheckTimer < diff)
+                if (CheckTimer <= diff)
                 {
                     if (m_creature->GetHealth() * 4 < m_creature->GetMaxHealth() * (3 - TransformCount))
                         EnterPhase(PHASE_SPLIT);
                     CheckTimer = 1000;
-                }else CheckTimer -= diff;
+                } else CheckTimer -= diff;
         }
 
         if (Phase == PHASE_HUMAN || Phase == PHASE_ENRAGE)
         {
-            if (TotemTimer < diff)
+            if (TotemTimer <= diff)
             {
                 DoCast(m_creature, SPELL_SUMMON_TOTEM);
                 TotemTimer = 20000;
-            }else TotemTimer -= diff;
+            } else TotemTimer -= diff;
 
-            if (ShockTimer < diff)
+            if (ShockTimer <= diff)
             {
-                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+                if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                 {
-                    if (target->IsNonMeleeSpellCasted(false))
-                        DoCast(target,SPELL_EARTHSHOCK);
+                    if (pTarget->IsNonMeleeSpellCasted(false))
+                        DoCast(pTarget,SPELL_EARTHSHOCK);
                     else
-                        DoCast(target,SPELL_FLAMESHOCK);
+                        DoCast(pTarget,SPELL_FLAMESHOCK);
                     ShockTimer = 10000 + rand()%5000;
                 }
-            }else ShockTimer -= diff;
+            } else ShockTimer -= diff;
 
             if (Phase == PHASE_HUMAN)
-                if (CheckTimer < diff)
+                if (CheckTimer <= diff)
                 {
                     if (((m_creature->GetHealth()*100) / m_creature->GetMaxHealth() <= 20)/*m_creature->GetHealth() * 10 < m_creature->GetMaxHealth()*/)
                         EnterPhase(PHASE_MERGE);
@@ -273,12 +274,12 @@ struct QUAD_DLL_DECL boss_halazziAI : public ScriptedAI
                             EnterPhase(PHASE_MERGE);
                     }
                     CheckTimer = 1000;
-                }else CheckTimer -= diff;
+                } else CheckTimer -= diff;
         }
 
         if (Phase == PHASE_MERGE)
         {
-            if (CheckTimer < diff)
+            if (CheckTimer <= diff)
             {
                 Unit *Lynx = Unit::GetUnit(*m_creature, LynxGUID);
                 if (Lynx)
@@ -294,7 +295,7 @@ struct QUAD_DLL_DECL boss_halazziAI : public ScriptedAI
                     }
                 }
                 CheckTimer = 1000;
-            }else CheckTimer -= diff;
+            } else CheckTimer -= diff;
         }
 
         DoMeleeAttackIfReady();
@@ -302,17 +303,17 @@ struct QUAD_DLL_DECL boss_halazziAI : public ScriptedAI
 
     void KilledUnit(Unit* victim)
     {
-        switch(rand()%2)
+        switch (urand(0,1))
         {
-        case 0:
-            m_creature->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, NULL);
-            DoPlaySoundToSet(m_creature, SOUND_KILL_ONE);
-            break;
+            case 0:
+                m_creature->MonsterYell(YELL_KILL_ONE, LANG_UNIVERSAL, NULL);
+                DoPlaySoundToSet(m_creature, SOUND_KILL_ONE);
+                break;
 
-        case 1:
-            m_creature->MonsterYell(YELL_KILL_TWO, LANG_UNIVERSAL, NULL);
-            DoPlaySoundToSet(m_creature, SOUND_KILL_TWO);
-            break;
+            case 1:
+                m_creature->MonsterYell(YELL_KILL_TWO, LANG_UNIVERSAL, NULL);
+                DoPlaySoundToSet(m_creature, SOUND_KILL_TWO);
+                break;
         }
     }
 
@@ -337,7 +338,7 @@ struct QUAD_DLL_DECL boss_spiritlynxAI : public ScriptedAI
 
     void Reset()
     {
-        FrenzyTimer = (30+rand()%20)*1000;  //frenzy every 30-50 seconds
+        FrenzyTimer = urand(30000,50000);  //frenzy every 30-50 seconds
         shredder_timer = 4000;
     }
 
@@ -360,17 +361,17 @@ struct QUAD_DLL_DECL boss_spiritlynxAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (FrenzyTimer < diff)
+        if (FrenzyTimer <= diff)
         {
             DoCast(m_creature, SPELL_LYNX_FRENZY);
-            FrenzyTimer = (30+rand()%20)*1000;
-        }else FrenzyTimer -= diff;
+            FrenzyTimer = urand(30000,50000);  //frenzy every 30-50 seconds
+        } else FrenzyTimer -= diff;
 
-        if (shredder_timer < diff)
+        if (shredder_timer <= diff)
         {
             DoCast(m_creature->getVictim(), SPELL_SHRED_ARMOR);
             shredder_timer = 4000;
-        }else shredder_timer -= diff;
+        } else shredder_timer -= diff;
 
         DoMeleeAttackIfReady();
     }

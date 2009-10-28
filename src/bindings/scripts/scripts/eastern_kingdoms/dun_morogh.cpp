@@ -62,7 +62,7 @@ struct QUAD_DLL_DECL npc_narm_faulkAI : public ScriptedAI
     {
        if (m_creature->IsStandState())
         {
-            if (lifeTimer < diff)
+            if (lifeTimer <= diff)
             {
                 EnterEvadeMode();
                 return;

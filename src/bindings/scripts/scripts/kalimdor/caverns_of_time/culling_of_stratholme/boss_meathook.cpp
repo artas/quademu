@@ -72,23 +72,23 @@ struct QUAD_DLL_DECL boss_meathookAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (uiDiseaseTimer < diff)
+        if (uiDiseaseTimer <= diff)
         {
             DoCast(m_creature->getVictim(), HEROIC(SPELL_DISEASE_EXPULSION,H_SPELL_DISEASE_EXPULSION));
             uiDiseaseTimer = urand(1500,4000);
-        }else uiDiseaseTimer -= diff;
+        } else uiDiseaseTimer -= diff;
 
-        if (uiFrenzyTimer < diff)
+        if (uiFrenzyTimer <= diff)
         {
             DoCast(m_creature->getVictim(), SPELL_FRENZY);
             uiFrenzyTimer = urand(20000,30000);
-        }else uiFrenzyTimer -= diff;
+        } else uiFrenzyTimer -= diff;
 
-        if (uiChainTimer < diff)
+        if (uiChainTimer <= diff)
         {
             DoCast(SelectUnit(SELECT_TARGET_RANDOM, 1), HEROIC(SPELL_CONSTRICTING_CHAINS,H_SPELL_CONSTRICTING_CHAINS)); //anyone but the tank
             uiChainTimer = urand(2000,3000);
-        }else uiChainTimer -= diff;
+        } else uiChainTimer -= diff;
 
         DoMeleeAttackIfReady();
     }

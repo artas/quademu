@@ -25,12 +25,11 @@ EndScriptData */
 #include "deadmines.h"
 #include "Spell.h"
 
-
 /*#####
 # item_Defias_Gunpowder
 #####*/
 
-bool ItemUse_item_defias_gunpowder(Player* pPlayer, Item* _Item, SpellCastTargets const& targets)
+bool ItemUse_item_defias_gunpowder(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
 {
     ScriptedInstance *pInstance = pPlayer->GetInstanceData();
 
@@ -47,7 +46,7 @@ bool ItemUse_item_defias_gunpowder(Player* pPlayer, Item* _Item, SpellCastTarget
         pInstance->SetData(EVENT_STATE, CANNON_GUNPOWDER_USED);
     }
 
-    pPlayer->DestroyItemCount(_Item->GetEntry(), 1, true);
+    pPlayer->DestroyItemCount(pItem->GetEntry(), 1, true);
     return true;
 }
 

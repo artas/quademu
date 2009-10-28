@@ -34,10 +34,6 @@ struct QUAD_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
 
     uint32 FireBlast_Timer;
     uint32 Spirit_Timer;
-    int Rand;
-    int RandX;
-    int RandY;
-    Creature* Summoned;
 
     void Reset()
     {
@@ -49,22 +45,8 @@ struct QUAD_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
 
     void SummonSpirits(Unit* victim)
     {
-        Rand = rand()%10;
-        switch (rand()%2)
-        {
-            case 0: RandX -= Rand; break;
-            case 1: RandX += Rand; break;
-        }
-        Rand = 0;
-        Rand = rand()%10;
-        switch (rand()%2)
-        {
-            case 0: RandY -= Rand; break;
-            case 1: RandY += Rand; break;
-        }
-        Summoned = DoSpawnCreature(9178, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
-        if (Summoned)
-            (Summoned->AI())->AttackStart(victim);
+        if (Creature *Spirit = DoSpawnCreature(9178, RAND(irand(0,-9),irand(0,9)), RAND(irand(0,-9),irand(0,9)), 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000))
+            Spirit->AI()->AttackStart(victim);
     }
 
     void UpdateAI(const uint32 diff)
@@ -74,14 +56,14 @@ struct QUAD_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
             return;
 
         //FireBlast_Timer
-        if (FireBlast_Timer < diff)
+        if (FireBlast_Timer <= diff)
         {
             DoCast(m_creature->getVictim(),SPELL_FIREBLAST);
             FireBlast_Timer = 7000;
-        }else FireBlast_Timer -= diff;
+        } else FireBlast_Timer -= diff;
 
         //Spirit_Timer
-        if (Spirit_Timer < diff)
+        if (Spirit_Timer <= diff)
         {
             SummonSpirits(m_creature->getVictim());
             SummonSpirits(m_creature->getVictim());
@@ -89,7 +71,7 @@ struct QUAD_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
             SummonSpirits(m_creature->getVictim());
 
             Spirit_Timer = 30000;
-        }else Spirit_Timer -= diff;
+        } else Spirit_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

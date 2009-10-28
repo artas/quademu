@@ -19,7 +19,7 @@
 /* ScriptData
 SDName: Assembly of Iron encounter
 SD%Complete: 60%
-SDComment: Runes need DB support, chain lightning won't cast, supercharge won't cast (target error?) - it worked before during debugging.
+SDComment: Runes need DB support, chain lightning won't cast, supercharge won't cast (pTarget error?) - it worked before during debugging.
 SDCategory: Ulduar - Ulduar
 EndScriptData */
 
@@ -205,8 +205,8 @@ struct QUAD_DLL_DECL boss_steelbreakerAI : public ScriptedAI
                 break;
                 case EVENT_STATIC_DISRUPTION:
                 {
-                    Unit *target = SelectTarget(SELECT_TARGET_RANDOM);
-                    DoCast(target, HEROIC(SPELL_STATIC_DISRUPTION_H, SPELL_STATIC_DISRUPTION));
+                    Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM);
+                    DoCast(pTarget, HEROIC(SPELL_STATIC_DISRUPTION_H, SPELL_STATIC_DISRUPTION));
                     events.ScheduleEvent(EVENT_STATIC_DISRUPTION, 20000 + (rand()%20)*1000);
                 }
                 break;
@@ -320,15 +320,15 @@ struct QUAD_DLL_DECL boss_runemaster_molgeimAI : public ScriptedAI
                 break;
                 case EVENT_RUNE_OF_DEATH:
                 {
-                    Unit *target = SelectTarget(SELECT_TARGET_RANDOM);
-                    DoCast(target, SPELL_RUNE_OF_DEATH);
+                    Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM);
+                    DoCast(pTarget, SPELL_RUNE_OF_DEATH);
                     events.ScheduleEvent(EVENT_RUNE_OF_DEATH, 30000+ (rand()%10)*1000);
                 }
                 break;
                 case EVENT_RUNE_OF_SUMMONING:
                 {
-                    Unit *target = SelectTarget(SELECT_TARGET_RANDOM);
-                    DoCast(target, SPELL_RUNE_OF_SUMMONING);
+                    Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM);
+                    DoCast(pTarget, SPELL_RUNE_OF_SUMMONING);
                     events.ScheduleEvent(EVENT_RUNE_OF_SUMMONING, 20000+(rand()%10)*1000);
                 }
                 break;

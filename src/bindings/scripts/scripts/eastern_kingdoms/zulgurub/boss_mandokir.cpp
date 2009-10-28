@@ -145,7 +145,7 @@ struct QUAD_DLL_DECL boss_mandokirAI : public ScriptedAI
                 CombatStart = true;
             }
 
-            if (Watch_Timer < diff)                         //Every 20 Sec Mandokir will check this
+            if (Watch_Timer <= diff)                         //Every 20 Sec Mandokir will check this
             {
                 if (WatchTarget)                             //If someone is watched and If the Position of the watched target is different from the one stored, or are attacking, mandokir will charge him
                 {
@@ -171,7 +171,7 @@ struct QUAD_DLL_DECL boss_mandokirAI : public ScriptedAI
                 }
                 someWatched = false;
                 Watch_Timer = 20000;
-            }else Watch_Timer -= diff;
+            } else Watch_Timer -= diff;
 
             if ((Watch_Timer < 8000) && !someWatched)       //8 sec(cast time + expire time) before the check for the watch effect mandokir will cast watch debuff on a random target
             {
@@ -200,21 +200,21 @@ struct QUAD_DLL_DECL boss_mandokirAI : public ScriptedAI
             if (!someWatched)
             {
                 //Cleave
-                if (Cleave_Timer < diff)
+                if (Cleave_Timer <= diff)
                 {
                     DoCast(m_creature->getVictim(),SPELL_CLEAVE);
                     Cleave_Timer = 7000;
-                }else Cleave_Timer -= diff;
+                } else Cleave_Timer -= diff;
 
                 //Whirlwind
-                if (Whirlwind_Timer < diff)
+                if (Whirlwind_Timer <= diff)
                 {
                     DoCast(m_creature,SPELL_WHIRLWIND);
                     Whirlwind_Timer = 18000;
-                }else Whirlwind_Timer -= diff;
+                } else Whirlwind_Timer -= diff;
 
                 //If more then 3 targets in melee range mandokir will cast fear
-                if (Fear_Timer < diff)
+                if (Fear_Timer <= diff)
                 {
                     TargetInRange = 0;
 
@@ -223,27 +223,27 @@ struct QUAD_DLL_DECL boss_mandokirAI : public ScriptedAI
                     {
                         Unit* pUnit = Unit::GetUnit(*m_creature, (*i)->getUnitGuid());
                         if (pUnit && m_creature->IsWithinMeleeRange(pUnit))
-                            TargetInRange++;
+                            ++TargetInRange;
                     }
 
                     if (TargetInRange > 3)
                         DoCast(m_creature->getVictim(),SPELL_FEAR);
 
                     Fear_Timer = 4000;
-                }else Fear_Timer -=diff;
+                } else Fear_Timer -=diff;
 
                 //Mortal Strike if target below 50% hp
                 if (m_creature->getVictim() && m_creature->getVictim()->GetHealth() < m_creature->getVictim()->GetMaxHealth()*0.5)
                 {
-                    if (MortalStrike_Timer < diff)
+                    if (MortalStrike_Timer <= diff)
                     {
                         DoCast(m_creature->getVictim(),SPELL_MORTAL_STRIKE);
                         MortalStrike_Timer = 15000;
-                    }else MortalStrike_Timer -= diff;
+                    } else MortalStrike_Timer -= diff;
                 }
             }
             //Checking if Ohgan is dead. If yes Mandokir will enrage.
-            if (Check_Timer < diff)
+            if (Check_Timer <= diff)
             {
                 if (m_pInstance)
                 {
@@ -258,7 +258,7 @@ struct QUAD_DLL_DECL boss_mandokirAI : public ScriptedAI
                 }
 
                 Check_Timer = 1000;
-            }else Check_Timer -= diff;
+            } else Check_Timer -= diff;
 
             DoMeleeAttackIfReady();
         }
@@ -296,11 +296,11 @@ struct QUAD_DLL_DECL mob_ohganAI : public ScriptedAI
             return;
 
         //SunderArmor_Timer
-        if (SunderArmor_Timer < diff)
+        if (SunderArmor_Timer <= diff)
         {
             DoCast(m_creature->getVictim(), SPELL_SUNDERARMOR);
             SunderArmor_Timer = 10000 + rand()%5000;
-        }else SunderArmor_Timer -= diff;
+        } else SunderArmor_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

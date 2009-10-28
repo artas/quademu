@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -193,7 +205,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
             return;
 
         // Change stance
-        if (m_uiChangeStance_Timer < uiDiff)
+        if (m_uiChangeStance_Timer <= uiDiff)
         {
             //wait for current spell to finish before change stance
             if (m_creature->IsNonMeleeSpellCasted(false))
@@ -240,7 +252,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
         {
             case STANCE_DEFENSIVE:
             {
-                if (m_uiReflection_Timer < uiDiff)
+                if (m_uiReflection_Timer <= uiDiff)
                 {
                     DoCast(m_creature, SPELL_SPELL_REFLECTION);
                     m_uiReflection_Timer = 8000 + rand()%1000;
@@ -248,7 +260,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiReflection_Timer -= uiDiff;
 
-                if (m_uiKnockAway_Timer < uiDiff)
+                if (m_uiKnockAway_Timer <= uiDiff)
                 {
                     DoCast(m_creature, SPELL_KNOCK_AWAY);
                     m_uiKnockAway_Timer = 20000 + rand()%1000;
@@ -256,7 +268,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiKnockAway_Timer -= uiDiff;
 
-                if (m_uiPummel_Timer < uiDiff)
+                if (m_uiPummel_Timer <= uiDiff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_PUMMEL);
                     m_uiPummel_Timer = 10000 + rand()%1000;
@@ -264,7 +276,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiPummel_Timer -= uiDiff;
 
-                if (m_uiIronform_Timer < uiDiff)
+                if (m_uiIronform_Timer <= uiDiff)
                 {
                     DoCast(m_creature, SPELL_IRONFORM);
                     m_uiIronform_Timer = 25000 + rand()%1000;
@@ -276,7 +288,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
             }
             case STANCE_BERSERKER:
             {
-                if (m_uiIntercept_Timer < uiDiff)
+                if (m_uiIntercept_Timer <= uiDiff)
                 {
                     //not much point is this, better random target and more often?
                     DoCast(m_creature->getVictim(), SPELL_INTERCEPT);
@@ -285,7 +297,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiIntercept_Timer -= uiDiff;
 
-                if (m_uiWhirlwind_Timer < uiDiff)
+                if (m_uiWhirlwind_Timer <= uiDiff)
                 {
                     DoCast(m_creature, SPELL_WHIRLWIND);
                     m_uiWhirlwind_Timer = 10000 + rand()%1000;
@@ -293,7 +305,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiWhirlwind_Timer -= uiDiff;
 
-                if (m_uiCleave_Timer < uiDiff)
+                if (m_uiCleave_Timer <= uiDiff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_CLEAVE);
                     m_uiCleave_Timer = 8000 + rand()%1000;
@@ -305,7 +317,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
             }
             case STANCE_BATTLE:
             {
-                if (m_uiMortalStrike_Timer < uiDiff)
+                if (m_uiMortalStrike_Timer <= uiDiff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_MORTAL_STRIKE);
                     m_uiMortalStrike_Timer = 20000 + rand()%1000;
@@ -313,7 +325,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
                 else
                     m_uiMortalStrike_Timer -= uiDiff;
 
-                if (m_uiSlam_Timer < uiDiff)
+                if (m_uiSlam_Timer <= uiDiff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_SLAM);
                     m_uiSlam_Timer = 15000 + rand()%1000;
@@ -371,7 +383,7 @@ struct QUAD_DLL_DECL mob_stormforged_lieutenantAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (m_uiArcWeld_Timer < uiDiff)
+        if (m_uiArcWeld_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_ARC_WELD);
             m_uiArcWeld_Timer = 20000 + rand()%1000;
@@ -379,7 +391,7 @@ struct QUAD_DLL_DECL mob_stormforged_lieutenantAI : public ScriptedAI
         else
             m_uiArcWeld_Timer -= uiDiff;
 
-        if (m_uiRenewSteel_Timer < uiDiff)
+        if (m_uiRenewSteel_Timer <= uiDiff)
         {
             if (m_pInstance)
             {

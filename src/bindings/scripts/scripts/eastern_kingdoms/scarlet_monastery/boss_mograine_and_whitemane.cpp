@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -175,18 +187,18 @@ struct QUAD_DLL_DECL boss_scarlet_commander_mograineAI : public ScriptedAI
             return;
 
         //m_uiCrusaderStrike_Timer
-        if (m_uiCrusaderStrike_Timer < uiDiff)
+        if (m_uiCrusaderStrike_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(),SPELL_CRUSADERSTRIKE);
             m_uiCrusaderStrike_Timer = 10000;
-        }else m_uiCrusaderStrike_Timer -= uiDiff;
+        } else m_uiCrusaderStrike_Timer -= uiDiff;
 
         //m_uiHammerOfJustice_Timer
-        if (m_uiHammerOfJustice_Timer < uiDiff)
+        if (m_uiHammerOfJustice_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(),SPELL_HAMMEROFJUSTICE);
             m_uiHammerOfJustice_Timer = 60000;
-        }else m_uiHammerOfJustice_Timer -= uiDiff;
+        } else m_uiHammerOfJustice_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -250,7 +262,7 @@ struct QUAD_DLL_DECL boss_high_inquisitor_whitemaneAI : public ScriptedAI
         if (m_bCanResurrect)
         {
             //When casting resuruction make sure to delay so on rez when reinstate battle deepsleep runs out
-            if (m_pInstance && m_uiWait_Timer < uiDiff)
+            if (m_pInstance && m_uiWait_Timer <= uiDiff)
             {
                 if (Unit* Mograine = Unit::GetUnit((*m_creature), m_pInstance->GetData64(DATA_MOGRAINE)))
                 {
@@ -279,7 +291,7 @@ struct QUAD_DLL_DECL boss_high_inquisitor_whitemaneAI : public ScriptedAI
             return;
 
         //If we are <75% hp cast healing spells at self or Mograine
-        if (m_uiHeal_Timer < uiDiff)
+        if (m_uiHeal_Timer <= uiDiff)
         {
             Creature* pTarget = NULL;
 
@@ -300,21 +312,21 @@ struct QUAD_DLL_DECL boss_high_inquisitor_whitemaneAI : public ScriptedAI
                 DoCast(pTarget, SPELL_HEAL);
 
             m_uiHeal_Timer = 13000;
-        }else m_uiHeal_Timer -= uiDiff;
+        } else m_uiHeal_Timer -= uiDiff;
 
         //m_uiPowerWordShield_Timer
-        if (m_uiPowerWordShield_Timer < uiDiff)
+        if (m_uiPowerWordShield_Timer <= uiDiff)
         {
             DoCast(m_creature,SPELL_POWERWORDSHIELD);
             m_uiPowerWordShield_Timer = 15000;
-        }else m_uiPowerWordShield_Timer -= uiDiff;
+        } else m_uiPowerWordShield_Timer -= uiDiff;
 
         //m_uiHolySmite_Timer
-        if (m_uiHolySmite_Timer < uiDiff)
+        if (m_uiHolySmite_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(),SPELL_HOLYSMITE);
             m_uiHolySmite_Timer = 6000;
-        }else m_uiHolySmite_Timer -= uiDiff;
+        } else m_uiHolySmite_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

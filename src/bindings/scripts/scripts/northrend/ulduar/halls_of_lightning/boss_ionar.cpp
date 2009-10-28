@@ -1,5 +1,17 @@
 /* Copyright (C) 2006 - 2009 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 /* ScriptData
@@ -205,7 +217,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
                 return;
             }*/
 
-            if (m_uiSplit_Timer < uiDiff)
+            if (m_uiSplit_Timer <= uiDiff)
             {
                 m_uiSplit_Timer = 2500;
 
@@ -244,7 +256,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        if (m_uiStaticOverload_Timer < uiDiff)
+        if (m_uiStaticOverload_Timer <= uiDiff)
         {
             if (Unit* pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0))
                 DoCast(pTarget, HEROIC(SPELL_STATIC_OVERLOAD_N,SPELL_STATIC_OVERLOAD_H));
@@ -254,7 +266,7 @@ struct QUAD_DLL_DECL boss_ionarAI : public ScriptedAI
         else
             m_uiStaticOverload_Timer -= uiDiff;
 
-        if (m_uiBallLightning_Timer < uiDiff)
+        if (m_uiBallLightning_Timer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), HEROIC(SPELL_BALL_LIGHTNING_N,SPELL_BALL_LIGHTNING_H));
             m_uiBallLightning_Timer = 10000 + rand()%1000;

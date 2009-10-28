@@ -1,11 +1,3 @@
-REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99001, 0, 0, 0, 18, 0, 18, 0, 'Slappy McFry', 'The Teleport Guy', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'teleguy');
-REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99002, 0, 0, 0, 21473, 0, 21473, 0, 'Playmounts', 'mounts', '', 81, 81, 10000, 10000, 10000, 10000, 10029, 35, 35, 1, 1.15, 1, 1, 1200, 1620, 0, 1208, 1, 1600, 1760, 0, 0, 0, 0, 0, 0, 0, 0, 57.728, 79.376, 100, 7, 138936390, 0, 0, 0, 999, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 1500, 1700, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'paymounts');
---- fix Doodad_Nox_portal
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191538, 1, 6699, 'Doodad_Nox_portal_purple_bossroom01', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191539, 1, 6699, 'Doodad_Nox_portal_purple_bossroom17', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990001, 6, 6699, 'Doodad_Nox_portal_purple_bossroom02', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53098, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990002, 6, 6699, 'Doodad_Nox_portal_purple_bossroom03', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53822, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
-
 
 -- 
 -- quadscript_script_texts.sql Contains data for table `script_texts` mainly used in C++ parts.
@@ -2297,7 +2289,6 @@ DELETE FROM `npc_option` WHERE `id`=51;
 INSERT INTO `npc_option` (`id`,`gossip_id`,`npcflag`,`icon`,`action`,`box_money`,`coded`,`option_text`,`box_text`) VALUES
    ('51','0','16','0','18','10000000','0','Purchase a Dual Talent Specialization.','Are you sure you wish to purchase a Dual Talent Specialization?');
 
-
 -- This file contains all waypoints used by escortAI scripts
 /*
 DROP TABLE IF EXISTS script_waypoint;
@@ -3974,22 +3965,6 @@ INSERT INTO `script_waypoint` VALUES
    (23784, 22, 1619.15, -6167.6, 9.39125, 5, 'Apothecary Hanes'),
    (23784, 23, 1634.05, -6153.81, 8.08527, 5, 'Apothecary Hanes');
 
--- New waypoint format as of 5696:
-ALTER IGNORE TABLE `creature_addon`
-    ADD `path_id` int(11) unsigned NOT NULL default '0' AFTER `guid`;
-ALTER IGNORE TABLE `creature_template_addon`
-    ADD `path_id` int(11) unsigned NOT NULL default '0' AFTER `entry`;
-
-ALTER TABLE `waypoint_data` ADD COLUMN `id_old` int(10) unsigned NOT NULL default '0' COMMENT 'Creature GUID' AFTER `wpguid`;
-UPDATE `waypoint_data` SET `id_old`=`id`*0.1;
-
-REPLACE INTO `creature_addon` ( `guid` ) SELECT `id_old` FROM `waypoint_data`;
-
-UPDATE `creature_addon`,`waypoint_data` SET `creature_addon`.`path_id` = `waypoint_data`.`id` WHERE `creature_addon`.`guid`=`waypoint_data`.`id_old`;
-
-ALTER TABLE `waypoint_data` DROP COLUMN `id_old`;   
-
-
 -- Cleanup first
 UPDATE `creature_template` SET `ScriptName`='';
 
@@ -4053,6 +4028,15 @@ UPDATE `creature_template` SET `ScriptName`='guard_exodar' WHERE `entry`=16733;
 UPDATE `creature_template` SET `ScriptName`='guard_shattrath' WHERE `entry`=19687;
 UPDATE `creature_template` SET `ScriptName`='guard_shattrath_aldor' WHERE `entry`=18549;
 UPDATE `creature_template` SET `ScriptName`='guard_shattrath_scryer' WHERE `entry`=18568;
+
+/* INNKEEPER */
+UPDATE `creature_template` SET `ScriptName`='npc_innkeeper' WHERE `entry` IN
+(32418,32411,29926,30308,31433,32413,30005,29963,31115,31557,29971,18649,15397,6806,6778,16542,17553,19046,16739,16553,11116,9501,
+6740,2352,6739,1247,3934,6727,7714,15433,16458,295,5111,7733,7737,6928,6929,6734,8931,1464,6272,7731,17630,6930,6747,12196,6736,
+6738,11103,6741,6746,5688,6735,6737,2388,9356,7736,11106,5814,7744,6790,16618,11118,6791,23995,24208,6807,14731,16256,15174,16826,
+19531,16602,19470,19232,21088,18245,18906,18905,18251,18907,18908,27148,18914,27187,21746,19352,19319,18957,19571,19495,18913,21744,
+23731,21110,23143,23937,25278,25245,26596,24149,24033,25036,24057,27950,27042,22922,27066,27027,27052,26709,24342,26985,27125,26680,
+29532,28687,28686,27174,28791,29583,26375,28038,29904);
 
 /* ITEM */
 UPDATE `item_template` SET `ScriptName`='item_draenei_fishing_net' WHERE `entry`=23654;
@@ -5323,128 +5307,129 @@ UPDATE `creature_template` SET `ScriptName`='EventAI',`modelid1` = 16925,`modeli
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (29998,33753,33752,33751,33750);
 INSERT INTO `creature_ai_scripts` VALUES 
 -- Commander Stoutbeard
-( 2679600, 26796, 4, 0, 100, 4, 0, 0, 0, 0, 28, 0, 47543, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - crystal prison remove'),
-( 2679601, 26796, 4, 0, 100, 4, 0, 0, 0, 0, 11, 31403, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - cast battle shout'),
-( 2679602, 26796, 0, 0, 100, 5, 3000, 3000, 11000, 15000, 11, 60067, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - cast charge'),
-( 2679603, 26796, 0, 0, 100, 5, 6000, 8000, 19500, 25000, 11, 38618, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - cast whirlwind'),
-( 2679604, 26796, 0, 0, 100, 5, 13000, 13000, 45000, 55000, 11, 19134, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - cast Frightening Shout'),
+   (2679600,26796,4,0,100,4,0,0,0,0,28,0,47543,0,0,0,0,0,0,0,0,0,'Commander Stoutbeard - crystal prison remove'),
+   (2679601,26796,4,0,100,4,0,0,0,0,11,31403,0,0,0,0,0,0,0,0,0,0,'Commander Stoutbeard - cast battle shout'),
+   (2679602,26796,0,0,100,5,3000,3000,11000,15000,11,60067,4,0,0,0,0,0,0,0,0,0,'Commander Stoutbeard - cast charge'),
+   (2679603,26796,0,0,100,5,6000,8000,19500,25000,11,38618,0,0,0,0,0,0,0,0,0,0,'Commander Stoutbeard - cast whirlwind'),
+   (2679604,26796,0,0,100,5,13000,13000,45000,55000,11,19134,1,0,0,0,0,0,0,0,0,0,'Commander Stoutbeard - cast Frightening Shout'),
 -- Commander Kolurg
-( 2679800, 26798, 4, 0, 100, 4, 0, 0, 0, 0, 28, 0, 47543, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - crystal prison remove'),
-( 2679801, 26798, 4, 0, 100, 4, 0, 0, 0, 0, 11, 31403, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - cast battle shout'),
-( 2679802, 26798, 0, 0, 100, 5, 3000, 3000, 11000, 15000, 11, 60067, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - cast charge'),
-( 2679803, 26798, 0, 0, 100, 5, 6000, 8000, 19500, 25000, 11, 38618, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - cast whirlwind'),
-( 2679804, 26798, 0, 0, 100, 5, 13000, 13000, 45000, 55000, 11, 19134, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - cast Frightening Shout'),
+   (2679800,26798,4,0,100,4,0,0,0,0,28,0,47543,0,0,0,0,0,0,0,0,0,'Commander Kolurg - crystal prison remove'),
+   (2679801,26798,4,0,100,4,0,0,0,0,11,31403,0,0,0,0,0,0,0,0,0,0,'Commander Kolurg - cast battle shout'),
+   (2679802,26798,0,0,100,5,3000,3000,11000,15000,11,60067,4,0,0,0,0,0,0,0,0,0,'Commander Kolurg - cast charge'),
+   (2679803,26798,0,0,100,5,6000,8000,19500,25000,11,38618,0,0,0,0,0,0,0,0,0,0,'Commander Kolurg - cast whirlwind'),
+   (2679804,26798,0,0,100,5,13000,13000,45000,55000,11,19134,1,0,0,0,0,0,0,0,0,0,'Commander Kolurg - cast Frightening Shout'),
 -- Grand Magus Telestra Clone (Arcane)
-( 2692901, 26929, 0, 0, 100, 7, 6000, 8000, 10000, 12000, 11, 47731, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra arcane - cast pollymorph critter'),
-( 2692902, 26929, 0, 0, 100, 7, 15000, 16000, 15000, 16000, 11, 47736, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra arcane - cast time stop'),
+   (2692901,26929,0,0,100,7,6000,8000,10000,12000,11,47731,4,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra arcane - cast pollymorph critter'),
+   (2692902,26929,0,0,100,7,15000,16000,15000,16000,11,47736,0,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra arcane - cast time stop'),
 -- Grand Magus Telestra Clone (Fire)
-( 2692801, 26928, 0, 0, 100, 3, 3000, 3000, 8000, 9000, 11, 47721, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand magus Telestra fire - cast fire blast N'),
-( 2692802, 26928, 0, 0, 100, 5, 3000, 3000, 8000, 9000, 11, 56939, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand magus Telestra fire - cast fire blast H'),
-( 2692803, 26928, 0, 0, 100, 3, 9000, 9000, 9500, 11500, 11, 47723, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand magus Telestra fire - cast scorge N'),
-( 2692804, 26928, 0, 0, 100, 5, 9000, 9000, 9500, 11500, 11, 56938, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand magus Telestra fire - cast scorge H'),
+   (2692801,26928,0,0,100,3,3000,3000,8000,9000,11,47721,1,0,0,0,0,0,0,0,0,0,'Grand magus Telestra fire - cast fire blast N'),
+   (2692802,26928,0,0,100,5,3000,3000,8000,9000,11,56939,1,0,0,0,0,0,0,0,0,0,'Grand magus Telestra fire - cast fire blast H'),
+   (2692803,26928,0,0,100,3,9000,9000,9500,11500,11,47723,1,0,0,0,0,0,0,0,0,0,'Grand magus Telestra fire - cast scorge N'),
+   (2692804,26928,0,0,100,5,9000,9000,9500,11500,11,56938,1,0,0,0,0,0,0,0,0,0,'Grand magus Telestra fire - cast scorge H'),
 -- Grand Magus Telestra Clone (Frost)
-( 2693001, 26930, 0, 0, 100, 3, 3000, 3000, 8000, 9000, 11, 47729, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra frost - cast ice bard N'),
-( 2693002, 26930, 0, 0, 100, 5, 3000, 3000, 8000, 9000, 11, 56937, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra frost - cast ice bard H'),
-( 2693003, 26930, 0, 0, 100, 3, 9000, 9000, 15000, 16000, 11, 47727, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra frost - cast blizzard N'),
-( 2693004, 26930, 0, 0, 100, 5, 9000, 9000, 15000, 16000, 11, 56936, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Grand Magus Telestra frost - cast blizzard H'),
+   (2693001,26930,0,0,100,3,3000,3000,8000,9000,11,47729,1,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra frost - cast ice bard N'),
+   (2693002,26930,0,0,100,5,3000,3000,8000,9000,11,56937,1,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra frost - cast ice bard H'),
+   (2693003,26930,0,0,100,3,9000,9000,15000,16000,11,47727,1,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra frost - cast blizzard N'),
+   (2693004,26930,0,0,100,5,9000,9000,15000,16000,11,56936,1,0,0,0,0,0,0,0,0,0,'Grand Magus Telestra frost - cast blizzard H'),
 -- Desecration
-( 2999801, 29998, 11, 0, 100, 0, 0, 0, 0, 0, 11, 55741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Desecration'),
-( 2999800, 29998, 1, 0, 100, 0, 1, 1, 0, 0, 11, 55671, 0, 2, 11, 55710, 0, 2, 0, 0, 0, 0, 'Desecration'),
+   (2999801,29998,11,0,100,0,0,0,0,0,11,55741,0,0,0,0,0,0,0,0,0,0,'Desecration'),
+   (2999800,29998,1,0,100,0,1,1,0,0,11,55671,0,2,11,55710,0,2,0,0,0,0,'Desecration'),
 -- Desecration
-( 3375301, 33753, 11, 0, 100, 0, 0, 0, 0, 0, 11, 55741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Desecration'),
-( 3375300, 33753, 1, 0, 100, 0, 1, 1, 0, 0, 11, 63584, 0, 2, 11, 63580, 0, 2, 0, 0, 0, 0, 'Desecration'),
+   (3375301,33753,11,0,100,0,0,0,0,0,11,55741,0,0,0,0,0,0,0,0,0,0,'Desecration'),
+   (3375300,33753,1,0,100,0,1,1,0,0,11,63584,0,2,11,63580,0,2,0,0,0,0,'Desecration'),
 -- Desecration
-( 3375201, 33752, 11, 0, 100, 0, 0, 0, 0, 0, 11, 55741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Desecration'),
-( 3375200, 33752, 1, 0, 100, 0, 1, 1, 0, 0, 11, 63585, 0, 2, 11, 63581, 0, 2, 0, 0, 0, 0, 'Desecration'),
+   (3375201,33752,11,0,100,0,0,0,0,0,11,55741,0,0,0,0,0,0,0,0,0,0,'Desecration'),
+   (3375200,33752,1,0,100,0,1,1,0,0,11,63585,0,2,11,63581,0,2,0,0,0,0,'Desecration'),
 -- Desecration
-( 3375101, 33751, 11, 0, 100, 0, 0, 0, 0, 0, 11, 55741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Desecration'),
-( 3375100, 33751, 1, 0, 100, 0, 1, 1, 0, 0, 11, 63586, 0, 2, 11, 63582, 0, 2, 0, 0, 0, 0, 'Desecration'),
+   (3375101,33751,11,0,100,0,0,0,0,0,11,55741,0,0,0,0,0,0,0,0,0,0,'Desecration'),
+   (3375100,33751,1,0,100,0,1,1,0,0,11,63586,0,2,11,63582,0,2,0,0,0,0,'Desecration'),
 -- Desecration
-( 3375001, 33750, 11, 0, 100, 0, 0, 0, 0, 0, 11, 55741, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Desecration'),
-( 3375000, 33750, 1, 0, 100, 0, 1, 1, 0, 0, 11, 63587, 0, 2, 11, 63583, 0, 2, 0, 0, 0, 0, 'Desecration');
+   (3375001,33750,11,0,100,0,0,0,0,0,11,55741,0,0,0,0,0,0,0,0,0,0,'Desecration'),
+   (3375000,33750,1,0,100,0,1,1,0,0,11,63587,0,2,11,63583,0,2,0,0,0,0,'Desecration');
 /* EOF */
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_skywing' WHERE `entry`=22424;
 
 DELETE FROM areatrigger_scripts WHERE `entry`=4156;
-INSERT INTO areatrigger_scripts VALUES (4156, 'at_naxxramas_frostwyrm_wing');
+INSERT INTO areatrigger_scripts VALUES
+   (4156,'at_naxxramas_frostwyrm_wing');
 
 DELETE FROM areatrigger_scripts WHERE `entry`=3066;
-INSERT INTO areatrigger_scripts VALUES (3066,'at_ravenholdt');
+INSERT INTO areatrigger_scripts VALUES
+   (3066,'at_ravenholdt');
 
 /* Oculus: "Just for the logic, shouldn't be necessary": */
 DELETE FROM `creature_ai_scripts` WHERE `creature_id`=23035 AND `comment` LIKE 'Anzu%Death';
 INSERT INTO `creature_ai_scripts` (`creature_id`,`event_type`,`event_chance`,`event_flags`,`action1_type`,`action1_param1`,`action1_param2`,`comment`) VALUES
-(23035,6,100,6,34,2,3,'Anzu - Set Inst Data on Death');
+   (23035,6,100,6,34,2,3,'Anzu - Set Inst Data on Death');
 
 -- dk final quest
 UPDATE `creature_template` SET `unit_flags`=32768,`AIName`='EventAI' WHERE `entry` IN (29199,29204,29200,29174,29182,29186,29190,29219,29206,29176,29178,29179,29180,29177,29181);
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (29199,29204,29200,29174,29182,29186,29190,29219,29206,29176,29178,29179,29180,29177,29181);
-INSERT INTO `creature_ai_scripts` VALUES ('2919901', '29199', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52374', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Koltira Deathweaver - SPELL_BLOOD_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2919902', '29199', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '49576', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Koltira Deathweaver - SPELL_DEATH_GRIP');
-INSERT INTO `creature_ai_scripts` VALUES ('2919903', '29199', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52372', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Koltira Deathweaver - SPELL_ICY_TOUCH2');
-INSERT INTO `creature_ai_scripts` VALUES ('2919904', '29199', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '50668', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Koltira Deathweaver - SPELL_PLAGUE_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2920401', '29204', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52374', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Orbaz Bloodbane - SPELL_BLOOD_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2920402', '29204', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '49576', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Orbaz Bloodbane - SPELL_DEATH_GRIP');
-INSERT INTO `creature_ai_scripts` VALUES ('2920403', '29204', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52372', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Orbaz Bloodbane - SPELL_ICY_TOUCH2');
-INSERT INTO `creature_ai_scripts` VALUES ('2920404', '29204', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '50668', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Orbaz Bloodbane - SPELL_PLAGUE_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2920001', '29200', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52374', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Thassarian - SPELL_BLOOD_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2920002', '29200', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '49576', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Thassarian - SPELL_DEATH_GRIP');
-INSERT INTO `creature_ai_scripts` VALUES ('2920003', '29200', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '52372', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Thassarian - SPELL_ICY_TOUCH2');
-INSERT INTO `creature_ai_scripts` VALUES ('2920004', '29200', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '50668', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Thassarian - SPELL_PLAGUE_STRIKE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2917401', '29174', '14', '0', '100', '3', '10000', '20', '5000', '10000', '11', '29427', '6', '1', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light - SPELL_HOLY_LIGHT1');
-INSERT INTO `creature_ai_scripts` VALUES ('2917402', '29174', '4', '0', '100', '0', '0', '0', '0', '0', '11', '53625', '1', '5', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light aggro');
-INSERT INTO `creature_ai_scripts` VALUES ('2917403', '29174', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '53625', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light - SPELL_HEROIC_LEAP');
-INSERT INTO `creature_ai_scripts` VALUES ('2917404', '29174', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '53643', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light - SPELL_HOLY_STRIKE');
-INSERT INTO `creature_ai_scripts` VALUES ('2917405', '29174', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '53638', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light - SPELL_HOLY_WRATH');
-INSERT INTO `creature_ai_scripts` VALUES ('2917406', '29174', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '53629', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Defender of the Light - SPELL_UPPERCUT');
-INSERT INTO `creature_ai_scripts` VALUES ('2918201', '29182', '14', '0', '100', '3', '10000', '20', '5000', '10000', '11', '33642', '6', '1', '0', '0', '0', '0', '0', '0', '0', '0', 'Rimblat Earthshatter - SPELL_CHAIN_HEAL');
-INSERT INTO `creature_ai_scripts` VALUES ('2918202', '29182', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53630', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Rimblat Earthshatter - SPELL_THUNDER');
-INSERT INTO `creature_ai_scripts` VALUES ('2918601', '29186', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53633', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Rampaging Abomination - SPELL_CLEAVE1');
-INSERT INTO `creature_ai_scripts` VALUES ('2918602', '29186', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '50335', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Rampaging Abomination - SPELL_SCOURGE_HOOK');
-INSERT INTO `creature_ai_scripts` VALUES ('2919001', '29190', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53634', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Flesh Behemoth - SPELL_SCOURGE_HOOK');
-INSERT INTO `creature_ai_scripts` VALUES ('2919002', '29190', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '36706', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Flesh Behemoth - SPELL_THUNDERCLAP');
-INSERT INTO `creature_ai_scripts` VALUES ('2919003', '29190', '0', '0', '100', '3', '5000', '10000', '5000', '10000', '11', '53627', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Flesh Behemoth - SPELL_THUNDERCLAP');
-INSERT INTO `creature_ai_scripts` VALUES ('2921901', '29219', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53632', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Volatile Ghoul - SPELL_GHOULPLOSION');
-INSERT INTO `creature_ai_scripts` VALUES ('2920601', '29206', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53631', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Warrior of the Frozen Wastes - SPELL_CLEAVE');
-INSERT INTO `creature_ai_scripts` VALUES ('2917601', '29176', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53631', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Korfax - SPELL_CLEAVE');
-INSERT INTO `creature_ai_scripts` VALUES ('2917602', '29176', '0', '0', '100', '3', '10000', '20000', '10000', '10000', '11', '53625', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Korfax - SPELL_CLEAVE');
-INSERT INTO `creature_ai_scripts` VALUES ('2917701', '29177', '14', '0', '100', '3', '10000', '20', '5000', '10000', '11', '37979', '6', '1', '0', '0', '0', '0', '0', '0', '0', '0', 'Commander Eligor Dawnbringer - SPELL_HOLY_LIGHT2');
-INSERT INTO `creature_ai_scripts` VALUES ('2918101', '29181', '14', '0', '100', '3', '10000', '20', '5000', '10000', '11', '20664', '6', '1', '0', '0', '0', '0', '0', '0', '0', '0', 'Rayne - SPELL_REJUVENATION');
-INSERT INTO `creature_ai_scripts` VALUES ('2918102', '29181', '14', '0', '100', '3', '10000', '20', '5000', '10000', '11', '25817', '6', '1', '0', '0', '0', '0', '0', '0', '0', '0', 'Rayne - SPELL_TRANQUILITY');
-INSERT INTO `creature_ai_scripts` VALUES ('2918103', '29181', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '20678', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Rayne - SPELL_STARFALL');
-INSERT INTO `creature_ai_scripts` VALUES ('2918104', '29181', '0', '0', '100', '3', '10000', '20000', '10000', '20000', '11', '21807', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Rayne - SPELL_WRATH');
+INSERT INTO `creature_ai_scripts` VALUES
+   (2919901,29199,0,0,100,3,10000,20000,10000,20000,11,52374,1,0,0,0,0,0,0,0,0,0,'Koltira Deathweaver - SPELL_BLOOD_STRIKE1'),
+   (2919902,29199,0,0,100,3,10000,20000,10000,20000,11,49576,1,0,0,0,0,0,0,0,0,0,'Koltira Deathweaver - SPELL_DEATH_GRIP'),
+   (2919903,29199,0,0,100,3,10000,20000,10000,20000,11,52372,1,0,0,0,0,0,0,0,0,0,'Koltira Deathweaver - SPELL_ICY_TOUCH2'),
+   (2919904,29199,0,0,100,3,10000,20000,10000,20000,11,50668,1,0,0,0,0,0,0,0,0,0,'Koltira Deathweaver - SPELL_PLAGUE_STRIKE1'),
+   (2920401,29204,0,0,100,3,10000,20000,10000,20000,11,52374,1,0,0,0,0,0,0,0,0,0,'Orbaz Bloodbane - SPELL_BLOOD_STRIKE1'),
+   (2920402,29204,0,0,100,3,10000,20000,10000,20000,11,49576,1,0,0,0,0,0,0,0,0,0,'Orbaz Bloodbane - SPELL_DEATH_GRIP'),
+   (2920403,29204,0,0,100,3,10000,20000,10000,20000,11,52372,1,0,0,0,0,0,0,0,0,0,'Orbaz Bloodbane - SPELL_ICY_TOUCH2'),
+   (2920404,29204,0,0,100,3,10000,20000,10000,20000,11,50668,1,0,0,0,0,0,0,0,0,0,'Orbaz Bloodbane - SPELL_PLAGUE_STRIKE1'),
+   (2920001,29200,0,0,100,3,10000,20000,10000,20000,11,52374,1,0,0,0,0,0,0,0,0,0,'Thassarian - SPELL_BLOOD_STRIKE1'),
+   (2920002,29200,0,0,100,3,10000,20000,10000,20000,11,49576,1,0,0,0,0,0,0,0,0,0,'Thassarian - SPELL_DEATH_GRIP'),
+   (2920003,29200,0,0,100,3,10000,20000,10000,20000,11,52372,1,0,0,0,0,0,0,0,0,0,'Thassarian - SPELL_ICY_TOUCH2'),
+   (2920004,29200,0,0,100,3,10000,20000,10000,20000,11,50668,1,0,0,0,0,0,0,0,0,0,'Thassarian - SPELL_PLAGUE_STRIKE1'),
+   (2917401,29174,14,0,100,3,10000,20,5000,10000,11,29427,6,1,0,0,0,0,0,0,0,0,'Defender of the Light - SPELL_HOLY_LIGHT1'),
+   (2917402,29174,4,0,100,0,0,0,0,0,11,53625,1,5,0,0,0,0,0,0,0,0,'Defender of the Light aggro'),
+   (2917403,29174,0,0,100,3,10000,20000,10000,20000,11,53625,5,0,0,0,0,0,0,0,0,0,'Defender of the Light - SPELL_HEROIC_LEAP'),
+   (2917404,29174,0,0,100,3,10000,20000,10000,20000,11,53643,1,0,0,0,0,0,0,0,0,0,'Defender of the Light - SPELL_HOLY_STRIKE'),
+   (2917405,29174,0,0,100,3,10000,20000,10000,20000,11,53638,1,0,0,0,0,0,0,0,0,0,'Defender of the Light - SPELL_HOLY_WRATH'),
+   (2917406,29174,0,0,100,3,10000,20000,10000,20000,11,53629,1,0,0,0,0,0,0,0,0,0,'Defender of the Light - SPELL_UPPERCUT'),
+   (2918201,29182,14,0,100,3,10000,20,5000,10000,11,33642,6,1,0,0,0,0,0,0,0,0,'Rimblat Earthshatter - SPELL_CHAIN_HEAL'),
+   (2918202,29182,0,0,100,3,10000,20000,10000,10000,11,53630,1,0,0,0,0,0,0,0,0,0,'Rimblat Earthshatter - SPELL_THUNDER'),
+   (2918601,29186,0,0,100,3,10000,20000,10000,10000,11,53633,1,0,0,0,0,0,0,0,0,0,'Rampaging Abomination - SPELL_CLEAVE1'),
+   (2918602,29186,0,0,100,3,10000,20000,10000,10000,11,50335,5,0,0,0,0,0,0,0,0,0,'Rampaging Abomination - SPELL_SCOURGE_HOOK'),
+   (2919001,29190,0,0,100,3,10000,20000,10000,10000,11,53634,1,0,0,0,0,0,0,0,0,0,'Flesh Behemoth - SPELL_SCOURGE_HOOK'),
+   (2919002,29190,0,0,100,3,10000,20000,10000,10000,11,36706,1,0,0,0,0,0,0,0,0,0,'Flesh Behemoth - SPELL_THUNDERCLAP'),
+   (2919003,29190,0,0,100,3,5000,10000,5000,10000,11,53627,0,0,0,0,0,0,0,0,0,0,'Flesh Behemoth - SPELL_THUNDERCLAP'),
+   (2921901,29219,0,0,100,3,10000,20000,10000,10000,11,53632,1,0,0,0,0,0,0,0,0,0,'Volatile Ghoul - SPELL_GHOULPLOSION'),
+   (2920601,29206,0,0,100,3,10000,20000,10000,10000,11,53631,1,0,0,0,0,0,0,0,0,0,'Warrior of the Frozen Wastes - SPELL_CLEAVE'),
+   (2917601,29176,0,0,100,3,10000,20000,10000,10000,11,53631,1,0,0,0,0,0,0,0,0,0,'Korfax - SPELL_CLEAVE'),
+   (2917602,29176,0,0,100,3,10000,20000,10000,10000,11,53625,1,0,0,0,0,0,0,0,0,0,'Korfax - SPELL_CLEAVE'),
+   (2917701,29177,14,0,100,3,10000,20,5000,10000,11,37979,6,1,0,0,0,0,0,0,0,0,'Commander Eligor Dawnbringer - SPELL_HOLY_LIGHT2'),
+   (2918101,29181,14,0,100,3,10000,20,5000,10000,11,20664,6,1,0,0,0,0,0,0,0,0,'Rayne - SPELL_REJUVENATION'),
+   (2918102,29181,14,0,100,3,10000,20,5000,10000,11,25817,6,1,0,0,0,0,0,0,0,0,'Rayne - SPELL_TRANQUILITY'),
+   (2918103,29181,0,0,100,3,10000,20000,10000,20000,11,20678,1,0,0,0,0,0,0,0,0,0,'Rayne - SPELL_STARFALL'),
+   (2918104,29181,0,0,100,3,10000,20000,10000,20000,11,21807,1,0,0,0,0,0,0,0,0,0,'Rayne - SPELL_WRATH');
 
 -- spell 30298 tries to start event script 10675 but it doesn't exist. create it & make it spawn Geezle
 DELETE FROM `event_scripts` WHERE `id`=10675;
-INSERT INTO `event_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `x`, `y`, `z`, `o`) values 
-(10675, 0, 10, 17318, 90000, '-5139.79','-11248.27','5.23', '6.27609');
+INSERT INTO `event_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `x`, `y`, `z`, `o`) VALUES
+   (10675,0,10,17318,90000,-5139.79,-11248.27,5.23,6.27609);
 
 -- geezle should not spawn by default
 UPDATE `creature` SET `spawnMask`=0 WHERE `id`=17318;
 
 -- Quest - The Warsong Farms
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (25669,25671,25672);
-INSERT INTO `creature_ai_scripts`
-(`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`)
-VALUES
-(2566901, 25669, 10, 0, 100, 3, 1, 20, 2000, 2000, 33, 25669, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scout Warsong Granary - Killed Moster at LOS'), (2567101, 25671, 10, 0, 100, 3, 1, 20, 2000, 2000, 33, 25671, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scout Torp''s Farm - Killed Moster at LOS'), (2567201, 25672, 10, 0, 100, 3, 1, 20, 2000, 2000, 33, 25672, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scout Warsong Slaughterhouse - Killed Moster at LOS');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+   (2566901,25669,10,0,100,3,1,20,2000,2000,33,25669,6,0,0,0,0,0,0,0,0,0,'Scout Warsong Granary - Killed Moster at LOS'),
+   (2567101,25671,10,0,100,3,1,20,2000,2000,33,25671,6,0,0,0,0,0,0,0,0,0,'Scout Torp''s Farm - Killed Moster at LOS'),
+   (2567201,25672,10,0,100,3,1,20,2000,2000,33,25672,6,0,0,0,0,0,0,0,0,0,'Scout Warsong Slaughterhouse - Killed Moster at LOS');
 
 -- WOTLK Naxxramas Worshipper update
 DELETE FROM `creature_ai_scripts` WHERE `id`=1650612 AND `creature_id`=16506;
 INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
-(1650612, 16506, 6, 0, 100, 0, 0, 0, 0, 0, 11, 28732, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Naxxramas Worshipper - Widow Embrace');
+   (1650612,16506,6,0,100,0,0,0,0,0,11,28732,0,0,0,0,0,0,0,0,0,0,'Naxxramas Worshipper - Widow Embrace');
 
 -- Quest - Kroshius' Infernal Core (level 50 warlock specific)
+DELETE FROM `creature_ai_scripts` WHERE `creature_id`=14467;
 UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry`=14467;
-INSERT INTO `creature_ai_scripts`
-   (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`)
-VALUES 
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES 
    (1446701, 14467, 11, 0, 100, 0, 0, 0, 0, 0, 1, -980, 0, 0, 19, 768, 0, 0, 2, 16, 0, 0, 'Kroshius Spawn Say');
-INSERT INTO `creature_ai_texts`
-   (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`)
-VALUES 
-   (-980, 'Kroshius live? Kroshius crush!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, NULL);
+DELETE FROM `creature_ai_texts` WHERE `entry`=-980;
+INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
+   (-980,'Kroshius live? Kroshius crush!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,NULL);
 
 -- --------
 -- LINKED
@@ -7699,7 +7684,6 @@ update creature_template set scriptname = "boss_flame_leviathan_safety_container
 -- --------
 -- WINTERGRASP
 -- --------
-UPDATE `creature_template` SET `spell2`='50990' WHERE `entry`=27881;
 DELETE FROM `game_event` WHERE `entry` IN (50,51);
 INSERT INTO `game_event` (`entry`, `description`, `world_event`) VALUES
 (50, 'Wintergrasp Alliance Defence', 5),
@@ -8565,3 +8549,11 @@ INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_
 (10054, 'Give me the flag, I''ll take it to the central beacon for the glory of the Alliance!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (10055, 'Give me the flag, I''ll take it to the central beacon for the glory of the Horde!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (11000, '|cffffff00[|c00077766Autobroadcast|cffffff00]: |cFFF222FF%s|r', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+UPDATE `creature_template` SET `spell2`='50990' WHERE `entry`=27881;
+REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99001, 0, 0, 0, 18, 0, 18, 0, 'Slappy McFry', 'The Teleport Guy', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'teleguy');
+REPLACE INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99002, 0, 0, 0, 21473, 0, 21473, 0, 'Playmounts', 'mounts', '', 81, 81, 10000, 10000, 10000, 10000, 10029, 35, 35, 1, 1.15, 1, 1, 1200, 1620, 0, 1208, 1, 1600, 1760, 0, 0, 0, 0, 0, 0, 0, 0, 57.728, 79.376, 100, 7, 138936390, 0, 0, 0, 999, 999, 999, 999, 999, 999, 0, 0, 0, 0, 0, 0, 1500, 1700, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'paymounts');
+--- fix Doodad_Nox_portal
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191538, 1, 6699, 'Doodad_Nox_portal_purple_bossroom01', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (191539, 1, 6699, 'Doodad_Nox_portal_purple_bossroom17', '', '', '', 114, 6553632, 0.703538, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990001, 6, 6699, 'Doodad_Nox_portal_purple_bossroom02', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53098, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+REPLACE INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `IconName`, `castBarCaption`, `unk1`, `faction`, `flags`, `size`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (990002, 6, 6699, 'Doodad_Nox_portal_purple_bossroom03', '', '', '', 0, 32, 1, 0, 0, 0, 0, 0, 0, 2, 53822, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
