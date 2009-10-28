@@ -299,7 +299,7 @@ bool OPvPWintergrasp::SetupOutdoorPvP()
                 workshop->m_spiGuid = spiritGuid;
             }
             else
-                workshop->m_spiGuid = 0;			
+                workshop->m_spiGuid = 0;
             workshop->m_workshopGuid = guid;
             AddCapturePoint(workshop);
             m_buildingStates[guid]->type = BUILDING_WORKSHOP;
@@ -811,7 +811,7 @@ bool OPvPWintergrasp::UpdateCreatureInfo(Creature *creature) const
             return false;
         case CREATURE_GUARD:
         case CREATURE_SPECIAL:
-        {		
+        {
             TeamPairMap::const_iterator itr = m_creEntryPair.find(creature->GetCreatureData()->id);
             if (itr != m_creEntryPair.end())
             {
@@ -819,9 +819,9 @@ bool OPvPWintergrasp::UpdateCreatureInfo(Creature *creature) const
                 RespawnCreatureIfNeeded(creature, entry);
             }
             return false;
-        }			
+        }
         default:
-            return false;			
+            return false;
     }
 }
 
@@ -901,7 +901,7 @@ void OPvPWintergrasp::HandlePlayerResurrects(Player * plr, uint32 zone)
             // Tenacity
             if (plr->GetTeamId() == TEAM_ALLIANCE && m_tenacityStack > 0 ||
                 plr->GetTeamId() == TEAM_HORDE && m_tenacityStack < 0)
-             {
+            {
                 if (plr->HasAura(SPELL_TENACITY))
                     CastTenacity(plr, 0);
                 int32 newStack = m_tenacityStack < 0 ? -m_tenacityStack : m_tenacityStack;
@@ -916,18 +916,20 @@ void OPvPWintergrasp::HandlePlayerResurrects(Player * plr, uint32 zone)
                 if (m_towerDestroyedCount[getAttackerTeam()] < 3)
                     plr->SetAuraStack(SPELL_TOWER_CONTROL, plr, 3 - m_towerDestroyedCount[getAttackerTeam()]);
             }
-            else // Spell Rullers (Defender only)
+            else
             {
-                if (plr->GetTeamId() == getDefenderTeam())
-                    plr->CastSpell(plr, SPELL_RULLERS_OF_WG, true);
+                if (m_towerDestroyedCount[getAttackerTeam()])
+                    plr->SetAuraStack(SPELL_TOWER_CONTROL, plr, m_towerDestroyedCount[getAttackerTeam()]);
             }
         }
     }
-    else 
+    /* Essence is not removed in ghost form so no need to reapply
+    else // Essence of Wintergrasp
     {
-                if (m_towerDestroyedCount[getAttackerTeam()])
-                    plr->SetAuraStack(SPELL_TOWER_CONTROL, plr, m_towerDestroyedCount[getAttackerTeam()]);
+        if (plr->GetTeamId() == getDefenderTeam())
+            plr->CastSpell(plr, SPELL_ESSENCE_OF_WG, true);
     }
+    */
     OutdoorPvP::HandlePlayerResurrects(plr, zone);
 }
 
@@ -968,8 +970,8 @@ void OPvPWintergrasp::PromotePlayer(Player *killer) const
         else
             killer->CastSpell(killer, SPELL_CORPORAL, true);
     }
-    else if (!killer->HasAura(SPELL_LIEUTENANT))
-        killer->CastSpell(killer, SPELL_RECRUIT, true);
+    else if (killer->HasAura(SPELL_LIEUTENANT))
+        killer->CastSpell(killer, SPELL_LIEUTENANT, true);
 }
 
 void OPvPWintergrasp::HandleKill(Player *killer, Unit *victim)
@@ -1378,7 +1380,7 @@ void OPvPWintergrasp::EndBattle()
             REMOVE_WARTIME_AURAS(*itr);
             REMOVE_TENACITY_AURA(*itr);
             (*itr)->CombatStop(true);
-            (*itr)->getHostilRefManager().deleteReferences();			
+            (*itr)->getHostilRefManager().deleteReferences();
         }
     }
 
