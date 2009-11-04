@@ -3349,6 +3349,8 @@ void AuraEffect::HandleAuraFeatherFall(bool apply, bool Real, bool /*changeAmoun
     if(apply)
     {
         Unit* caster = GetCaster();
+        if (!caster || !m_target)
+            return;
 
         if (caster->GetGUID() == m_target->GetGUID())
         {
