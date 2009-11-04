@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #include "Common.h"
 #include "Language.h"
@@ -301,13 +319,14 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & /*recv_data*/)
         }
     }
 
-    WorldPacket data(MSG_CORPSE_QUERY, 1+(5*4));
+    WorldPacket data(MSG_CORPSE_QUERY, 1+(6*4));
     data << uint8(1);                                       // corpse found
     data << int32(mapid);
     data << float(x);
     data << float(y);
     data << float(z);
     data << int32(corpsemapid);
+    data << uint32(0);
     SendPacket(&data);
 }
 

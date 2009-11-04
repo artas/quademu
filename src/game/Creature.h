@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifndef QUADCORE_CREATURE_H
 #define QUADCORE_CREATURE_H
@@ -603,6 +621,13 @@ class QUAD_DLL_SPEC Creature : public Unit
         void SetLootRecipient (Unit* unit);
         void AllLootRemovedFromCorpse();
 
+        uint16 GetLootMode() { return m_LootMode; }
+        bool HasLootMode(uint16 lootMode) { return m_LootMode & lootMode; }
+        void SetLootMode(uint16 lootMode) { m_LootMode = lootMode; }
+        void AddLootMode(uint16 lootMode) { m_LootMode |= lootMode; }
+        void RemoveLootMode(uint16 lootMode) { m_LootMode &= ~lootMode; }
+        void ResetLootMode() { m_LootMode = DEFAULT_LOOT_MODE; }
+
         SpellEntry const *reachWithSpellAttack(Unit *pVictim);
         SpellEntry const *reachWithSpellCure(Unit *pVictim);
 
@@ -760,6 +785,7 @@ class QUAD_DLL_SPEC Creature : public Unit
         CreatureInfo const* m_creatureInfo;                 // in heroic mode can different from ObjMgr::GetCreatureTemplate(GetEntry())
         CreatureData const* m_creatureData;
 
+        uint16 m_LootMode;                                  // bitmask, default DEFAULT_LOOT_MODE, determines what loot will be lootable
     private:
         //WaypointMovementGenerator vars
         uint32 m_waypointID;

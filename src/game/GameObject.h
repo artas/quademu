@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifndef QUADCORE_GAMEOBJECT_H
 #define QUADCORE_GAMEOBJECT_H
@@ -654,6 +672,13 @@ class QUAD_DLL_SPEC GameObject : public WorldObject
         LootState getLootState() const { return m_lootState; }
         void SetLootState(LootState s) { m_lootState = s; }
 
+        uint16 GetLootMode() { return m_LootMode; }
+        bool HasLootMode(uint16 lootMode) { return m_LootMode & lootMode; }
+        void SetLootMode(uint16 lootMode) { m_LootMode = lootMode; }
+        void AddLootMode(uint16 lootMode) { m_LootMode |= lootMode; }
+        void RemoveLootMode(uint16 lootMode) { m_LootMode &= ~lootMode; }
+        void ResetLootMode() { m_LootMode = DEFAULT_LOOT_MODE; }
+
         void AddToSkillupList(uint32 PlayerGuidLow) { m_SkillupList.push_back(PlayerGuidLow); }
         bool IsInSkillupList(uint32 PlayerGuidLow) const
         {
@@ -711,12 +736,17 @@ class QUAD_DLL_SPEC GameObject : public WorldObject
         std::set<uint32> m_unique_users;
         uint32 m_usetimes;
 
+        typedef std::map<uint32,uint64> ChairSlotAndUser;
+        ChairSlotAndUser ChairListSlots;
+
         uint32 m_DBTableGuid;                               ///< For new or temporary gameobjects is 0 for saved it is lowguid
         GameObjectInfo const* m_goInfo;
         GameObjectData const* m_goData;
         GameObjectValue * const m_goValue;
 
         uint64 m_rotation;
+
+        uint16 m_LootMode;                                  // bitmask, default DEFAULT_LOOT_MODE, determines what loot will be lootable
     private:
         void SwitchDoorOrButton(bool activate, bool alternative = false);
 
