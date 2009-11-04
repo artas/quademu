@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
@@ -3029,7 +3047,7 @@ void AuraEffect::HandleAuraDummy(bool apply, bool Real, bool changeAmount)
                         case 57724: m_target->ApplySpellImmune(GetId(), IMMUNITY_ID, 2825, apply);  break; // Bloodlust
                     }
                     return;
-                }				
+                }
                 case 57819: // Argent Champion
                 case 57820: // Ebon Champion
                 case 57821: // Champion of the Kirin Tor
@@ -3329,7 +3347,28 @@ void AuraEffect::HandleAuraFeatherFall(bool apply, bool Real, bool /*changeAmoun
 
     WorldPacket data;
     if(apply)
+    {
+        Unit* caster = GetCaster();
+
+        if (caster->GetGUID() == m_target->GetGUID())
+        {
+            m_target->RemoveAurasByType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED);
+            m_target->RemoveAurasByType(SPELL_AURA_FLY);
+        }
+
+        if (GetId() == 61243) // No fly zone - Parachute
+        {
+            float x, y, z;
+            caster->GetPosition(x, y, z);
+            float ground_Z = caster->GetMap()->GetVmapHeight(x, y, z, true);
+            if (fabs(ground_Z - z) < 0.1f)
+            {
+                m_target->RemoveAura(GetId());
+                return;
+            }
+        }
         data.Initialize(SMSG_MOVE_FEATHER_FALL, 8+4);
+    }
     else
         data.Initialize(SMSG_MOVE_NORMAL_FALL, 8+4);
     data.append(m_target->GetPackGUID());
@@ -5239,10 +5278,8 @@ void AuraEffect::HandleModCombatSpeedPct(bool apply, bool Real, bool /*changeAmo
 
 void AuraEffect::HandleModAttackSpeed(bool apply, bool Real, bool /*changeAmount*/)
 {
-    if(!m_target->isAlive() )
-        return;
-
     m_target->ApplyAttackTimePercentMod(BASE_ATTACK,m_amount,apply);
+    m_target->UpdateDamagePhysical(BASE_ATTACK);
 }
 
 void AuraEffect::HandleHaste(bool apply, bool Real, bool /*changeAmount*/)
@@ -6641,12 +6678,12 @@ void AuraEffect::PeriodicDummyTick()
             {
                 // Feeding Frenzy Rank 1
                 case 53511:
-                    if ( m_target->GetHealth() * 100 < m_target->GetMaxHealth() * 35 )
+                    if ( m_target->getVictim() && m_target->getVictim()->GetHealth() * 100 < m_target->getVictim()->GetMaxHealth() * 35 )
                         m_target->CastSpell(m_target, 60096, true, 0, this);
                     return;
                 // Feeding Frenzy Rank 2
                 case 53512:
-                    if ( m_target->GetHealth() * 100 < m_target->GetMaxHealth() * 35 )
+                    if ( m_target->getVictim() && m_target->getVictim()->GetHealth() * 100 < m_target->getVictim()->GetMaxHealth() * 35 )
                         m_target->CastSpell(m_target, 60097, true, 0, this);
                     return;
                 default:

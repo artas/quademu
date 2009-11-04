@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #include "Unit.h"
 #include "Player.h"
@@ -425,19 +443,20 @@ void Player::CalculateMinMaxDamage(WeaponAttackType attType, bool normalized, bo
 
     if (IsInFeralForm())                                    //check if player is druid and in cat or bear forms
     {
-        uint32 lvl = getLevel();
-        if ( lvl > 60 ) lvl = 60;
+        uint8 lvl = getLevel();
+        if (lvl > 60)
+            lvl = 60;
 
-        weapon_mindamage = lvl*0.85*att_speed;
-        weapon_maxdamage = lvl*1.25*att_speed;
+        weapon_mindamage = lvl*0.85f*att_speed;
+        weapon_maxdamage = lvl*1.25f*att_speed;
     }
     else if(!CanUseAttackType(attType))      //check if player not in form but still can't use (disarm case)
     {
         //cannot use ranged/off attack, set values to 0
         if (attType != BASE_ATTACK)
         {
-            min_damage=0;
-            max_damage=0;
+            min_damage = 0;
+            max_damage = 0;
             return;
         }
         weapon_mindamage = BASE_MINDAMAGE;
@@ -460,7 +479,7 @@ void Player::UpdateDamagePhysical(WeaponAttackType attType)
 
     CalculateMinMaxDamage(attType, false, true, mindamage, maxdamage);
 
-    switch(attType)
+    switch (attType)
     {
         case BASE_ATTACK:
         default:
@@ -1152,6 +1171,21 @@ void Guardian::UpdateDamagePhysical(WeaponAttackType attType)
                 // 75% of normal damage
                 mindamage = mindamage * 0.75;
                 maxdamage = maxdamage * 0.75;
+                break;
+        }
+    }
+
+    Unit::AuraEffectList const& mDummy = GetAurasByType(SPELL_AURA_MOD_ATTACKSPEED);
+    for(Unit::AuraEffectList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
+    {
+        switch ((*itr)->GetSpellProto()->Id)
+        {
+            case 61682:
+            case 61683:
+                mindamage = mindamage * (100.0f-float((*itr)->GetAmount()))/100.0f;
+                maxdamage = maxdamage * (100.0f-float((*itr)->GetAmount()))/100.0f;
+                break;
+            default:
                 break;
         }
     }

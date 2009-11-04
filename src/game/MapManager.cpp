@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifdef MULTI_THREAD_MAP
 #include <omp.h>
@@ -234,7 +252,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player)
                     }
                     
                     //Encounters in progress
-                    if (((InstanceMap*)boundedMap)->GetInstanceData() && ((InstanceMap*)boundedMap)->GetInstanceData()->IsEncounterInProgress())
+                    if (entry->map_type == MAP_RAID && ((InstanceMap*)boundedMap)->GetInstanceData() && ((InstanceMap*)boundedMap)->GetInstanceData()->IsEncounterInProgress())
                     {
                         sLog.outDebug("MAP: Player '%s' can't enter instance '%s' while an encounter is in progress.", player->GetName(), mapName);
                         player->SendTransferAborted(mapid, TRANSFER_ABORT_ZONE_IN_COMBAT);
@@ -245,7 +263,7 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player)
                     int8 maxPlayers = (player->GetDifficulty() == DIFFICULTY_HEROIC) ? instance->maxPlayersHeroic : instance->maxPlayers;
                     if (maxPlayers != -1) //-1: unlimited access
                     {
-                        if (boundedMap->GetPlayers().getSize() >= maxPlayers)
+                        if (boundedMap->GetPlayersCountExceptGMs() >= maxPlayers)
                         {
                             sLog.outDebug("MAP: Player '%s' can't enter instance '%s' because it's full.", player->GetName(), mapName);
                             player->SendTransferAborted(mapid, TRANSFER_ABORT_MAX_PLAYERS);
@@ -277,37 +295,36 @@ void
 MapManager::Update(uint32 diff)
 {
     i_timer.Update(diff);
-    if( !i_timer.Passed() )
+    if (!i_timer.Passed())
         return;
 
+    MapMapType::iterator iter = i_maps.begin();
 #ifdef MULTI_THREAD_MAP
-    uint32 i=0;
-    MapMapType::iterator iter;
     std::vector<Map*> update_queue(i_maps.size());
     int omp_set_num_threads(sWorld.getConfig(CONFIG_NUMTHREADS));
-    for (iter = i_maps.begin(), i=0; iter != i_maps.end(); ++iter, i++)
-        update_queue[i]=iter->second;
+    for (uint32 i = 0; iter != i_maps.end(); ++iter, ++i)
+        update_queue[i] = iter->second;
 /*
     gomp in gcc <4.4 version cannot parallelise loops using random access iterators
     so until gcc 4.4 isnt standard, we need the update_queue workaround
 */
 #pragma omp parallel for schedule(dynamic) private(i) shared(update_queue)
-    for (int32 i = 0; i < i_maps.size(); ++i)
+    for (uint32 i = 0; i < i_maps.size(); ++i)
     {
         checkAndCorrectGridStatesArray();                   // debugging code, should be deleted some day
         update_queue[i]->Update(i_timer.GetCurrent());
         sWorld.RecordTimeDiff("UpdateMap %u", update_queue[i]->GetId());
-    //  sLog.outError("This is thread %d out of %d threads,updating map %u",omp_get_thread_num(),omp_get_num_threads(),iter->second->GetId());
+        //sLog.outError("This is thread %d out of %d threads,updating map %u",omp_get_thread_num(),omp_get_num_threads(),iter->second->GetId());
     }
 #else
-    for (MapMapType::iterator iter=i_maps.begin(); iter != i_maps.end(); ++iter)
+    for (; iter != i_maps.end(); ++iter)
     {
         iter->second->Update(i_timer.GetCurrent());
         sWorld.RecordTimeDiff("UpdateMap %u", iter->second->GetId());
     }
 #endif
 
-    for (MapMapType::iterator iter = i_maps.begin(); iter != i_maps.end(); ++iter)
+    for (iter = i_maps.begin(); iter != i_maps.end(); ++iter)
         iter->second->DelayedUpdate(i_timer.GetCurrent());
 
     ObjectAccessor::Instance().Update(i_timer.GetCurrent());
@@ -322,17 +339,15 @@ MapManager::Update(uint32 diff)
 void MapManager::DoDelayedMovesAndRemoves()
 {
     /*
-    int i =0;
     std::vector<Map*> update_queue(i_maps.size());
-    MapMapType::iterator iter;
-    for (iter = i_maps.begin(); iter != i_maps.end(); ++iter, i++)
+    for (MapMapType::iterator iter = i_maps.begin(), uint32 i = 0; iter != i_maps.end(); ++iter, ++i)
     update_queue[i] = iter->second;
 
     omp_set_num_threads(sWorld.getConfig(CONFIG_NUMTHREADS));
 
 #pragma omp parallel for schedule(dynamic) private(i) shared(update_queue)
-    for (i=0; i<i_maps.size(); i++)
-    update_queue[i]->DoDelayedMovesAndRemoves();
+    for (uint32 i = 0; i < i_maps.size(); ++i)
+        update_queue[i]->DoDelayedMovesAndRemoves();
     */
 }
 

@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #include "Creature.h"
 #include "MapManager.h"
@@ -16,7 +34,7 @@ template<class T>
 void
 ConfusedMovementGenerator<T>::Initialize(T &unit)
 {
-    const float wander_distance=11;
+    const float wander_distance = 11;
     float x,y,z;
     x = unit.GetPositionX();
     y = unit.GetPositionY();
@@ -31,20 +49,21 @@ ConfusedMovementGenerator<T>::Initialize(T &unit)
 
     VMAP::IVMapManager *vMaps = VMAP::VMapFactory::createOrGetVMapManager();
 
-    for (unsigned int idx=0; idx < MAX_CONF_WAYPOINTS+1; ++idx)
+    for (uint8 idx = 0; idx <= MAX_CONF_WAYPOINTS; ++idx)
     {
-        const float wanderX=wander_distance*rand_norm() - wander_distance/2;
-        const float wanderY=wander_distance*rand_norm() - wander_distance/2;
-
         const bool isInLoS = vMaps->isInLineOfSight(unit.GetMapId(), x, y, z + 2.0f, i_waypoints[idx][0], i_waypoints[idx][1], z + 2.0f);
-        if (!isInLoS)
+        if (isInLoS)
+        {
+            const float wanderX = wander_distance*rand_norm() - wander_distance/2;
+            const float wanderY = wander_distance*rand_norm() - wander_distance/2;
+            i_waypoints[idx][0] = x + wanderX;
+            i_waypoints[idx][1] = y + wanderY;
+        }
+        else
         {
             i_waypoints[idx][0] = x;
             i_waypoints[idx][1] = y;
         }
-
-        i_waypoints[idx][0] = x + wanderX;
-        i_waypoints[idx][1] = y + wanderY;
 
         // prevent invalid coordinates generation
         Quad::NormalizeMapCoord(i_waypoints[idx][0]);
@@ -59,7 +78,7 @@ ConfusedMovementGenerator<T>::Initialize(T &unit)
         }
 
         unit.UpdateGroundPositionZ(i_waypoints[idx][0],i_waypoints[idx][1],z);
-        i_waypoints[idx][2] =  z;
+        i_waypoints[idx][2] = z;
     }
 
     unit.SetUInt64Value(UNIT_FIELD_TARGET, 0);

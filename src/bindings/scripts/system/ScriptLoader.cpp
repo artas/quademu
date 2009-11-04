@@ -344,7 +344,10 @@ extern void AddSC_utgarde_keep();
 extern void AddSC_boss_archavon();              //Vault of Archavon
 extern void AddSC_boss_emalon();
 extern void AddSC_instance_archavon();
-extern void AddSC_boss_novos();                 //Drak'Tharon Keep
+extern void AddSC_boss_trollgore();             //Drak'Tharon Keep
+extern void AddSC_boss_novos();
+extern void AddSC_boss_dred();
+extern void AddSC_boss_tharon_ja();
 extern void AddSC_instance_drak_tharon();
 extern void AddSC_boss_cyanigosa();             //Violet Hold
 extern void AddSC_boss_erekem();
@@ -791,7 +794,10 @@ void AddScripts()
     AddSC_boss_archavon();              //Vault of Archavon
     AddSC_boss_emalon();
     AddSC_instance_archavon();
-    AddSC_boss_novos();                 //Drak'Tharon Keep
+    AddSC_boss_trollgore();             //Drak'Tharon Keep
+    AddSC_boss_novos();
+    AddSC_boss_dred();
+    AddSC_boss_tharon_ja();
     AddSC_instance_drak_tharon();
     AddSC_boss_cyanigosa();             //Violet Hold
     AddSC_boss_erekem();

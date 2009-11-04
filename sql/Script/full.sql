@@ -4086,7 +4086,7 @@ UPDATE `creature_template` SET `ScriptName`='mob_high_inquisitor_valroth' WHERE 
 UPDATE `creature_template` SET `ScriptName`='npc_demolisher_engineerer' WHERE `entry` IN (30400,30499);
 UPDATE `creature_template` SET `ScriptName`='npc_valkyr_battle_maiden' WHERE `entry`=28534;
 UPDATE `creature_template` SET `ScriptName`='npc_mirror_image' WHERE `entry`=31216;
-UPDATE `creature_template` SET `ScriptName`='npc_training_dummy' WHERE `entry` IN (17578,24792,32543,32546,32542,32545,30527,31143,31144,31146,32541,32666,32667,16111);
+UPDATE `creature_template` SET `ScriptName`='npc_training_dummy' WHERE `entry` IN (17578,24792,32543,32546,32542,32545,30527,31143,31144,31146,32541,32666,32667,16111,2674,2673);
 UPDATE `creature_template` SET `ScriptName`='npc_lightwell' WHERE `entry` IN (31883,31893,31894,31895,31896,31897);
 UPDATE `creature_template` SET `ScriptName`='npc_ebon_gargoyle' WHERE `entry`=27829;
 UPDATE `gameobject_template` SET `ScriptName`='go_inconspicuous_mine_car' WHERE `entry`=190767;
@@ -4321,8 +4321,12 @@ UPDATE `creature_template` SET `ScriptName`='npc_keristrasza' WHERE `entry`=2620
 UPDATE `creature_template` SET `ScriptName`='npc_iruk' WHERE `entry`=26219;
 UPDATE `creature_template` SET `ScriptName`='npc_corastrasza' WHERE `entry`=32548;
 UPDATE `creature_template` SET `ScriptName`='mob_nerubar_victim' WHERE `entry`=25284;
-UPDATE `creature_template` SET `ScriptName`='npc_gefangener_der_geiЯel' WHERE `entry`=25610;
+UPDATE `creature_template` SET `ScriptName`='npc_scourge_prisoner' WHERE `entry`=25610;
 UPDATE `gameobject_template` SET `ScriptName`='go_scourge_cage' WHERE `entry`=187867;
+UPDATE `creature_template` SET `ScriptName`='npc_loklira_crone' WHERE `entry`=29975;
+UPDATE `creature_template` SET `ScriptName`='npc_victorious_challenger' WHERE `entry`=30012;
+UPDATE `creature_template` SET `ScriptName`='npc_mcgoyver' WHERE `entry`=24040;
+UPDATE `creature_template` SET `ScriptName`='npc_jenny' WHERE `entry`=25969;
 
 /* BURNING STEPPES */
 UPDATE `creature_template` SET `ScriptName`='npc_ragged_john' WHERE `entry`=9563;
@@ -4506,9 +4510,14 @@ UPDATE `creature_template` SET `ScriptName`='npc_orsonn_and_kodian' WHERE `entry
 
 /* DRAK'THARON KEEP */
 UPDATE `instance_template` SET `script`='instance_drak_tharon' WHERE `map`=600;
+UPDATE `creature_template` SET `ScriptName`='boss_trollgore' WHERE `entry`=26630;
 UPDATE `creature_template` SET `ScriptName`='boss_novos' WHERE `entry`=26631;
 UPDATE `creature_template` SET `ScriptName`='mob_crystal_handler' WHERE `entry`=26627;
 UPDATE `creature_template` SET `ScriptName`='mob_novos_minion' WHERE `entry` IN (27600,27597,27598);
+UPDATE `creature_template` SET `ScriptName`='npc_drakkari_gutripper' WHERE `entry`=26641;
+UPDATE `creature_template` SET `ScriptName`='npc_drakkari_scytheclaw' WHERE `entry`=26628;
+UPDATE `creature_template` SET `ScriptName`='boss_dred' WHERE `entry`=27483;
+UPDATE `creature_template` SET `ScriptName`='boss_tharon_ja' WHERE `entry`=26632;
 
 /* GRUUL'S LAIR */
 UPDATE `instance_template` SET `script`='instance_gruuls_lair' WHERE `map`=565;
@@ -5305,7 +5314,7 @@ UPDATE `creature_template` SET `ScriptName`='mob_ohgan' WHERE `entry`=14988;
 -- --------
 UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE entry IN (26796,26798,26929,26928,26930);
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (26796,26798,26929,26928,26930);
-UPDATE `creature_template` SET `ScriptName`='EventAI',`modelid1` = 16925,`modelid3` = 16925, `minmana` = 1000000,`maxmana` = 1000000, `unit_flags` = 33554434 WHERE `entry` IN(29998,33753,33752,33751,33750);
+UPDATE `creature_template` SET `ScriptName`='EventAI' WHERE `entry` IN(29998,33753,33752,33751,33750);
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (29998,33753,33752,33751,33750);
 INSERT INTO `creature_ai_scripts` VALUES 
 -- Commander Stoutbeard
@@ -5366,7 +5375,7 @@ INSERT INTO `creature_ai_scripts` (`creature_id`,`event_type`,`event_chance`,`ev
    (23035,6,100,6,34,2,3,'Anzu - Set Inst Data on Death');
 
 -- dk final quest
-UPDATE `creature_template` SET `unit_flags`=32768,`AIName`='EventAI' WHERE `entry` IN (29199,29204,29200,29174,29182,29186,29190,29219,29206,29176,29178,29179,29180,29177,29181);
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` IN (29199,29204,29200,29174,29182,29186,29190,29219,29206,29176,29178,29179,29180,29177,29181);
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (29199,29204,29200,29174,29182,29186,29190,29219,29206,29176,29178,29179,29180,29177,29181);
 INSERT INTO `creature_ai_scripts` VALUES
    (2919901,29199,0,0,100,3,10000,20000,10000,20000,11,52374,1,0,0,0,0,0,0,0,0,0,'Koltira Deathweaver - SPELL_BLOOD_STRIKE1'),
@@ -6099,6 +6108,9 @@ INSERT INTO `spell_proc_event` (`entry`, `SchoolMask`, `SpellFamilyName`, `Spell
 ( 15286, 0x20,   6, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   0,   0,   0), -- Vampiric Embrace
 ( 15337, 0x00,   6, 0x00002000, 0x00000002, 0x00000000, 0x00000000, 0x00000002,   0,   0,   0), -- Improved Spirit Tap (Rank 1)
 ( 15338, 0x00,   6, 0x00002000, 0x00000002, 0x00000000, 0x00000000, 0x00000002,   0,   0,   0), -- Improved Spirit Tap (Rank 2)
+( 15318, 0x20,   0, 0x00000000, 0x00000000, 0x00000000, 0x02000000, 0x00002000,   0,   0,   0), -- Shadow Affinity (Rank 1)
+( 15272, 0x20,   0, 0x00000000, 0x00000000, 0x00000000, 0x02000000, 0x00002000,   0,   0,   0), -- Shadow Affinity (Rank 2)
+( 15320, 0x20,   0, 0x00000000, 0x00000000, 0x00000000, 0x02000000, 0x00002000,   0,   0,   0), -- Shadow Affinity (Rank 3)
 ( 15346, 0x00,   0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,   6,   0,   0), -- Seal of Reckoning
 ( 15362, 0x00,   6, 0x10001E00, 0x00010004, 0x00000000, 0x00000000, 0x00000002,   0,   0,   0), -- Inspiration (Rank 2)
 ( 15363, 0x00,   6, 0x10001E00, 0x00010004, 0x00000000, 0x00000000, 0x00000002,   0,   0,   0), -- Inspiration (Rank 3)
@@ -7714,6 +7726,10 @@ INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comm
 
 update game_graveyard_zone set ghost_zone = 4603 where id = 1474;
 
+-- No Fly Zone
+INSERT INTO `spell_linked_spell` (spell_trigger, spell_effect, type, comment) VALUES
+    (-58600, 61243, 0, 'No fly zone - Parachute'),
+    (-58730, 61243, 0, 'No fly zone - Parachute');
 
 -- temp
 
@@ -8344,6 +8360,23 @@ INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_
 (753, 'The battle for Warsong Gulch begins in 2 minutes.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (754, 'The battle for Arathi Basin begins in 2 minutes.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (755, 'The battle for Eye of the Storm begins in 2 minutes.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(756, 'Battle begins!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(757, '%s has successfully defended the fortress!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(758, '%s has taken over the fortress!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(759, 'The %s siege workshop has been damaged by the %s!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(760, 'The %s siege workshop has been destroyed by the %s!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(761, 'The %s tower has been damaged!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(762, 'The %s tower has been destroyed!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(763, 'Wintergrasp fortress is under attack!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(764, 'Wintergrasp is now under the control of the %s.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(765, 'Wintergrasp timer set to %s.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(766, 'Wintergrasp battle started.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(767, 'Wintergrasp battle finished.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(768, 'Wintergrasp info: %s controled. Timer: %s. Wartime: %s', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(769, 'Wintergrasp outdoorPvP is disabled.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(770, 'Wintergrasp outdoorPvP is enabled.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(771, 'You have reached Rank 1: Corporal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(772, 'You have reached Rank 2: First Lieutenant', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (785, 'Arena testing turned %s', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (786, '|cffff0000[Automatic]:|r', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (787, '|cffffff00[|c1f40af20Announce by|r |cffff0000%s|cffffff00]:|r %s|r', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -8363,6 +8396,7 @@ INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_
 (813, 'Veteran', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (814, 'Member', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (815, 'Initiate', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(816, 'Warning: You''ve entered a no-fly zone and are about to be dismounted!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1000, 'Exiting daemon...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1001, 'Account deleted: %s', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (1002, 'Account %s NOT deleted (probably sql file format was updated)', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),

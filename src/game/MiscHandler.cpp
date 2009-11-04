@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #include "Common.h"
 #include "Language.h"
@@ -146,9 +164,9 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recv_data )
 
     recv_data >> racemask;                                  // race mask
     recv_data >> classmask;                                 // class mask
-    recv_data >> zones_count;                               // zones count, client limit=10 (2.0.10)
+    recv_data >> zones_count;                               // zones count, client limit = 10 (2.0.10)
 
-    if(zones_count > 10)
+    if (zones_count > 10)
         return;                                             // can't be received from real client or broken packet
 
     for (uint32 i = 0; i < zones_count; ++i)
@@ -161,7 +179,7 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recv_data )
 
     recv_data >> str_count;                                 // user entered strings count, client limit=4 (checked on 2.0.10)
 
-    if(str_count > 4)
+    if (str_count > 4)
         return;                                             // can't be received from real client or broken packet
 
     sLog.outDebug("Minlvl %u, maxlvl %u, name %s, guild %s, racemask %u, classmask %u, zones %u, strings %u", level_min, level_max, player_name.c_str(), guild_name.c_str(), racemask, classmask, zones_count, str_count);
@@ -172,7 +190,7 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recv_data )
         std::string temp;
         recv_data >> temp;                                  // user entered string, it used as universal search pattern(guild+player name)?
 
-        if(!Utf8toWStr(temp,str[i]))
+        if (!Utf8toWStr(temp,str[i]))
             continue;
 
         wstrToLower(str[i]);
@@ -182,14 +200,14 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recv_data )
 
     std::wstring wplayer_name;
     std::wstring wguild_name;
-    if(!(Utf8toWStr(player_name, wplayer_name) && Utf8toWStr(guild_name, wguild_name)))
+    if (!(Utf8toWStr(player_name, wplayer_name) && Utf8toWStr(guild_name, wguild_name)))
         return;
     wstrToLower(wplayer_name);
     wstrToLower(wguild_name);
 
     // client send in case not set max level value 100 but mangos support 255 max level,
     // update it to show GMs with characters after 100 level
-    if(level_max >= MAX_LEVEL)
+    if (level_max >= MAX_LEVEL)
         level_max = STRONG_MAX_LEVEL;
 
     uint32 team = _player->GetTeam();
@@ -225,7 +243,7 @@ void WorldSession::HandleWhoOpcode( WorldPacket & recv_data )
             continue;
 
         // check if target's level is in level range
-        uint32 lvl = itr->second->getLevel();
+        uint8 lvl = itr->second->getLevel();
         if (lvl < level_min || lvl > level_max)
             continue;
 

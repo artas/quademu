@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #ifndef QUADCORE_PET_H
 #define QUADCORE_PET_H
@@ -144,7 +162,7 @@ class Pet : public Guardian
         void LooseHappiness();
         HappinessState GetHappinessState();
         void GivePetXP(uint32 xp);
-        void GivePetLevel(uint32 level);
+        void GivePetLevel(uint8 level);
         void SynchronizeLevelWithOwner();
         bool HaveInDiet(ItemPrototype const* item) const;
         uint32 GetCurrentFoodBenefitLevel(uint32 itemlevel);
@@ -195,7 +213,7 @@ class Pet : public Guardian
         uint32 resetTalentsCost() const;
         void InitTalentForLevel();
 
-        uint8 GetMaxTalentPointsForLevel(uint32 level);
+        uint8 GetMaxTalentPointsForLevel(uint8 level);
         uint8 GetFreeTalentPoints() { return GetByteValue(UNIT_FIELD_BYTES_1, 1); }
         void SetFreeTalentPoints(uint8 points) { SetByteValue(UNIT_FIELD_BYTES_1, 1, points); }
 

@@ -1,4 +1,22 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 
 #include "CombatAI.h"
 #include "SpellMgr.h"
@@ -32,6 +50,11 @@ int ArchorAI::Permissible(const Creature *creature)
 }
 
 int TurretAI::Permissible(const Creature *creature)
+{
+    return PERMIT_BASE_NO;
+}
+
+int AOEAI::Permissible(const Creature *creature)
 {
     return PERMIT_BASE_NO;
 }
@@ -227,4 +250,33 @@ void TurretAI::UpdateAI(const uint32 diff)
     //if(!DoSpellAttackIfReady(me->m_spells[0]))
         //if(HostilReference *ref = me->getThreatManager().getCurrentVictim())
             //ref->removeReference();
+}
+
+//////////////
+//AOEAI
+//////////////
+
+AOEAI::AOEAI(Creature *c) : CreatureAI(c)
+{
+    ASSERT(me->m_spells[0]);    
+    me->SetVisibility(VISIBILITY_ON);//visible to see all spell anims
+    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);//can't be targeted
+    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_1);//can't be damaged
+    me->SetDisplayId(11686);//invisible model,around a size of a player
+}
+
+bool AOEAI::CanAIAttack(const Unit *who) const
+{
+    return false;
+}
+
+void AOEAI::AttackStart(Unit *who)
+{
+    
+}
+
+void AOEAI::UpdateAI(const uint32 diff)
+{
+    if(!me->HasAura(me->m_spells[0]))
+        me->CastSpell(me, me->m_spells[0],false);
 }

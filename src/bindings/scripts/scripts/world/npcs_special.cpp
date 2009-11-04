@@ -1170,6 +1170,7 @@ bool GossipSelect_npc_mount_vendor(Player* pPlayer, Creature* pCreature, uint32 
 
 #define GOSSIP_HELLO_ROGUE1 "I wish to unlearn my talents"
 #define GOSSIP_HELLO_ROGUE2 "<Take the letter>"
+#define GOSSIP_HELLO_ROGUE3 "Purchase a Dual Talent Specialization."
 
 bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
 {
@@ -1181,6 +1182,9 @@ bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
 
     if (pCreature->isCanTrainingAndResetTalentsOf(pPlayer))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_HELLO_ROGUE1, GOSSIP_SENDER_MAIN, GOSSIP_OPTION_UNLEARNTALENTS);
+
+    if (!(pPlayer->GetSpecsCount() == 1 && pCreature->isCanTrainingAndResetTalentsOf(pPlayer) && !(pPlayer->getLevel() < GetConfigValueInt32("MinDualSpecLevel"))))
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_TRAINER, GOSSIP_HELLO_ROGUE3, GOSSIP_SENDER_MAIN, GOSSIP_OPTION_LEARNDUALSPEC);
 
     if (pPlayer->getClass() == CLASS_ROGUE && pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
     {
@@ -1206,6 +1210,29 @@ bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32
         case GOSSIP_OPTION_UNLEARNTALENTS:
             pPlayer->CLOSE_GOSSIP_MENU();
             pPlayer->SendTalentWipeConfirm(pCreature->GetGUID());
+            break;
+        case GOSSIP_OPTION_LEARNDUALSPEC:
+            if(pPlayer->GetSpecsCount() == 1 && !(pPlayer->getLevel() < GetConfigValueInt32("MinDualSpecLevel")))
+            {
+                if (pPlayer->GetMoney() < 10000000)
+                {
+                    pPlayer->SendBuyError( BUY_ERR_NOT_ENOUGHT_MONEY, 0, 0, 0);
+                    pPlayer->PlayerTalkClass->CloseGossip();
+                    break;
+                }
+                else
+                {
+                    pPlayer->ModifyMoney(-10000000);
+
+                    // Cast spells that teach dual spec
+                    // Both are also ImplicitTarget self and must be cast by player
+                    pPlayer->CastSpell(pPlayer,63680,true,NULL,NULL,pPlayer->GetGUID());
+                    pPlayer->CastSpell(pPlayer,63624,true,NULL,NULL,pPlayer->GetGUID());
+
+                    // Should show another Gossip text with "Congratulations..."
+                    pPlayer->PlayerTalkClass->CloseGossip();
+                }
+            }
             break;
     }
     return true;
@@ -1808,15 +1835,21 @@ CreatureAI* GetAI_npc_lightwellAI(Creature* pCreature)
 
 struct QUAD_DLL_DECL npc_training_dummy : Scripted_NoMovementAI
 {
-    npc_training_dummy(Creature *c) : Scripted_NoMovementAI(c) {}
+    npc_training_dummy(Creature *c) : Scripted_NoMovementAI(c)
+    {
+        m_Entry = c->GetEntry();
+    }
 
+    uint64 m_Entry;
     uint32 ResetTimer;
+    uint32 DespawnTimer;
     void Reset()
     {
         m_creature->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
         m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);//imune to knock aways like blast wave
         m_creature->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_STUN, true);
         ResetTimer = 10000;
+        DespawnTimer = 15000;
     }
 
     void DamageTaken(Unit *done_by, uint32 &damage)
@@ -1825,7 +1858,11 @@ struct QUAD_DLL_DECL npc_training_dummy : Scripted_NoMovementAI
         damage = 0;
     }
 
-    void EnterCombat(Unit *who){return;}
+    void EnterCombat(Unit *who)
+    {
+        if (m_Entry != 2674 && m_Entry != 2673)
+            return;
+    }
 
     void UpdateAI(const uint32 diff)
     {
@@ -1833,12 +1870,25 @@ struct QUAD_DLL_DECL npc_training_dummy : Scripted_NoMovementAI
             return;
         if (!m_creature->hasUnitState(UNIT_STAT_STUNNED))
             m_creature->SetControlled(true,UNIT_STAT_STUNNED);//disable rotate
-        if (ResetTimer <= diff)
+
+        if (m_Entry != 2674 && m_Entry != 2673)
         {
-            EnterEvadeMode();
-            ResetTimer = 10000;
-        } else ResetTimer -= diff;
-        return;
+            if (ResetTimer <= diff)
+            {
+                EnterEvadeMode();
+                ResetTimer = 10000;
+            }
+            else
+                ResetTimer -= diff;
+            return;
+        }
+        else
+        {
+            if (DespawnTimer <= diff)
+                m_creature->ForcedDespawn();
+            else
+                DespawnTimer -= diff;
+        }
     }
     void MoveInLineOfSight(Unit *who){return;}
 };

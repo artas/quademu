@@ -1,4 +1,20 @@
-
+/*
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifndef DBC_FILE_LOADER_H
 #define DBC_FILE_LOADER_H
@@ -73,11 +89,11 @@ class DBCFileLoader
         Record getRecord(size_t id);
         /// Get begin iterator over records
 
-        uint32 GetNumRows() const { return recordCount;}
-        uint32 GetRowSize() const { return recordSize;}
+        uint32 GetNumRows() const { return recordCount; }
+        uint32 GetRowSize() const { return recordSize; }
         uint32 GetCols() const { return fieldCount; }
         uint32 GetOffset(size_t id) const { return (fieldsOffset != NULL && id < fieldCount) ? fieldsOffset[id] : 0; }
-        bool IsLoaded() {return (data!=NULL);}
+        bool IsLoaded() { return data != NULL; }
         char* AutoProduceData(const char* fmt, uint32& count, char**& indexTable, uint32 sqlRecordCount, uint32 sqlHighestIndex, char *& sqlDataTable);
         char* AutoProduceStrings(const char* fmt, char* dataTable);
         static uint32 GetFormatRecordSize(const char * format, int32 * index_pos = NULL);
