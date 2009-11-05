@@ -3455,7 +3455,7 @@ void ObjectMgr::LoadQuests()
     //   47            48            49            50            51               52               53               54
         "ReqSourceId1, ReqSourceId2, ReqSourceId3, ReqSourceId4, ReqSourceCount1, ReqSourceCount2, ReqSourceCount3, ReqSourceCount4,"
     //   55                  56                  57                  58                  59                     60                     61                     62
-        "ReqCreatureOrGOId1, ReqCreatureOrGOId2, ReqCreatureOrGOId3, ReqCreatureOrGOId4, ReqCreatureOrGOCount1, ReqCreatureOrGOCount2, ReqCreatureOrGOCount3, ReqCreatureOrGOCount4,"
+        "ReqNpcOrGOId1, ReqNpcOrGOId2, ReqNpcOrGOId3, ReqNpcOrGOId4, ReqNpcOrGOCount1, ReqNpcOrGOCount2, ReqNpcOrGOCount3, ReqNpcOrGOCount4,"
     //   63             64             65             66
         "ReqSpellCast1, ReqSpellCast2, ReqSpellCast3, ReqSpellCast4,"
     //   67                68                69                70                71                72
