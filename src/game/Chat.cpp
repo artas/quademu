@@ -1177,7 +1177,7 @@ valid examples:
         }
         else if (reader.get() != '|')
         {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
             sLog.outBasic("ChatHandler::isValidChatMessage sequence aborted unexpectedly");
 #endif
             return false;
@@ -1186,7 +1186,7 @@ valid examples:
         // pipe has always to be followed by at least one char
         if (reader.peek() == '\0')
         {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
             sLog.outBasic("ChatHandler::isValidChatMessage pipe followed by \\0");
 #endif
             return false;
@@ -1211,7 +1211,7 @@ valid examples:
             }
             else
             {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                 sLog.outBasic("ChatHandler::isValidChatMessage invalid sequence, expected %c but got %c", *validSequenceIterator, commandChar);
 #endif
                 return false;
@@ -1220,7 +1220,7 @@ valid examples:
         else if (validSequence != validSequenceIterator)
         {
             // no escaped pipes in sequences
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
             sLog.outBasic("ChatHandler::isValidChatMessage got escaped pipe in sequence");
 #endif
             return false;
@@ -1237,7 +1237,7 @@ valid examples:
                     reader >> c;
                     if (!c)
                     {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                         sLog.outBasic("ChatHandler::isValidChatMessage got \\0 while reading color in |c command");
 #endif
                         return false;
@@ -1255,7 +1255,7 @@ valid examples:
                         color |= 10+c-'a';
                         continue;
                     }
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                     sLog.outBasic("ChatHandler::isValidChatMessage got non hex char '%c' while reading color", c);
 #endif
                     return false;
@@ -1273,7 +1273,7 @@ valid examples:
                     linkedItem= objmgr.GetItemPrototype(atoi(buffer));
                     if (!linkedItem)
                     {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                         sLog.outBasic("ChatHandler::isValidChatMessage got invalid itemID %u in |item command", atoi(buffer));
 #endif
                         return false;
@@ -1281,7 +1281,7 @@ valid examples:
 
                     if (color != ItemQualityColors[linkedItem->Quality])
                     {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                         sLog.outBasic("ChatHandler::isValidChatMessage linked item has color %u, but user claims %u", ItemQualityColors[linkedItem->Quality],
                                 color);
 #endif
@@ -1455,7 +1455,7 @@ valid examples:
                 }
                 else
                 {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                     sLog.outBasic("ChatHandler::isValidChatMessage user sent unsupported link type '%s'", buffer);
 #endif
                     return false;
@@ -1468,7 +1468,7 @@ valid examples:
                     // links start with '['
                     if (reader.get() != '[')
                     {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                         sLog.outBasic("ChatHandler::isValidChatMessage link caption doesn't start with '['");
 #endif
                         return false;
@@ -1565,7 +1565,7 @@ valid examples:
 
                             if (!il)
                             {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                                 sLog.outBasic("ChatHandler::isValidChatMessage linked item name doesn't is wrong and there is no localization");
 #endif
                                 return false;
@@ -1582,7 +1582,7 @@ valid examples:
                             }
                             if (!foundName)
                             {
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                                 sLog.outBasic("ChatHandler::isValidChatMessage linked item name wasn't found in any localization");
 #endif
                                 return false;
@@ -1614,7 +1614,7 @@ valid examples:
                 // no further payload
                 break;
             default:
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
                 sLog.outBasic("ChatHandler::isValidChatMessage got invalid command |%c", commandChar);
 #endif
                 return false;
@@ -1622,7 +1622,7 @@ valid examples:
     }
 
     // check if every opened sequence was also closed properly
-#ifdef MANGOS_DEBUG
+#ifdef CORE_DEBUG
     if (validSequence != validSequenceIterator)
         sLog.outBasic("ChatHandler::isValidChatMessage EOF in active sequence");
 #endif
@@ -2306,7 +2306,7 @@ int ChatHandler::GetSessionDbLocaleIndex() const
     return m_session->GetSessionDbLocaleIndex();
 }
 
-const char *CliHandler::GetMangosString(int32 entry) const
+const char *CliHandler::GetCoreString(int32 entry) const
 {
     return objmgr.GetQuadStringForDBCLocale(entry);
 }

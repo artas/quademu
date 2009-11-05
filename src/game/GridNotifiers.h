@@ -426,7 +426,7 @@ namespace Quad
     };
 
     template<class Do>
-    struct MANGOS_DLL_DECL CreatureWorker
+    struct CORE_DLL_DECL CreatureWorker
     {
         uint32 i_phaseMask;
         Do& i_do;

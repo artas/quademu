@@ -30,7 +30,7 @@
 
 class Transport;
 
-class MANGOS_DLL_DECL MapManager : public MaNGOS::Singleton<MapManager, MaNGOS::ClassLevelLockable<MapManager, ACE_Thread_Mutex> >
+class CORE_DLL_DECL MapManager : public MaNGOS::Singleton<MapManager, MaNGOS::ClassLevelLockable<MapManager, ACE_Thread_Mutex> >
 {
 
     friend class Quad::OperatorNew<MapManager>;

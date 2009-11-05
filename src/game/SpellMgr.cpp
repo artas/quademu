@@ -753,7 +753,7 @@ bool SpellMgr::_isPositiveEffect(uint32 spellId, uint32 effIndex, bool deep) con
         case  1852:                                         // Silenced (GM)
         case 46392:                                         // Focused Assault
         case 46393:                                         // Brutal Assault
-        //case 37675:                                         // Chaos Blast removed from mangos
+        //case 37675:                                         // Chaos Blast removed from core
         case 41519:                                         // Mark of Stormrage
         case 34877:                                         // Custodian of Time
         case 34700:                                         // Allergic Reaction

@@ -657,4 +657,4 @@ struct ObjectDistanceOrderReversed : public std::binary_function<const WorldObje
     }
 };
 
-#endif                                                      // MANGOS_GRIDNOTIFIERSIMPL_H
+#endif                                                      // CORE_GRIDNOTIFIERSIMPL_H

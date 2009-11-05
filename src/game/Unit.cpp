@@ -6214,7 +6214,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
             // Judgements of the Wise
             if (dummySpell->SpellIconID == 3017)
             {
-                //Mangos code, do not know if we need it
+                //Core code, do not know if we need it
                 // triggered only at casted Judgement spells, not at additional Judgement effects
                 //if(!procSpell || procSpell->Category != 1210)
                 //    return;

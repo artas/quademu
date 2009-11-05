@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MANGOS_DBCSTORES_H
-#define MANGOS_DBCSTORES_H
+#ifndef CORE_DBCSTORES_H
+#define CORE_DBCSTORES_H
 
 #include "Common.h"
 #include "Database/DBCStore.h"

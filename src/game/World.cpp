@@ -2012,7 +2012,7 @@ namespace MaNGOS
             explicit WorldWorldTextBuilder(int32 textId, va_list* args = NULL) : i_textId(textId), i_args(args) {}
             void operator()(WorldPacketList& data_list, int32 loc_idx)
             {
-                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
+                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
 
                 if (i_args)
                 {

@@ -26,9 +26,9 @@ AM_CPPFLAGS = $(TRINI_INCLUDES) -I$(top_builddir)/src/shared -I$(srcdir) -I$(src
 ## Build MaNGOS shared library and its parts as convenience library.
 #  All libraries will be convenience libraries. Might be changed to shared
 #  later.
-noinst_LIBRARIES = libmangosdatabase.a
+noinst_LIBRARIES = libcoredatabase.a
 
-libmangosdatabase_a_SOURCES = \
+libcoredatabase_a_SOURCES = \
 	DBCFileLoader.cpp \
 	DBCFileLoader.h \
 	DBCStore.h \

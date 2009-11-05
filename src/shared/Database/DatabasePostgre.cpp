@@ -124,7 +124,7 @@ bool DatabasePostgre::_Query(const char *sql, PGresult** pResult, uint64* pRowCo
 
     // guarded block for thread-safe request
     ACE_Guard<ACE_Thread_Mutex> query_connection_guard(mMutex);
-    #ifdef MANGOS_DEBUG
+    #ifdef CORE_DEBUG
     uint32 _s = getMSTime();
     #endif
     // Send the query
@@ -230,7 +230,7 @@ bool DatabasePostgre::DirectExecute(const char* sql)
     {
         // guarded block for thread-safe  request
         ACE_Guard<ACE_Thread_Mutex> query_connection_guard(mMutex);
-        #ifdef MANGOS_DEBUG
+        #ifdef CORE_DEBUG
         uint32 _s = getMSTime();
         #endif
         PGresult *res = PQexec(mPGconn, sql);

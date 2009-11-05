@@ -52,7 +52,7 @@ class QUAD_DLL_SPEC PointMovementGenerator
         bool arrived;
 };
 
-class MANGOS_DLL_SPEC AssistanceMovementGenerator
+class CORE_DLL_SPEC AssistanceMovementGenerator
 : public PointMovementGenerator<Creature>
 {
     public:

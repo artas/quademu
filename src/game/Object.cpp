@@ -1496,7 +1496,7 @@ namespace Quad
                 : i_object(obj), i_msgtype(msgtype), i_textId(textId), i_language(language), i_targetGUID(targetGUID) {}
             void operator()(WorldPacket& data, int32 loc_idx)
             {
-                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
+                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
 
                 // TODO: i_object.GetName() also must be localized?
                 i_object.BuildMonsterChat(&data,i_msgtype,text,i_language,i_object.GetNameForLocaleIdx(loc_idx),i_targetGUID);

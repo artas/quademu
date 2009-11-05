@@ -18,8 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef MANGOS_DBCSTRUCTURE_H
-#define MANGOS_DBCSTRUCTURE_H
+#ifndef CORE_DBCSTRUCTURE_H
+#define CORE_DBCSTRUCTURE_H
 
 #include "DBCEnums.h"
 #include "Platform/Define.h"

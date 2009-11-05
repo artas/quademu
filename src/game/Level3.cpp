@@ -1674,13 +1674,13 @@ bool ChatHandler::HandleCooldownCommand(const char* args)
 
         if (!sSpellStore.LookupEntry(spell_id))
         {
-            PSendSysMessage(LANG_UNKNOWN_SPELL, target==m_session->GetPlayer() ? GetMangosString(LANG_YOU) : tNameLink.c_str());
+            PSendSysMessage(LANG_UNKNOWN_SPELL, target==m_session->GetPlayer() ? GetCoreString(LANG_YOU) : tNameLink.c_str());
             SetSentErrorMessage(true);
             return false;
         }
 
         target->RemoveSpellCooldown(spell_id,true);
-        PSendSysMessage(LANG_REMOVE_COOLDOWN, spell_id, target==m_session->GetPlayer() ? GetMangosString(LANG_YOU) : tNameLink.c_str());
+        PSendSysMessage(LANG_REMOVE_COOLDOWN, spell_id, target==m_session->GetPlayer() ? GetCoreString(LANG_YOU) : tNameLink.c_str());
    }
     return true;
 }
@@ -3822,7 +3822,7 @@ bool ChatHandler::HandleLookupFactionCommand(const char* args)
                 if (repState)                               // and then target!=NULL also
                 {
                     ReputationRank rank = target->GetReputationMgr().GetRank(factionEntry);
-                    std::string rankName = GetMangosString(ReputationRankStrIndex[rank]);
+                    std::string rankName = GetCoreString(ReputationRankStrIndex[rank]);
 
                     ss << " " << rankName << "|h|r (" << target->GetReputationMgr().GetReputation(factionEntry) << ")";
 

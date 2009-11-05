@@ -3535,7 +3535,7 @@ void Player::removeSpell(uint32 spell_id, bool disabled, bool learn_low_rank)
         // if talent then lesser rank also talent and need learn
         if (talentCosts)
         {
-            // I cannot see why mangos has these lines.
+            // I cannot see why core has these lines.
             //if(learn_low_rank)
             //    learnSpell (prev_id,false);
         }
@@ -17777,7 +17777,7 @@ void Player::HandleStealthedUnitsDetection()
                 (*i)->SendUpdateToPlayer(this);
                 m_clientGUIDs.insert((*i)->GetGUID());
 
-                #ifdef MANGOS_DEBUG
+                #ifdef CORE_DEBUG
                 if((sLog.getLogFilter() & LOG_FILTER_VISIBILITY_CHANGES)==0)
                     sLog.outDebug("Object %u (Type: %u) is detected in stealth by player %u. Distance = %f",(*i)->GetGUIDLow(),(*i)->GetTypeId(),GetGUIDLow(),GetDistance(*i));
                 #endif
@@ -19993,7 +19993,7 @@ void Player::AutoUnequipOffhandIfNeed(bool force /*= false*/)
         offItem->SaveToDB();                                // recursive and not have transaction guard into self, item not in inventory and can be save standalone
         CharacterDatabase.CommitTransaction();
 
-        std::string subject = GetSession()->GetMangosString(LANG_NOT_EQUIPPED_ITEM);
+        std::string subject = GetSession()->GetCoreString(LANG_NOT_EQUIPPED_ITEM);
         WorldSession::SendMailTo(this, MAIL_NORMAL, MAIL_STATIONERY_GM, GetGUIDLow(), GetGUIDLow(), subject, 0, &mi, 0, 0, MAIL_CHECK_MASK_NONE);
     }
 }

@@ -50,7 +50,7 @@ namespace MaNGOS
                 : i_player(pl), i_msgtype(msgtype), i_textId(textId), i_achievementId(ach_id) {}
             void operator()(WorldPacket& data, int32 loc_idx)
             {
-                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
+                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
 
                 data << uint8(i_msgtype);
                 data << uint32(LANG_UNIVERSAL);

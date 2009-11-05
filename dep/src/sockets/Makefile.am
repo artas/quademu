@@ -26,9 +26,9 @@ AM_CPPFLAGS = -I$(srcdir) -I$(srcdir)/../../include/sockets
 ## Build MaNGOS shared library and its parts as convenience library.
 #  All libraries will be convenience libraries. Might be changed to shared
 #  later.
-noinst_LIBRARIES = libmangossockets.a
+noinst_LIBRARIES = libcoresockets.a
 
-libmangossockets_a_SOURCES = \
+libcoresockets_a_SOURCES = \
 	Base64.cpp \
 	Exception.cpp \
 	Ipv4Address.cpp \
