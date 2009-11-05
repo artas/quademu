@@ -381,7 +381,7 @@ void Loot::AddItem(LootStoreItem const & item)
         if( !item.conditionId )
         {
             ItemPrototype const* proto = objmgr.GetItemPrototype(item.itemid);
-            if( !proto || (proto->Flags & ITEM_FLAGS_PARTY_LOOT)==0 )
+            if (!proto || (proto->Flags & ITEM_FLAGS_PARTY_LOOT) == 0)
                 ++unlootedCount;
         }
     }
@@ -468,11 +468,11 @@ QuestItemList* Loot::FillQuestLoot(Player* player)
     for (uint8 i = 0; i < quest_items.size(); ++i)
     {
         LootItem &item = quest_items[i];
-        if(!item.is_looted && item.AllowedForPlayer(player) )
+        if (!item.is_looted && item.AllowedForPlayer(player))
         {
             ql->push_back(QuestItem(i));
 
-            // questitems get blocked when they first apper in a
+            // questitems get blocked when they first appear in a
             // player's quest vector
             //
             // increase once if one looter only, looter-times if free for all
@@ -508,7 +508,7 @@ QuestItemList* Loot::FillNonQuestNonFFAConditionalLoot(Player* player)
             if(!item.is_counted)
             {
                 ++unlootedCount;
-                item.is_counted=true;
+                item.is_counted = true;
             }
         }
     }
@@ -862,7 +862,13 @@ void LootTemplate::LootGroup::Process(Loot& loot, uint16 lootMode) const
 {
     LootStoreItem const * item = Roll();
     if (item != NULL && item->lootmode & lootMode) // only add this item if roll succeeds and the mode matches
+    {
+        for (LootItemList::const_iterator _item = loot.items.begin(); _item != loot.items.end(); ++_item)
+           if (_item->itemid == item->itemid)
+               return;                             // Never add the same item twice
+
         loot.AddItem(*item);
+    }			
 }
 
 // Overall chance for the group without equal chanced items
@@ -957,26 +963,30 @@ void LootTemplate::Process(Loot& loot, LootStore const& store, bool rate, uint16
     }
 
     // Rolling non-grouped items
-    for (LootStoreItemList::const_iterator i = Entries.begin() ; i != Entries.end() ; ++i )
+    for (LootStoreItemList::const_iterator i = Entries.begin(); i != Entries.end(); ++i)
     {
-        if (i->lootmode &~ lootMode)                        // Do not add if mode mismatch
+        if (i->lootmode &~ lootMode)                          // Do not add if mode mismatch
             continue;
 
         if (!i->Roll(rate))
-            continue;                                       // Bad luck for the entry
+            continue;                                         // Bad luck for the entry
 
-        if (i->mincountOrRef < 0)                           // References processing
+        for (LootItemList::const_iterator _item = loot.items.begin(); _item != loot.items.end(); ++_item)
+           if (_item->itemid == i->itemid)
+               continue;                                      // Never add the same item twice
+
+        if (i->mincountOrRef < 0)                             // References processing
         {
             LootTemplate const* Referenced = LootTemplates_Reference.GetLootFor(-i->mincountOrRef);
 
             if(!Referenced)
-                continue;                                   // Error message already printed at loading stage
+                continue;                                     // Error message already printed at loading stage
 
-            for (uint32 loop=0; loop < i->maxcount; ++loop) // Ref multiplicator
+            for (uint32 loop = 0; loop < i->maxcount; ++loop) // Ref multiplicator
                 Referenced->Process(loot, store, rate, lootMode, i->group);
         }
-        else                                                // Plain entries (not a reference, not grouped)
-            loot.AddItem(*i);                               // Chance is already checked, just add
+        else                                                  // Plain entries (not a reference, not grouped)
+            loot.AddItem(*i);                                 // Chance is already checked, just add
     }
 
     // Now processing groups
