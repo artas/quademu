@@ -3311,7 +3311,7 @@ void AuraEffect::HandleAuraMounted(bool apply, bool Real, bool /*changeAmount*/)
             if(GetSpellProto()->Effect[i] == SPELL_EFFECT_SUMMON
                 && GetSpellProto()->EffectMiscValue[i] == GetMiscValue())
                 display_id = 0;
-        m_target->Mount(display_id);
+        m_target->Mount(display_id,ci->VehicleId);
     }
     else
     {

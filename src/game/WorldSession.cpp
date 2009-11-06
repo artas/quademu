@@ -39,6 +39,8 @@
 #include "OutdoorPvPMgr.h"
 #include "MapManager.h"
 #include "SocialMgr.h"
+#include "Vehicle.h"
+
 #include "zlib/zlib.h"
 #include "ScriptCalls.h"
 
@@ -135,7 +137,8 @@ void WorldSession::SendPacket(WorldPacket const* packet)
     }
 
     #endif                                                  // !QUAD_DEBUG
-
+	
+	uint32 psize=packet->size();
     if (m_Socket->SendPacket (*packet) == -1)
         m_Socket->CloseSocket ();
 }
@@ -189,6 +192,15 @@ bool WorldSession::Update(uint32 /*diff*/)
         else
         {
             OpcodeHandler& opHandle = opcodeTable[packet->GetOpcode()];
+			/*if(_player)
+			{
+				if(packet->GetOpcode()!=CMSG_MOVE_TIME_SKIPPED)
+				{
+					sLog.outError("Send:%u (OP:%u)<%s>",_player->GetGUID(), opcodeTable[packet->GetOpcode()],LookupOpcodeName(packet->GetOpcode()));
+					packet->Print();
+					packet->rpos(0);
+				}
+			}*/			
             try
             {
                 switch (opHandle.status)
@@ -732,7 +744,15 @@ void WorldSession::ReadMovementInfo(WorldPacket &data, MovementInfo *mi)
     data >> mi->z;
     data >> mi->o;
 
-    if(mi->flags & MOVEMENTFLAG_ONTRANSPORT)
+    if((mi->flags & MOVEMENTFLAG_ONTRANSPORT) && (mi->flags  & MOVEMENTFLAG_ROOT) && (data.size()==52))
+	{   
+        data >> mi->t_seat;
+        data >> mi->t_x;
+        data >> mi->t_y;
+        data >> mi->t_z;
+        data >> mi->t_o;
+		data.read_skip(5);
+	}else if(mi->flags & MOVEMENTFLAG_ONTRANSPORT)
     {
         if(!data.readPackGUID(mi->t_guid))
             return;
@@ -895,4 +915,17 @@ void WorldSession::SetPlayer( Player *plr )
     // set m_GUID that can be used while player loggined and later until m_playerRecentlyLogout not reset
     if(_player)
         m_GUIDLow = _player->GetGUIDLow();
+}
+void WorldSession::HandleEjectPasenger(WorldPacket &data)
+{
+	if(data.GetOpcode()==CMSG_EJECT_PASSENGER)
+	{
+		if(Vehicle* Vv= _player->GetVehicleKit())
+		{
+			uint64 guid;
+			data >> guid;
+			if(Player* Pl=ObjectAccessor::FindPlayer(guid))
+				Pl->ExitVehicle();
+		}
+	}		
 }
