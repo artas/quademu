@@ -24,7 +24,7 @@
 #include "ObjectMgr.h"
 #include "Database/DatabaseEnv.h"
 
-DatabaseType TScriptDB;
+DatabaseType QScriptDB;
 
 SystemMgr::SystemMgr()
 {
@@ -39,7 +39,7 @@ SystemMgr& SystemMgr::Instance()
 void SystemMgr::LoadVersion()
 {
     //Get Version information
-    QueryResult* pResult = TScriptDB.PQuery("SELECT script_version FROM version LIMIT 1");
+    QueryResult* pResult = QScriptDB.PQuery("SELECT script_version FROM version LIMIT 1");
 
     if (pResult)
     {
@@ -58,9 +58,9 @@ void SystemMgr::LoadVersion()
 void SystemMgr::LoadScriptTexts()
 {
     outstring_log("QUADSCRIPT: Loading Script Texts...");
-    LoadQuadStrings(TScriptDB,"script_texts",TEXT_SOURCE_RANGE,1+(TEXT_SOURCE_RANGE*2));
+    LoadQuadStrings(QScriptDB,"script_texts",TEXT_SOURCE_RANGE,1+(TEXT_SOURCE_RANGE*2));
 
-    QueryResult* pResult = TScriptDB.PQuery("SELECT entry, sound, type, language, emote FROM script_texts");
+    QueryResult* pResult = QScriptDB.PQuery("SELECT entry, sound, type, language, emote FROM script_texts");
 
     outstring_log("QUADSCRIPT: Loading Script Texts additional data...");
 
@@ -124,9 +124,9 @@ void SystemMgr::LoadScriptTexts()
 void SystemMgr::LoadScriptTextsCustom()
 {
     outstring_log("QUADSCRIPT: Loading Custom Texts...");
-    LoadQuadStrings(TScriptDB,"custom_texts",TEXT_SOURCE_RANGE*2,1+(TEXT_SOURCE_RANGE*3));
+    LoadQuadStrings(QScriptDB,"custom_texts",TEXT_SOURCE_RANGE*2,1+(TEXT_SOURCE_RANGE*3));
 
-    QueryResult* pResult = TScriptDB.PQuery("SELECT entry, sound, type, language, emote FROM custom_texts");
+    QueryResult* pResult = QScriptDB.PQuery("SELECT entry, sound, type, language, emote FROM custom_texts");
 
     outstring_log("QUADSCRIPT: Loading Custom Texts additional data...");
 
@@ -195,7 +195,7 @@ void SystemMgr::LoadScriptWaypoints()
     uint64 uiCreatureCount = 0;
 
     // Load Waypoints
-    QueryResult* pResult = TScriptDB.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    QueryResult* pResult = QScriptDB.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
     if (pResult)
     {
         uiCreatureCount = pResult->GetRowCount();
@@ -204,7 +204,7 @@ void SystemMgr::LoadScriptWaypoints()
 
     outstring_log("QUADSCRIPT: Loading Script Waypoints for %u creature(s)...", uiCreatureCount);
 
-    pResult = TScriptDB.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
+    pResult = QScriptDB.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY pointid");
 
     if (pResult)
     {
