@@ -2706,6 +2706,10 @@
 				<File
 					RelativePath="..\scripts\custom\paymounts.cpp"
 					>
+				</File>	
+				<File
+					RelativePath="..\scripts\custom\guildmaster.cpp"
+					>
 				</File>				
 			</Filter>
 		</Filter>

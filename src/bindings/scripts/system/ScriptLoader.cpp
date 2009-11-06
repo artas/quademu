@@ -8,6 +8,7 @@
 extern void AddSC_teleguy();
 extern void AddSC_paymounts();
 extern void AddSC_npc_acherus_taxi();
+extern void AddSC_guildmaster();
 
 //examples
 extern void AddSC_example_creature();
@@ -458,6 +459,7 @@ void AddScripts()
     AddSC_teleguy();
     AddSC_paymounts();
     AddSC_npc_acherus_taxi();
+	AddSC_guildmaster();
 	
     //examples
     AddSC_example_creature();

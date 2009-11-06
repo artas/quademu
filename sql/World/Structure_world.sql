@@ -2960,3 +2960,18 @@ CREATE TABLE `waypoint_scripts` (
   PRIMARY KEY  (`guid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
+
+DROP TABLE IF EXISTS `guildhouses`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `guildhouses` (
+  `id` int(8) unsigned NOT NULL auto_increment,
+  `guildId` bigint(20) NOT NULL default '0',
+  `x` double NOT NULL,
+  `y` double NOT NULL,
+  `z` double NOT NULL,
+  `map` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=22 ;
+SET character_set_client = @saved_cs_client;
