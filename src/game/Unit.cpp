@@ -444,7 +444,6 @@ void Unit::SendMonsterMoveByPath(Path const& path, uint32 start, uint32 end)
 
 void Unit::SendMonsterMoveTransport(Unit *vehicleOwner)
 {
-/*
     WorldPacket data(SMSG_MONSTER_MOVE_TRANSPORT, GetPackGUID().size()+vehicleOwner->GetPackGUID().size());
     data.append(GetPackGUID());
     data.append(vehicleOwner->GetPackGUID());
@@ -462,31 +461,6 @@ void Unit::SendMonsterMoveTransport(Unit *vehicleOwner)
     data << uint32(0);//GetTransOffsetY();
     data << uint32(0);//GetTransOffsetZ();
     SendMessageToSet(&data, true);
-	*/
-    if (vehicleOwner->GetTypeId()==TYPEID_PLAYER)
-	{
-		WorldPacket data2( SMSG_PLAYER_VEHICLE_DATA, vehicleOwner->GetPackGUID().size()+4);
-			data2.append(vehicleOwner->GetPackGUID());
-			data2 << uint32(GetVehicle()->GetVehicleInfo()->m_ID);
-		((Player*)this)->GetSession()->SendPacket(&data2);
-	}
-		WorldPacket data(SMSG_MONSTER_MOVE_TRANSPORT, GetPackGUID().size()+vehicleOwner->GetPackGUID().size());
-		data.append(GetPackGUID());
-		data.append(vehicleOwner->GetPackGUID());
-		data << int8(GetTransSeat());
-		data << uint8(0);
-		data << GetPositionX() - vehicleOwner->GetPositionX();
-		data << GetPositionY() - vehicleOwner->GetPositionY();
-		data << GetPositionZ() - vehicleOwner->GetPositionZ();
-		data << uint32(getMSTime());
-		data << uint8(4);
-		data << GetTransOffsetO();
-		data << uint32(MOVEFLAG_ENTER_TRANSPORT);
-		data << uint32(0); // move time
-		data << uint32(0); // Number of waypoints
-		data << uint32(0); // GetTransOffsetX();
-		data << uint32(0); // GetTransOffsetY();
-		data << uint32(0); // GetTransOffsetZ();	
 }
 
 void Unit::resetAttackTimer(WeaponAttackType type)
@@ -10553,7 +10527,7 @@ float Unit::GetPPMProcChance(uint32 WeaponSpeed, float PPM, const SpellEntry * s
     return uint32((WeaponSpeed * PPM) / 600.0f);   // result is chance in percents (probability = Speed_in_sec * (PPM / 60))
 }
 
-void Unit::Mount(uint32 mount,uint32 VehicleId)
+void Unit::Mount(uint32 mount)
 {
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_MOUNT);
 
@@ -10576,21 +10550,7 @@ void Unit::Mount(uint32 mount,uint32 VehicleId)
                 ((Player*)this)->UnsummonPetTemporaryIfAny();
         }
     }
-	if(VehicleId!=0 && GetTypeId()==TYPEID_PLAYER)
-		{
-			if(VehicleEntry const *ve = sVehicleStore.LookupEntry(VehicleId))
-			{
-				CreateVehicleKit(VehicleId);
-				GetVehicleKit()->Reset();	
-				WorldPacket data( SMSG_PLAYER_VEHICLE_DATA, GetPackGUID().size()+4);
-					data.appendPackGUID(GetGUID());
-					data << uint32(VehicleId);
-				((Player*)this)->GetSession()->SendPacket(&data);
 
-				data.Initialize(SMSG_ON_CANCEL_EXPECTED_RIDE_VEHICLE_AURA, 0);
-				((Player*)this)->GetSession()->SendPacket( &data );
-			}
-		}
 }
 
 void Unit::Unmount()
@@ -10616,18 +10576,6 @@ void Unit::Unmount()
         else
             ((Player*)this)->ResummonPetTemporaryUnSummonedIfAny();
     }
-	if(GetTypeId()==TYPEID_PLAYER && IsVehicle())
-	{
-		RemoveAurasByType(SPELL_AURA_CONTROL_VEHICLE);
-		GetVehicleKit()->Uninstall();
-		CreateVehicleKit(0);
-		RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPELLCLICK);
-		WorldPacket data( SMSG_PLAYER_VEHICLE_DATA, 8+4 );
-		data.appendPackGUID(GetGUID());
-		data << uint32(0);
-		((Player*)this)->SendMessageToSet( &data,true );
-		((Player*)this)->SendUpdateObjectToAllExcept(NULL);
-	}	
 }
 
 void Unit::SetInCombatWith(Unit* enemy)
@@ -14251,7 +14199,7 @@ bool Unit::SetCharmedBy(Unit* charmer, CharmType type)
                 SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PLAYER_CONTROLLED);
                 ((Player*)charmer)->SetClientControl(this, 1);
                 ((Player*)charmer)->SetViewpoint(this, true);
-				((Player*)charmer)->VehicleSpellInitialize();
+                ((Player*)charmer)->VehicleSpellInitialize();
                 break;
             case CHARM_TYPE_POSSESS:
                 addUnitState(UNIT_STAT_POSSESSED);
@@ -14416,12 +14364,7 @@ void Unit::RestoreFaction()
 
 bool Unit::CreateVehicleKit(uint32 id)
 {
-    if(id==0){
-		m_vehicleKit->m_Seats.clear();
-		m_vehicleKit=NULL;
-		m_unitTypeMask &= ~UNIT_MASK_VEHICLE;
-	}
-	VehicleEntry const *vehInfo = sVehicleStore.LookupEntry(id);
+    VehicleEntry const *vehInfo = sVehicleStore.LookupEntry(id);
     if(!vehInfo)
         return false;
 
@@ -14953,11 +14896,7 @@ void Unit::ExitVehicle()
     m_movementInfo.t_time = 0;
     m_movementInfo.t_seat = 0;
 
-   Relocate(vehicle->GetBase()->GetPositionX(),
-		vehicle->GetBase()->GetPositionY(),
-		vehicle->GetBase()->GetPositionZ());
-	if(((Player*)this)->GetGroup())
-		((Player*)this)->SetGroupUpdateFlag(GROUP_UPDATE_FLAG_VEHICLE_SEAT);
+    Relocate(vehicle->GetBase());
 
     //Send leave vehicle, not correct
     if(GetTypeId() == TYPEID_PLAYER)
@@ -14994,13 +14933,13 @@ void Unit::BuildMovementPacket(ByteBuffer *data) const
             break;
     }
 
-		*data << uint32(GetUnitMovementFlags()); // movement flags
-		*data << uint16(m_movementInfo.unk1);    // 2.3.0
-		*data << uint32(getMSTime());                           // time
-		*data << GetPositionX();
-		*data << GetPositionY();
-		*data << GetPositionZ();
-		*data << GetOrientation();
+    *data << uint32(GetUnitMovementFlags()); // movement flags
+    *data << uint16(m_movementInfo.unk1);    // 2.3.0
+    *data << uint32(getMSTime());            // time
+    *data << GetPositionX();
+    *data << GetPositionY();
+    *data << GetPositionZ();
+    *data << GetOrientation();
 
     // 0x00000200
     if (GetUnitMovementFlags() & MOVEMENTFLAG_ONTRANSPORT)

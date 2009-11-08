@@ -1829,9 +1829,9 @@ void Spell::SelectEffectTargets(uint32 i, uint32 cur)
                     float min_dis = GetSpellMinRange(m_spellInfo, true);
                     float max_dis = GetSpellMaxRange(m_spellInfo, true);
                     float dis = rand_norm() * (max_dis - min_dis) + min_dis;
-                    m_targets.setDst(x, y, z, m_caster->GetOrientation());
+                    float x, y, z;
                     m_caster->GetClosePoint(x, y, z, DEFAULT_WORLD_OBJECT_SIZE, dis);
-                    m_targets.setDst(x, y, z);
+                    m_targets.setDst(x, y, z, m_caster->GetOrientation());
                     break;
                 }
                 case TARGET_UNIT_MASTER:
@@ -5291,8 +5291,8 @@ SpellCastResult Spell::CheckCasterAuras() const
     SpellCastResult prevented_reason = SPELL_CAST_OK;
     // Have to check if there is a stun aura. Otherwise will have problems with ghost aura apply while logging out
     uint32 unitflag = m_caster->GetUInt32Value(UNIT_FIELD_FLAGS);     // Get unit state
-         if(unitflag & UNIT_FLAG_STUNNED && (!(m_spellInfo->AttributesEx5 & SPELL_ATTR_EX5_USABLE_WHILE_STUNNED) ||
-           (m_spellInfo->Id == 33206 && !m_caster->HasAura(63248))))
+    if(unitflag & UNIT_FLAG_STUNNED && (!(m_spellInfo->AttributesEx5 & SPELL_ATTR_EX5_USABLE_WHILE_STUNNED) ||
+        (m_spellInfo->Id == 33206 && !m_caster->HasAura(63248))))
         prevented_reason = SPELL_FAILED_STUNNED;
     else if(unitflag & UNIT_FLAG_CONFUSED && !(m_spellInfo->AttributesEx5 & SPELL_ATTR_EX5_USABLE_WHILE_CONFUSED))
         prevented_reason = SPELL_FAILED_CONFUSED;

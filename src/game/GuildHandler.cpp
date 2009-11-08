@@ -1117,7 +1117,7 @@ void WorldSession::HandleGuildBankSwapItems( WorldPacket & recv_data )
     Guild *pGuild = objmgr.GetGuildById(GuildId);
     if(!pGuild)
         return;
-		
+
     if (BankTab >= pGuild->GetPurchasedTabs())
         return;
 

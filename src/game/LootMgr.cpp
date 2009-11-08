@@ -868,7 +868,7 @@ void LootTemplate::LootGroup::Process(Loot& loot, uint16 lootMode) const
                return;                             // Never add the same item twice
 
         loot.AddItem(*item);
-    }			
+    }
 }
 
 // Overall chance for the group without equal chanced items

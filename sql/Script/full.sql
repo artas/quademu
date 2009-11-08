@@ -2289,6 +2289,7 @@ DELETE FROM `npc_option` WHERE `id`=51;
 INSERT INTO `npc_option` (`id`,`gossip_id`,`npcflag`,`icon`,`action`,`box_money`,`coded`,`option_text`,`box_text`) VALUES
    ('51','0','16','0','18','10000000','0','Purchase a Dual Talent Specialization.','Are you sure you wish to purchase a Dual Talent Specialization?');
 
+
 -- This file contains all waypoints used by escortAI scripts
 /*
 DROP TABLE IF EXISTS script_waypoint;
@@ -4010,6 +4011,8 @@ INSERT INTO `script_waypoint` VALUES
    (25208, 40, 4262.6, 6194.47, -0.145114, 0, ''),
    (25208, 41, 4268.96, 6189.47, 0.0303093, 21000, '');
 
+
+
 -- Cleanup first
 UPDATE `creature_template` SET `ScriptName`='';
 
@@ -4376,6 +4379,7 @@ UPDATE `creature_template` SET `ScriptName`='npc_lurgglbr' WHERE `entry`=25208;
 UPDATE `creature_template` SET `ScriptName`='npc_nexus_drake_hatchling' WHERE `entry`=26127;
 UPDATE `creature_template` SET `ScriptName`='npc_nesingwary_trapper' WHERE `entry`=25835;
 UPDATE `item_template` SET `ScriptName`='item_pile_fake_furs' WHERE `entry`=35127;
+
 
 /* BURNING STEPPES */
 UPDATE `creature_template` SET `ScriptName`='npc_ragged_john' WHERE `entry`=9563;
@@ -5492,6 +5496,7 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 DELETE FROM `creature_ai_texts` WHERE `entry`=-980;
 INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
    (-980,'Kroshius live? Kroshius crush!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,NULL);
+
 
 -- --------
 -- LINKED
@@ -7819,6 +7824,7 @@ UPDATE creature_template SET VehicleId = 165 , spell1 = 56091,spell2 = 56092,spe
 UPDATE creature_template SET armor = 9729, mindmg = 422, maxdmg=586, minrangedmg=345, maxrangedmg=509, attackpower=642, rangedattackpower=103 WHERE entry = 32535;
 update creature set DeathState = 0 where id = 26219;
 
+
 TRUNCATE TABLE `quad_string`;
 INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`) VALUES
 (1, 'You should select a character or a creature.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -8637,6 +8643,11 @@ INSERT INTO `quad_string` (`entry`, `content_default`, `content_loc1`, `content_
 (10055, 'Give me the flag, I''ll take it to the central beacon for the glory of the Horde!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (11000, '|cffffff00[|c00077766Autobroadcast|cffffff00]: |cFFF222FF%s|r', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+----world_guildmaster
+DELETE FROM `creature_template` WHERE `entry`=99003;
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99003, 0, 0, 0, 18748, 5525, 20711, 17895, 'Bruenno Guilde', 'Guildhouse Keeper', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'guildmaster');
+----
+UPDATE `creature_template` SET `spell2`='50990' WHERE `entry`=27881;
 /*!40101 SET NAMES utf8 */;
 ----scripts_guildmaster
 INSERT INTO `guildhouses` VALUES
@@ -8660,9 +8671,3 @@ INSERT INTO `guildhouses` VALUES
 (19, 0, -11805, -4754, 6, 1, 'Деревня гоблинов, Танарис'),/*Goblin village (Tanaris, South Seas)*/
 (20, 0, -9296, 670, 132, 0, 'Лагерь бандитов, Элвиннский лес'),/*Villains camp outside an Stormwind (Elwynn Forest)*/
 (21, 0, 3414, -3380, 142.2, 0, 'Стратхольм');/*Stratholm an outside instance*/
-
-----world_guildmaster
-DELETE FROM `creature_template` WHERE `entry`=99003;
-INSERT INTO `creature_template` (`entry`, `heroic_entry`, `KillCredit1`, `KillCredit2`, `modelid1`, `modelid2`, `modelid3`, `modelid4`, `name`, `subname`, `IconName`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `VehicleId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (99003, 0, 0, 0, 18748, 5525, 20711, 17895, 'Bruenno Guilde', 'Guildhouse Keeper', '', 59, 61, 6700, 24000, 5598, 5875, 4049, 35, 35, 1, 1.48, 1, 0, 339, 347, 0, 158, 1, 1500, 1900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 'guildmaster');
-----
-UPDATE `creature_template` SET `spell2`='50990' WHERE `entry`=27881;

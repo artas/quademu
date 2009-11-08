@@ -462,14 +462,8 @@ void Object::_BuildMovementUpdate(ByteBuffer * data, uint16 flags) const
     // 0x80
     if(flags & UPDATEFLAG_VEHICLE)                          // unused for now
     {
-        if(((Unit*)this)->GetVehicleKit())
-		{
-			*data << uint32(((Unit*)this)->GetVehicleKit()->GetVehicleInfo()->m_ID);  // vehicle id
-			*data << float(0);                                  // facing adjustment
-		}else{
-			*data << uint32(0);  // vehicle id
-			*data << float(0);  
-		}
+        *data << uint32(((Unit*)this)->GetVehicleKit()->GetVehicleInfo()->m_ID);  // vehicle id
+        *data << float(0);                                  // facing adjustment
     }
 
     // 0x200
@@ -544,8 +538,6 @@ void Object::_BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask 
 
                     if (GetTypeId() == TYPEID_UNIT && !target->canSeeSpellClickOn((Creature*)this))
                         appendValue &= ~UNIT_NPC_FLAG_SPELLCLICK;
-					if (GetTypeId() == TYPEID_PLAYER && ((Player*)this)->IsVehicle())
-                        appendValue &= ~UNIT_NPC_FLAG_SPELLCLICK;						
 
                     *data << uint32(appendValue);
                 }

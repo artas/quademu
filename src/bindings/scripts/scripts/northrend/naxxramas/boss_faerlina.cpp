@@ -124,7 +124,7 @@ struct QUAD_DLL_DECL boss_faerlinaAI : public BossAI
                     return;
                 case EVENT_FRENZY:
                     DoCast(me,HEROIC(SPELL_FRENZY,H_SPELL_FRENZY));
-                    delayFrenzy = false;					
+                    delayFrenzy = false;
                     return;
                 case EVENT_AFTERENRAGE:
                     events.ScheduleEvent(EVENT_FRENZY, urand(60000,80000));
@@ -199,7 +199,7 @@ void AddSC_boss_faerlina()
     newscript = new Script;
     newscript->Name = "mob_faerlina_add";
     newscript->GetAI = &GetAI_mob_faerlina_add;
-    newscript->RegisterSelf();	
+    newscript->RegisterSelf();
 }
 
 

@@ -2560,59 +2560,57 @@ void Player::GiveLevel(uint8 level)
 
     GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_LEVEL);
     // Bonus money system
-    uint32 level = getLevel();
+ uint32 level = getLevel();
     // int cos
-    int coso;
-    int cosa;
-    int cosb;
-    int cosc;
-    int cosd;
-    int cose;
-    int cosf;
+   int cosa;
+   int cosb;
+   int cosc;
+   int cosd;
+   int cose;
+   int cosf;
     //cos = money
-    coso = 0;
-    cosa = 100000;
-    cosb = 1000000;
-    cosc = 2500000;
-    cosd = 5000000;
-    cose = 7500000;
-    cosf = 30000000;
+   cosa = 100000;
+   cosb = 1000000;
+   cosc = 2500000;
+   cosd = 5000000;
+   cose = 7500000;
+   cosf = 30000000;
 
    if(level == 10)
   {
-   this->ModifyMoney(this->coso+cosa);
+   this->ModifyMoney(this->GetMoney()+ cosa);
    this->SaveToDB();
   }
 
-  if(level == 20)
- {
-  this->ModifyMoney(this->coso+(cosb-cosa));
-  this->SaveToDB();
- }
+   if(level == 20)
+  {
+   this->ModifyMoney(this->GetMoney()+(cosb-cosa));
+   this->SaveToDB();
+  }
 
- if(level == 30)
- {
-  this->ModifyMoney(this->coso+(cosc-(cosb+cosa)));
+  if(level == 30)
+  {
+  this->ModifyMoney(this->GetMoney()+ (cosc-(cosb+cosa)));
   this->SaveToDB();
- }
+  }
 
  if(level == 40)
- {
-  this->ModifyMoney(this->coso+(cosd-(cosc+cosb+cosa)));
+  {
+  this->ModifyMoney(this->GetMoney()+(cosd-(cosc+cosb+cosa)));
   this->SaveToDB();
- }
+  }
 
  if(level == 50)
- {
-  this->ModifyMoney(this->coso+(cose-(cosd+cosc+cosb+cosa)));
+  {
+  this->ModifyMoney(this->GetMoney()+(cose-(cosd+cosc+cosb+cosa)));
   this->SaveToDB();
- }
+  }
 
  if(level == 80)
- {
-  this->ModifyMoney(this->coso+(cosf-(cose+cosd+cosc+cosb+cosa)));
+  {
+  this->ModifyMoney(this->GetMoney()+ (cosf-(cose+cosd+cosc+cosb+cosa)));
   this->SaveToDB();
- }			
+  }			
 }
 
 void Player::InitTalentForLevel()
@@ -3589,7 +3587,7 @@ void Player::removeSpell(uint32 spell_id, bool disabled, bool learn_low_rank)
         // if talent then lesser rank also talent and need learn
         if (talentCosts)
         {
-            // I cannot see why core has these lines.
+            // I cannot see why mangos has these lines.
             //if(learn_low_rank)
             //    learnSpell (prev_id,false);
         }

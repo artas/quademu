@@ -111,7 +111,7 @@ void AddSC_boss_loatheb()
     newscript->Name = "boss_loatheb";
     newscript->GetAI = &GetAI_boss_loatheb;
     newscript->RegisterSelf();
-	
+
     newscript = new Script;
     newscript->Name = "mob_loatheb_spore";
     newscript->GetAI = &GetAI_mob_loatheb_spore;

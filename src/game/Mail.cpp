@@ -813,59 +813,6 @@ void WorldSession::HandleQueryNextMailTime(WorldPacket & /*recv_data*/ )
     SendPacket(&data);
 }
 
-void WorldSession::SendExternalMails()
-{
-        sLog.outString("Load External mails...");
-        QueryResult *result = CharacterDatabase.Query("SELECT id,sender,receiver,subject,message,money,stationery FROM mail_external WHERE sent=0");
-        if(!result)
-        {
-                sLog.outString("...No New Mails...");
-                delete result;
-                return;
-        }else{
-                do{
-                        Field *fields = result->Fetch();
-                        uint32 id = fields[0].GetUInt32();
-                        sLog.outString("Working Mail #%u",id);
-                        uint32 senderGUID = fields[1].GetUInt32();
-                        uint32 receiverGUID = fields[2].GetUInt32();
-                        char const* subject = fields[3].GetString();
-                        char const* message = fields[4].GetString();
-                        uint32 money = fields[5].GetUInt32();
-                        uint8 stationery =    fields[6].GetUInt8();
-                        Player* Receiver=objmgr.GetPlayer(receiverGUID);
-                        uint32 NewItemTextID=objmgr.CreateItemText(message);
-
-                        MailItemsInfo MailItems;
-
-                        QueryResult *result2 = CharacterDatabase.PQuery("SELECT item FROM mail_external_items WHERE mail_id=%u",id);
-                        if (result2)
-                        {
-                                sLog.outString("Mail has Items...");
-                                do{
-                                        Field *itemfields = result2->Fetch();
-                                        uint32 ItemID=itemfields[0].GetUInt32();
-                                        Item* ToMailItem=Item::CreateItem(ItemID,1,Receiver);
-                                        ToMailItem->SaveToDB();
-                                        MailItems.AddItem(ToMailItem->GetGUIDLow(),ToMailItem->GetEntry(),ToMailItem);
-                                        sLog.outString("Generated Item:%u, GUID:%u",ItemID,ToMailItem->GetGUID());
-                                }while(result2->NextRow());
-                                sLog.outString("..Done Items");
-                        }
-
-                        delete result2;
-                        sLog.outString("...Send Mail #%u, Stationery #%u...",id,stationery);
-                        WorldSession::SendMailTo(Receiver,MAIL_NORMAL,stationery ,senderGUID,receiverGUID,subject,NewItemTextID,&MailItems,money,0,MAIL_CHECK_MASK_RETURNED,  0);
-
-                        sLog.outString("...Update Mail #%u to sent...",id);
-                        CharacterDatabase.PExecute("UPDATE mail_external SET sent=1 WHERE id=%u",id);
-                        sLog.outString("...Done Mail #%u...",id);
-                }while(result->NextRow());
-        }
-        delete result;
-        sLog.outString("...End Load External mails");
-}
-
 void WorldSession::SendMailTo(Player* receiver, uint8 messageType, uint8 stationery, uint32 sender_guidlow_or_entry, uint32 receiver_guidlow, std::string subject, uint32 itemTextId, MailItemsInfo* mi, uint32 money, uint32 COD, uint32 checked, uint32 deliver_delay, uint16 mailTemplateId)
 {
     if (receiver_guidlow == auctionbot.GetAHBplayerGUID())

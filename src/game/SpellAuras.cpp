@@ -3311,7 +3311,7 @@ void AuraEffect::HandleAuraMounted(bool apply, bool Real, bool /*changeAmount*/)
             if(GetSpellProto()->Effect[i] == SPELL_EFFECT_SUMMON
                 && GetSpellProto()->EffectMiscValue[i] == GetMiscValue())
                 display_id = 0;
-        m_target->Mount(display_id,ci->VehicleId);
+        m_target->Mount(display_id);
     }
     else
     {
@@ -4002,7 +4002,7 @@ void AuraEffect::HandleModFear(bool apply, bool Real, bool /*changeAmount*/)
         }
         if(spell_id)
             m_target->CastSpell(m_target, spell_id, false);
-    } // end	
+    } 	
 }
 
 void AuraEffect::HandleFeignDeath(bool apply, bool Real, bool /*changeAmount*/)

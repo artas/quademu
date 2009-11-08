@@ -1813,7 +1813,6 @@ void World::Update(uint32 diff)
             sLog.outBasic("Update time diff: %u. Players online: %u.", m_updateTimeSum / m_updateTimeCount, GetActiveSessionCount());
             m_updateTimeSum = m_updateTime;
             m_updateTimeCount = 1;
-	        WorldSession::SendExternalMails();			
         }
         else
         {
