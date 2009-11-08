@@ -181,7 +181,7 @@ struct QUAD_DLL_DECL boss_bjarngrimAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BJARNGRIM, DONE);
     }
 
-    //TODO: remove when removal is done by mangos
+    //TODO: remove when removal is done by core
     void DoRemoveStanceAura(uint8 uiStance)
     {
         switch(uiStance)

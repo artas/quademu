@@ -1,6 +1,6 @@
 # 
 #
-# Thanks to the original authors: MaNGOS <http://getmangos.com/>
+# Thanks to the original authors: MaNGOS <http://getcore.com/>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 ## Sub-directories to parse
 
 ## Build MaNGOS script library as shared library.
-#  libmangosscript shared library will later be reused by world server daemon.
+#  libcorescript shared library will later be reused by world server daemon.
 lib_LTLIBRARIES = libquadscript.la
 
 libquadscript_la_CPPFLAGS = \

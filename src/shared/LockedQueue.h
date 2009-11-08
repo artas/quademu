@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 MaNGOS <http://getmangos.com/>
+ * Copyright (C) 2009 MaNGOS <http://getcore.com/>
  *
 
  */

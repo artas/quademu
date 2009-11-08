@@ -3587,7 +3587,7 @@ void Player::removeSpell(uint32 spell_id, bool disabled, bool learn_low_rank)
         // if talent then lesser rank also talent and need learn
         if (talentCosts)
         {
-            // I cannot see why mangos has these lines.
+            // I cannot see why core has these lines.
             //if(learn_low_rank)
             //    learnSpell (prev_id,false);
         }
