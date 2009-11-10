@@ -7591,6 +7591,14 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             trigger_spell_id = 26470;
             break;
         }
+        // Blessing of Ancient Kings (Val'anyr, Hammer of Ancient Kings)
+        case 64411:  
+        {
+            basepoints0 = damage * 15 / 100;
+            target = pVictim;
+            trigger_spell_id = 26470;
+            break;
+        }		
         // Unyielding Knights
         case 38164:
         {
