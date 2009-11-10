@@ -909,7 +909,8 @@ bool OPvPWintergrasp::UpdateCreatureInfo(Creature *creature)
             }
             else
             {
-                creature->GetVehicleKit()->RemoveAllPassengers();
+                if (creature->IsVehicle() && creature->GetVehicleKit())
+                    creature->GetVehicleKit()->RemoveAllPassengers();
                 creature->SetVisibility(VISIBILITY_OFF);
                 creature->setFaction(35);
             }
@@ -944,7 +945,7 @@ bool OPvPWintergrasp::UpdateCreatureInfo(Creature *creature)
         case CREATURE_ENGINEER:
             return false;
         case CREATURE_SIEGE_VEHICLE:
-            creature->DisappearAndDie();
+            //creature->DisappearAndDie();
             return false;
         case CREATURE_GUARD:
         case CREATURE_SPECIAL:

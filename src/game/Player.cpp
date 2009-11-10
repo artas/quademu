@@ -2610,7 +2610,7 @@ void Player::GiveLevel(uint8 level)
   {
   this->ModifyMoney(this->GetMoney()+ (cosf-(cose+cosd+cosc+cosb+cosa)));
   this->SaveToDB();
-  }			
+  }	
 }
 
 void Player::InitTalentForLevel()

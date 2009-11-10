@@ -3489,7 +3489,7 @@ void ObjectMgr::LoadQuests()
     //   47            48            49            50            51               52               53               54
         "ReqSourceId1, ReqSourceId2, ReqSourceId3, ReqSourceId4, ReqSourceCount1, ReqSourceCount2, ReqSourceCount3, ReqSourceCount4,"
     //   55                  56                  57                  58                  59                     60                     61                     62
-        "ReqNpcOrGOId1, ReqNpcOrGOId2, ReqNpcOrGOId3, ReqNpcOrGOId4, ReqNpcOrGOCount1, ReqNpcOrGOCount2, ReqNpcOrGOCount3, ReqNpcOrGOCount4,"
+        "ReqCreatureOrGOId1, ReqCreatureOrGOId2, ReqCreatureOrGOId3, ReqCreatureOrGOId4, ReqCreatureOrGOCount1, ReqCreatureOrGOCount2, ReqCreatureOrGOCount3, ReqCreatureOrGOCount4,"
     //   63             64             65             66
         "ReqSpellCast1, ReqSpellCast2, ReqSpellCast3, ReqSpellCast4,"
     //   67                68                69                70                71                72
@@ -8550,6 +8550,11 @@ uint64 ObjectMgr::GenerateGMTicketId()
 
 void ObjectMgr::LoadGMTickets()
 {
+    if(!m_GMTicketList.empty())
+    {
+        for(GmTicketList::const_iterator itr = m_GMTicketList.begin(); itr != m_GMTicketList.end(); ++itr)
+            delete *itr;
+    }
     m_GMTicketList.clear();
 
     QueryResult *result = CharacterDatabase.Query( "SELECT guid, playerGuid, name, message, createtime, map, posX, posY, posZ, timestamp, closed, assignedto, comment FROM gm_tickets" );
@@ -8587,11 +8592,19 @@ void ObjectMgr::LoadGMTickets()
 
     } while( result->NextRow() );
 
+    delete result;
+
     result = CharacterDatabase.PQuery("SELECT MAX(guid) from gm_tickets");
-    m_GMticketid = (*result)[0].GetUInt64();
+    m_GMticketid = 0;
+
+    if(result)
+    {
+        Field *fields = result->Fetch();
+        m_GMticketid = fields[0].GetUInt64();
+    }
+    delete result;
 
     sLog.outString(">>> %u GM Tickets loaded from the database.", count);
-    delete result;
 }
 
 void ObjectMgr::AddOrUpdateGMTicket(GM_Ticket &ticket, bool create)

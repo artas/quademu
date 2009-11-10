@@ -4002,7 +4002,7 @@ void AuraEffect::HandleModFear(bool apply, bool Real, bool /*changeAmount*/)
         }
         if(spell_id)
             m_target->CastSpell(m_target, spell_id, false);
-    } 	
+    } // end	
 }
 
 void AuraEffect::HandleFeignDeath(bool apply, bool Real, bool /*changeAmount*/)
