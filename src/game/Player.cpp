@@ -5964,6 +5964,15 @@ void Player::removeActionButton(uint8 button)
 
 bool Player::SetPosition(float x, float y, float z, float orientation, bool teleport)
 {
+
+    if(GetMapId() == 571 && getLevel()<68)
+    {
+		switch(GetTeam())
+		{
+       		case ALLIANCE: TeleportTo(0, -8830.62f, 622.80f, 93.85f, 3.9f); break;
+        	case HORDE: TeleportTo(1, 1629.35f, -4373.39f, 31.26f, 3.5f); break;
+		}
+    }
     // prevent crash when a bad coord is sent by the client
     if (!Quad::IsValidMapCoord(x,y,z,orientation))
     {
