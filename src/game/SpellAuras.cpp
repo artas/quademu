@@ -1182,7 +1182,9 @@ void Aura::HandleAuraSpecificMods(bool apply)
             }
         }
     }
-
+    //Pally Auras MassEffects
+	if (spellProto->SpellFamilyFlags[2] & 0x00000020 && spellProto->SpellIconID == 555) 
+	
     if (GetSpellSpecific(m_spellProto->Id) == SPELL_PRESENCE)
     {
         AuraEffect *bloodPresenceAura=0;  // healing by damage done
