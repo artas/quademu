@@ -784,8 +784,6 @@ void AreaAuraEffect::Update(uint32 diff)
                         newBp = actualSpellInfo->EffectBasePoints[m_effIndex];
                     (*tIter)->AddAuraEffect(actualSpellInfo, GetEffIndex(), source, caster, &newBp);
 
-                    if(m_areaAuraType == AREA_AURA_ENEMY)
-                        caster->CombatStart(*tIter);
                 }
             }
         }
