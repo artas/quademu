@@ -112,7 +112,7 @@ struct QUAD_DLL_DECL mob_unkor_the_ruthlessAI : public ScriptedAI
         {
             if (!UnkorUnfriendly_Timer)
             {
-                //DoCast(m_creature,SPELL_QUID9889);        //not using spell for now
+                //DoCast(m_creature, SPELL_QUID9889);        //not using spell for now
                 DoNice();
             }
             else
@@ -130,7 +130,7 @@ struct QUAD_DLL_DECL mob_unkor_the_ruthlessAI : public ScriptedAI
 
         if (Pulverize_Timer <= diff)
         {
-            DoCast(m_creature,SPELL_PULVERIZE);
+            DoCast(m_creature, SPELL_PULVERIZE);
             Pulverize_Timer = 9000;
         } else Pulverize_Timer -= diff;
 
@@ -160,7 +160,7 @@ struct QUAD_DLL_DECL mob_infested_root_walkerAI : public ScriptedAI
             if (m_creature->GetHealth() <= damage)
                 if (rand()%100 < 75)
                     //Summon Wood Mites
-                    m_creature->CastSpell(m_creature,39130,true);
+                    DoCast(m_creature, 39130, true);
     }
 };
 CreatureAI* GetAI_mob_infested_root_walker(Creature* pCreature)
@@ -240,7 +240,7 @@ struct QUAD_DLL_DECL mob_rotting_forest_ragerAI : public ScriptedAI
             if (m_creature->GetHealth() <= damage)
                 if (rand()%100 < 75)
                     //Summon Lots of Wood Mights
-                    m_creature->CastSpell(m_creature,39134,true);
+                    DoCast(m_creature, 39134, true);
     }
 };
 CreatureAI* GetAI_mob_rotting_forest_rager(Creature* pCreature)
@@ -342,19 +342,19 @@ struct QUAD_DLL_DECL npc_floonAI : public ScriptedAI
 
         if (Silence_Timer <= diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_SILENCE);
+            DoCast(m_creature->getVictim(), SPELL_SILENCE);
             Silence_Timer = 30000;
         } else Silence_Timer -= diff;
 
         if (FrostNova_Timer <= diff)
         {
-            DoCast(m_creature,SPELL_FROST_NOVA);
+            DoCast(m_creature, SPELL_FROST_NOVA);
             FrostNova_Timer = 20000;
         } else FrostNova_Timer -= diff;
 
         if (Frostbolt_Timer <= diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_FROSTBOLT);
+            DoCast(m_creature->getVictim(), SPELL_FROSTBOLT);
             Frostbolt_Timer = 5000;
         } else Frostbolt_Timer -= diff;
 
@@ -558,60 +558,56 @@ bool GossipSelect_npc_slim(Player* pPlayer, Creature* pCreature, uint32 uiSender
 }
 
 /*########
-####npc_Akuno
+####npc_akuno
 #####*/
 
-#define QUEST_NPC_AKUNO 10887
-#define Summon 21661
+enum eAkuno
+{
+    QUEST_ESCAPING_THE_TOMB = 10887,
+    NPC_CABAL_SKRIMISHER    = 21661
+};
 
 struct QUAD_DLL_DECL npc_akunoAI : public npc_escortAI
 {
     npc_akunoAI(Creature *c) : npc_escortAI(c) {}
 
-    bool IsWalking;
-
     void WaypointReached(uint32 i)
     {
         Player* pPlayer = GetPlayerForEscort();
 
-        if(!pPlayer)
+        if (!pPlayer)
             return;
-
-        if(IsWalking && !m_creature->HasUnitMovementFlag(MOVEMENTFLAG_WALK_MODE))
-            m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
 
         switch(i)
         {
-        case 0: m_creature->setFaction(5); break;
-        case 3:
-            m_creature->SummonCreature(Summon,-2795.99,5420.33,-34.53,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-            m_creature->SummonCreature(Summon,-2793.55,5412.79,-34.53,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-            break;
-        case 11:
-            if(pPlayer && pPlayer->GetTypeId() == TYPEID_PLAYER)
-                pPlayer->GroupEventHappens(QUEST_NPC_AKUNO,m_creature);
-            m_creature->setFaction(18);
-            break;
+            case 3:
+                m_creature->SummonCreature(NPC_CABAL_SKRIMISHER,-2795.99,5420.33,-34.53,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                m_creature->SummonCreature(NPC_CABAL_SKRIMISHER,-2793.55,5412.79,-34.53,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                break;
+            case 11:
+                if (pPlayer && pPlayer->GetTypeId() == TYPEID_PLAYER)
+                    pPlayer->GroupEventHappens(QUEST_ESCAPING_THE_TOMB,m_creature);
+                break;
         }
     }
 
-    void Reset()
+    void JustSummoned(Creature* summon)
     {
-        if (IsWalking && !m_creature->HasUnitMovementFlag(MOVEMENTFLAG_WALK_MODE))
-        {
-            m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
-            return;
-        }
-        IsWalking=false;
+        summon->AI()->AttackStart(m_creature);
     }
 };
 
 bool QuestAccept_npc_akuno(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
 {
-    if(pQuest->GetQuestId() == QUEST_NPC_AKUNO)
+    if (pQuest->GetQuestId() == QUEST_ESCAPING_THE_TOMB)
     {
         if (npc_akunoAI* pEscortAI = CAST_AI(npc_akunoAI, pCreature->AI()))
-          pEscortAI->Start(false, true, pPlayer->GetGUID());
+            pEscortAI->Start(false, false, pPlayer->GetGUID());
+
+        if (pPlayer->GetTeamId() == TEAM_ALLIANCE)
+            pCreature->setFaction(FACTION_ESCORT_A_NEUTRAL_PASSIVE);
+        else
+            pCreature->setFaction(FACTION_ESCORT_H_NEUTRAL_PASSIVE);
     }
     return true;
 }
