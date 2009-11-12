@@ -339,21 +339,21 @@ LootItem::LootItem(LootStoreItem const& li)
 bool LootItem::AllowedForPlayer(Player const * player) const
 {
     // DB conditions check
-    if ( !objmgr.IsPlayerMeetToCondition(player,conditionId) )
+    if (!objmgr.IsPlayerMeetToCondition(player,conditionId))
         return false;
 
-    if ( needs_quest )
+    if (needs_quest)
     {
         // Checking quests for quest-only drop (check only quests requirements in this case)
-        if( !player->HasQuestForItem(itemid) )
+        if (!player->HasQuestForItem(itemid))
             return false;
     }
     else
     {
         // Not quest only drop (check quest starting items for already accepted non-repeatable quests)
-        ItemPrototype const *pProto = objmgr.GetItemPrototype(itemid);
-        if (pProto && pProto->StartQuest && player->GetQuestStatus(pProto->StartQuest) != QUEST_STATUS_NONE && !player->HasQuestForItem(itemid))
-            return false;
+        if (ItemPrototype const *pProto = objmgr.GetItemPrototype(itemid))
+            if (pProto->StartQuest && player->GetQuestStatus(pProto->StartQuest) != QUEST_STATUS_NONE && !player->HasQuestForItem(itemid))
+                return false;
     }
 
     return true;
@@ -378,7 +378,7 @@ void Loot::AddItem(LootStoreItem const & item)
         // non-conditional one-player only items are counted here,
         // free for all items are counted in FillFFALoot(),
         // non-ffa conditionals are counted in FillNonQuestNonFFAConditionalLoot()
-        if( !item.conditionId )
+        if (!item.conditionId)
         {
             ItemPrototype const* proto = objmgr.GetItemPrototype(item.itemid);
             if (!proto || (proto->Flags & ITEM_FLAGS_PARTY_LOOT) == 0)
@@ -848,10 +848,10 @@ bool LootTemplate::LootGroup::HasQuestDrop() const
 // True if group includes at least 1 quest drop entry for active quests of the player
 bool LootTemplate::LootGroup::HasQuestDropForPlayer(Player const * player) const
 {
-    for (LootStoreItemList::const_iterator i=ExplicitlyChanced.begin(); i != ExplicitlyChanced.end(); ++i)
+    for (LootStoreItemList::const_iterator i = ExplicitlyChanced.begin(); i != ExplicitlyChanced.end(); ++i)
         if (player->HasQuestForItem(i->itemid))
             return true;
-    for (LootStoreItemList::const_iterator i=EqualChanced.begin(); i != EqualChanced.end(); ++i)
+    for (LootStoreItemList::const_iterator i = EqualChanced.begin(); i != EqualChanced.end(); ++i)
         if (player->HasQuestForItem(i->itemid))
             return true;
     return false;
@@ -863,10 +863,22 @@ void LootTemplate::LootGroup::Process(Loot& loot, uint16 lootMode) const
     LootStoreItem const * item = Roll();
     if (item != NULL && item->lootmode & lootMode) // only add this item if roll succeeds and the mode matches
     {
-        for (LootItemList::const_iterator _item = loot.items.begin(); _item != loot.items.end(); ++_item)
-           if (_item->itemid == item->itemid)
-               return;                             // Never add the same item twice
-
+        if (ItemPrototype const* _proto = sItemStorage.LookupEntry<ItemPrototype>(item->itemid))
+        {
+            uint8 _item_counter = 0;
+            LootItemList::const_iterator _item = loot.items.begin();
+            for (; _item != loot.items.end(); ++_item)
+                if (_item->itemid == item->itemid)
+                {
+                    ++_item_counter;
+                    if (_proto->InventoryType == 0 && _item_counter == 3)     // Non-equippable items are limited to 3 drops
+                        return;
+                    else if(_proto->InventoryType != 0 && _item_counter == 1) // Equippable item are limited to 1 drop
+                        return;
+                }
+            //if (_item != loot.items.end())
+            //    return;
+        }
         loot.AddItem(*item);
     }
 }
@@ -971,15 +983,28 @@ void LootTemplate::Process(Loot& loot, LootStore const& store, bool rate, uint16
         if (!i->Roll(rate))
             continue;                                         // Bad luck for the entry
 
-        for (LootItemList::const_iterator _item = loot.items.begin(); _item != loot.items.end(); ++_item)
-           if (_item->itemid == i->itemid)
-               continue;                                      // Never add the same item twice
+        if (ItemPrototype const* _proto = sItemStorage.LookupEntry<ItemPrototype>(i->itemid))
+        {
+            uint8 _item_counter = 0;
+            LootItemList::const_iterator _item = loot.items.begin();
+            for (; _item != loot.items.end(); ++_item)
+                if (_item->itemid == i->itemid)
+                {
+                    ++_item_counter;
+                    if (_proto->InventoryType == 0 && _item_counter == 3)     // Non-equippable items are limited to 3 drops
+                        continue;
+                    else if(_proto->InventoryType != 0 && _item_counter == 1) // Equippable item are limited to 1 drop
+                        continue;
+                }
+            if (_item != loot.items.end())
+                continue;
+        }
 
         if (i->mincountOrRef < 0)                             // References processing
         {
             LootTemplate const* Referenced = LootTemplates_Reference.GetLootFor(-i->mincountOrRef);
 
-            if(!Referenced)
+            if (!Referenced)
                 continue;                                     // Error message already printed at loading stage
 
             for (uint32 loop = 0; loop < i->maxcount; ++loop) // Ref multiplicator
@@ -1047,12 +1072,12 @@ bool LootTemplate::HasQuestDropForPlayer(LootTemplateMap const& store, Player co
             if (Referenced->second->HasQuestDropForPlayer(store, player, i->group) )
                 return true;
         }
-        else if ( player->HasQuestForItem(i->itemid) )
+        else if (player->HasQuestForItem(i->itemid))
             return true;                                    // active quest drop found
     }
 
     // Now checking groups
-    for (LootGroups::const_iterator i = Groups.begin(); i != Groups.end(); ++i )
+    for (LootGroups::const_iterator i = Groups.begin(); i != Groups.end(); ++i)
         if (i->HasQuestDropForPlayer(player))
             return true;
 
