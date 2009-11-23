@@ -28,10 +28,10 @@ AM_CPPFLAGS = $(TRINI_INCLUDES) -I$(top_builddir)/src/shared -I$(srcdir) -I$(src
 ## Build MaNGOS shared library and its parts as convenience library.
 #  All libraries will be convenience libraries. Might be changed to shared
 #  later.
-noinst_LIBRARIES = libcoreshared.a
+noinst_LIBRARIES = libmangosshared.a
 
-#  libcoreshared library will later be reused by ...
-libcoreshared_a_SOURCES = \
+#  libmangosshared library will later be reused by ...
+libmangosshared_a_SOURCES = \
 	Base.cpp \
 	Base.h \
 	ByteBuffer.h \

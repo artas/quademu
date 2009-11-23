@@ -32,7 +32,7 @@
 #include <stdarg.h>
 
 /// %Log packets to a file
-class CORE_DLL_DECL WorldLog : public MaNGOS::Singleton<WorldLog, MaNGOS::ClassLevelLockable<WorldLog, ACE_Thread_Mutex> >
+class MANGOS_DLL_DECL WorldLog : public MaNGOS::Singleton<WorldLog, MaNGOS::ClassLevelLockable<WorldLog, ACE_Thread_Mutex> >
 {
     friend class Quad::OperatorNew<WorldLog>;
     WorldLog();

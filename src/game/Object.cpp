@@ -1496,7 +1496,7 @@ namespace Quad
                 : i_object(obj), i_msgtype(msgtype), i_textId(textId), i_language(language), i_targetGUID(targetGUID) {}
             void operator()(WorldPacket& data, int32 loc_idx)
             {
-                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
+                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
 
                 // TODO: i_object.GetName() also must be localized?
                 i_object.BuildMonsterChat(&data,i_msgtype,text,i_language,i_object.GetNameForLocaleIdx(loc_idx),i_targetGUID);
@@ -1783,7 +1783,7 @@ Pet* Player::SummonPet(uint32 entry, float x, float y, float z, float ang, PetTy
     {
         // Remove Demonic Sacrifice auras (known pet)
         Unit::AuraEffectList const& auraClassScripts = GetAurasByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
-        for (Unit::AuraEffectList::const_iterator itr = auraClassScripts.begin(); itr!=auraClassScripts.end(); )
+        for (Unit::AuraEffectList::const_iterator itr = auraClassScripts.begin(); itr!=auraClassScripts.end();)
         {
             if((*itr)->GetMiscValue()==2228)
             {
@@ -1864,7 +1864,7 @@ Pet* Player::SummonPet(uint32 entry, float x, float y, float z, float ang, PetTy
     {
         // Remove Demonic Sacrifice auras (known pet)
         Unit::AuraEffectList const& auraClassScripts = GetAurasByType(SPELL_AURA_OVERRIDE_CLASS_SCRIPTS);
-        for (Unit::AuraEffectList::const_iterator itr = auraClassScripts.begin(); itr!=auraClassScripts.end(); )
+        for (Unit::AuraEffectList::const_iterator itr = auraClassScripts.begin(); itr!=auraClassScripts.end();)
         {
             if((*itr)->GetMiscValue()==2228)
             {
@@ -1903,7 +1903,7 @@ GameObject* WorldObject::SummonGameObject(uint32 entry, float x, float y, float 
         return NULL;
     }
     go->SetRespawnTime(respawnTime);
-    if(GetTypeId() == TYPEID_PLAYER || GetTypeId()==TYPEID_UNIT) //not sure how to handle this
+    if(GetTypeId() == TYPEID_PLAYER || GetTypeId() == TYPEID_UNIT) //not sure how to handle this
         ((Unit*)this)->AddGameObject(go);
     else
         go->SetSpawnedByDefault(false);
@@ -1920,7 +1920,7 @@ Creature* WorldObject::SummonTrigger(float x, float y, float z, float ang, uint3
         return NULL;
 
     //summon->SetName(GetName());
-    if(GetTypeId() == TYPEID_PLAYER || GetTypeId()==TYPEID_UNIT)
+    if(GetTypeId() == TYPEID_PLAYER || GetTypeId() == TYPEID_UNIT)
     {
         summon->setFaction(((Unit*)this)->getFaction());
         summon->SetLevel(((Unit*)this)->getLevel());
@@ -1931,52 +1931,38 @@ Creature* WorldObject::SummonTrigger(float x, float y, float z, float ang, uint3
     return summon;
 }
 
-Creature* WorldObject::FindNearestCreature(uint32 entry, float range, bool alive)
+Creature* WorldObject::FindNearestCreature(uint32 uiEntry, float fMaxSearchRange, bool bAlive)
 {
-    Creature *creature = NULL;
-    Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck checker(*this, entry, alive, range);
-    Quad::CreatureLastSearcher<Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(this, creature, checker);
-    VisitNearbyObject(range, searcher);
-    return creature;
+    Creature *pCreature = NULL;
+    Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck checker(*this, uiEntry, bAlive, fMaxSearchRange);
+    Quad::CreatureLastSearcher<Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(this, pCreature, checker);
+    VisitNearbyObject(fMaxSearchRange, searcher);
+    return pCreature;
 }
 
-GameObject* WorldObject::FindNearestGameObject(uint32 entry, float range)
+GameObject* WorldObject::FindNearestGameObject(uint32 uiEntry, float fMaxSearchRange)
 {
-    GameObject *go = NULL;
-    Quad::NearestGameObjectEntryInObjectRangeCheck checker(*this, entry, range);
-    Quad::GameObjectLastSearcher<Quad::NearestGameObjectEntryInObjectRangeCheck> searcher(this, go, checker);
-    VisitNearbyGridObject(range, searcher);
-    return go;
-}
-
-void WorldObject::GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, uint32 uiEntry, float fMaxSearchRange)
-{
-    CellPair pair(Quad::ComputeCellPair(this->GetPositionX(), this->GetPositionY()));
-    Cell cell(pair);
-    cell.data.Part.reserved = ALL_DISTRICT;
-    cell.SetNoCreate();
-
-    Quad::AllGameObjectsWithEntryInRange check(this, uiEntry, fMaxSearchRange);
-    Quad::GameObjectListSearcher<Quad::AllGameObjectsWithEntryInRange> searcher(this, lList, check);
-    TypeContainerVisitor<Quad::GameObjectListSearcher<Quad::AllGameObjectsWithEntryInRange>, GridTypeMapContainer> visitor(searcher);
-
-    CellLock<GridReadGuard> cell_lock(cell, pair);
-    cell_lock->Visit(cell_lock, visitor, *(this->GetMap()));
+    GameObject *pGO = NULL;
+    Quad::NearestGameObjectEntryInObjectRangeCheck checker(*this, uiEntry, fMaxSearchRange);
+    Quad::GameObjectLastSearcher<Quad::NearestGameObjectEntryInObjectRangeCheck> searcher(this, pGO, checker);
+    VisitNearbyGridObject(fMaxSearchRange, searcher);
+    return pGO;
 }
 
 void WorldObject::GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, uint32 uiEntry, float fMaxSearchRange)
 {
-    CellPair pair(Quad::ComputeCellPair(this->GetPositionX(), this->GetPositionY()));
-    Cell cell(pair);
-    cell.data.Part.reserved = ALL_DISTRICT;
-    cell.SetNoCreate();
-
     Quad::AllCreaturesOfEntryInRange check(this, uiEntry, fMaxSearchRange);
     Quad::CreatureListSearcher<Quad::AllCreaturesOfEntryInRange> searcher(this, lList, check);
     TypeContainerVisitor<Quad::CreatureListSearcher<Quad::AllCreaturesOfEntryInRange>, GridTypeMapContainer> visitor(searcher);
+    VisitNearbyObject(fMaxSearchRange, searcher);
+}
 
-    CellLock<GridReadGuard> cell_lock(cell, pair);
-    cell_lock->Visit(cell_lock, visitor, *(this->GetMap()));
+void WorldObject::GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, uint32 uiEntry, float fMaxSearchRange)
+{
+    Quad::AllGameObjectsWithEntryInRange check(this, uiEntry, fMaxSearchRange);
+    Quad::GameObjectListSearcher<Quad::AllGameObjectsWithEntryInRange> searcher(this, lList, check);
+    TypeContainerVisitor<Quad::GameObjectListSearcher<Quad::AllGameObjectsWithEntryInRange>, GridTypeMapContainer> visitor(searcher);
+    VisitNearbyGridObject(fMaxSearchRange, searcher);
 }
 
 /*

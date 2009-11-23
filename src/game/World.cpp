@@ -280,7 +280,7 @@ bool World::HasRecentlyDisconnected(WorldSession* session)
 
     if (uint32 tolerance = getConfig(CONFIG_INTERVAL_DISCONNECT_TOLERANCE))
     {
-        for (DisconnectMap::iterator i = m_disconnects.begin(); i != m_disconnects.end(); )
+        for (DisconnectMap::iterator i = m_disconnects.begin(); i != m_disconnects.end();)
         {
             if (difftime(i->second, time(NULL)) < tolerance)
             {
@@ -545,38 +545,38 @@ void World::LoadConfigSettings(bool reload)
     rate_values[RATE_DURABILITY_LOSS_ON_DEATH]  = sConfig.GetFloatDefault("DurabilityLoss.OnDeath", 10.0f);
     if (rate_values[RATE_DURABILITY_LOSS_ON_DEATH] < 0.0f)
     {
-        sLog.outError("DurabilityLoss.OnDeath (%f) must be >=0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_ON_DEATH]);
+        sLog.outError("DurabilityLoss.OnDeath (%f) must be >= 0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_ON_DEATH]);
         rate_values[RATE_DURABILITY_LOSS_ON_DEATH] = 0.0f;
     }
     if (rate_values[RATE_DURABILITY_LOSS_ON_DEATH] > 100.0f)
     {
-        sLog.outError("DurabilityLoss.OnDeath (%f) must be <=100. Using 100.0 instead.",rate_values[RATE_DURABILITY_LOSS_ON_DEATH]);
-        rate_values[RATE_DURABILITY_LOSS_ON_DEATH] = 0.0f;
+        sLog.outError("DurabilityLoss.OnDeath (%f) must be <= 100. Using 100.0 instead.",rate_values[RATE_DURABILITY_LOSS_ON_DEATH]);
+        rate_values[RATE_DURABILITY_LOSS_ON_DEATH] = 100.0f;
     }
     rate_values[RATE_DURABILITY_LOSS_ON_DEATH] = rate_values[RATE_DURABILITY_LOSS_ON_DEATH] / 100.0f;
 
     rate_values[RATE_DURABILITY_LOSS_DAMAGE] = sConfig.GetFloatDefault("DurabilityLossChance.Damage",0.5f);
     if (rate_values[RATE_DURABILITY_LOSS_DAMAGE] < 0.0f)
     {
-        sLog.outError("DurabilityLossChance.Damage (%f) must be >=0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_DAMAGE]);
+        sLog.outError("DurabilityLossChance.Damage (%f) must be >= 0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_DAMAGE]);
         rate_values[RATE_DURABILITY_LOSS_DAMAGE] = 0.0f;
     }
     rate_values[RATE_DURABILITY_LOSS_ABSORB] = sConfig.GetFloatDefault("DurabilityLossChance.Absorb",0.5f);
     if (rate_values[RATE_DURABILITY_LOSS_ABSORB] < 0.0f)
     {
-        sLog.outError("DurabilityLossChance.Absorb (%f) must be >=0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_ABSORB]);
+        sLog.outError("DurabilityLossChance.Absorb (%f) must be >= 0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_ABSORB]);
         rate_values[RATE_DURABILITY_LOSS_ABSORB] = 0.0f;
     }
     rate_values[RATE_DURABILITY_LOSS_PARRY] = sConfig.GetFloatDefault("DurabilityLossChance.Parry",0.05f);
     if (rate_values[RATE_DURABILITY_LOSS_PARRY] < 0.0f)
     {
-        sLog.outError("DurabilityLossChance.Parry (%f) must be >=0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_PARRY]);
+        sLog.outError("DurabilityLossChance.Parry (%f) must be >= 0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_PARRY]);
         rate_values[RATE_DURABILITY_LOSS_PARRY] = 0.0f;
     }
     rate_values[RATE_DURABILITY_LOSS_BLOCK] = sConfig.GetFloatDefault("DurabilityLossChance.Block",0.05f);
     if (rate_values[RATE_DURABILITY_LOSS_BLOCK] < 0.0f)
     {
-        sLog.outError("DurabilityLossChance.Block (%f) must be >=0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_BLOCK]);
+        sLog.outError("DurabilityLossChance.Block (%f) must be >= 0. Using 0.0 instead.",rate_values[RATE_DURABILITY_LOSS_BLOCK]);
         rate_values[RATE_DURABILITY_LOSS_BLOCK] = 0.0f;
     }
 
@@ -2012,7 +2012,7 @@ namespace MaNGOS
             explicit WorldWorldTextBuilder(int32 textId, va_list* args = NULL) : i_textId(textId), i_args(args) {}
             void operator()(WorldPacketList& data_list, int32 loc_idx)
             {
-                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
+                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
 
                 if (i_args)
                 {

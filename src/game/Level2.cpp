@@ -780,7 +780,7 @@ bool ChatHandler::HandleGameObjectAddCommand(const char* args)
         return false;
     }
 
-    sLog.outDebug(GetCoreString(LANG_GAMEOBJECT_CURRENT), gInfo->name, db_lowGUID, x, y, z, o);
+    sLog.outDebug(GetMangosString(LANG_GAMEOBJECT_CURRENT), gInfo->name, db_lowGUID, x, y, z, o);
 
     map->Add(pGameObj);
 
@@ -3289,7 +3289,7 @@ bool ChatHandler::HandleCharacterReputationCommand(const char* args)
         FactionEntry const *factionEntry = sFactionStore.LookupEntry(itr->second.ID);
         char const* factionName = factionEntry ? factionEntry->name[loc] : "#Not found#";
         ReputationRank rank = target->GetReputationMgr().GetRank(factionEntry);
-        std::string rankName = GetCoreString(ReputationRankStrIndex[rank]);
+        std::string rankName = GetMangosString(ReputationRankStrIndex[rank]);
         std::ostringstream ss;
         if (m_session)
             ss << itr->second.ID << " - |cffffffff|Hfaction:" << itr->second.ID << "|h[" << factionName << " " << localeNames[loc] << "]|h|r";
@@ -3299,17 +3299,17 @@ bool ChatHandler::HandleCharacterReputationCommand(const char* args)
         ss << " " << rankName << " (" << target->GetReputationMgr().GetReputation(factionEntry) << ")";
 
         if(itr->second.Flags & FACTION_FLAG_VISIBLE)
-            ss << GetCoreString(LANG_FACTION_VISIBLE);
+            ss << GetMangosString(LANG_FACTION_VISIBLE);
         if(itr->second.Flags & FACTION_FLAG_AT_WAR)
-            ss << GetCoreString(LANG_FACTION_ATWAR);
+            ss << GetMangosString(LANG_FACTION_ATWAR);
         if(itr->second.Flags & FACTION_FLAG_PEACE_FORCED)
-            ss << GetCoreString(LANG_FACTION_PEACE_FORCED);
+            ss << GetMangosString(LANG_FACTION_PEACE_FORCED);
         if(itr->second.Flags & FACTION_FLAG_HIDDEN)
-            ss << GetCoreString(LANG_FACTION_HIDDEN);
+            ss << GetMangosString(LANG_FACTION_HIDDEN);
         if(itr->second.Flags & FACTION_FLAG_INVISIBLE_FORCED)
-            ss << GetCoreString(LANG_FACTION_INVISIBLE_FORCED);
+            ss << GetMangosString(LANG_FACTION_INVISIBLE_FORCED);
         if(itr->second.Flags & FACTION_FLAG_INACTIVE)
-            ss << GetCoreString(LANG_FACTION_INACTIVE);
+            ss << GetMangosString(LANG_FACTION_INACTIVE);
 
         SendSysMessage(ss.str().c_str());
     }
@@ -4240,9 +4240,6 @@ bool ChatHandler::HandleNpcSetLinkCommand(const char* args)
 
 bool ChatHandler::HandleWintergraspStatusCommand(const char* args)
 {
-    if(!*args)
-        return false;
-
     OPvPWintergrasp *pvpWG = (OPvPWintergrasp*)sOutdoorPvPMgr.GetOutdoorPvPToZoneId(4197);
 
     if (!pvpWG || !sWorld.getConfig(CONFIG_OUTDOORPVP_WINTERGRASP_ENABLED))
@@ -4252,7 +4249,12 @@ bool ChatHandler::HandleWintergraspStatusCommand(const char* args)
         return false;
     }
 
-    PSendSysMessage(LANG_BG_WG_STATUS, objmgr.GetQuadStringForDBCLocale(pvpWG->GetTeam() == TEAM_ALLIANCE ? LANG_BG_AB_ALLY : LANG_BG_AB_HORDE), secsToTimeString(pvpWG->GetTimer(), true).c_str(), pvpWG->isWarTime() ? "Yes" : "No");
+    PSendSysMessage(LANG_BG_WG_STATUS, objmgr.GetQuadStringForDBCLocale(
+        pvpWG->GetTeam() == TEAM_ALLIANCE ? LANG_BG_AB_ALLY : LANG_BG_AB_HORDE),
+        secsToTimeString(pvpWG->GetTimer(), true).c_str(),
+        pvpWG->isWarTime() ? "Yes" : "No",
+        pvpWG->GetNumPlayersH(),
+        pvpWG->GetNumPlayersA());
     return true;
 }
 
@@ -4298,7 +4300,7 @@ bool ChatHandler::HandleWintergraspEnableCommand(const char* args)
         SendSysMessage(LANG_BG_WG_DISABLE);
         SetSentErrorMessage(true);
         return false;
-    }    
+    }
 
     if (!strncmp(args, "on", 3))
     {

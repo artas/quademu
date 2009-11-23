@@ -20,7 +20,7 @@
 int num_sc_scripts;
 Script *m_scripts[MAX_SCRIPTS];
 
-Config QScriptConfig;
+Config TScriptConfig;
 
 void FillSpellSummary();
 void LoadOverridenSQLData();
@@ -29,7 +29,7 @@ void LoadOverridenDBCData();
 void LoadDatabase()
 {
     //Get db string from file
-    std::string dbstring = QScriptConfig.GetStringDefault("WorldDatabaseInfo", "");
+    std::string dbstring = TScriptConfig.GetStringDefault("WorldDatabaseInfo", "");
 
     if (dbstring.empty())
     {
@@ -38,7 +38,7 @@ void LoadDatabase()
     }
 
     //Initialize connection to DB
-    if (!dbstring.empty() && QScriptDB.Initialize(dbstring.c_str()))
+    if (!dbstring.empty() && TScriptDB.Initialize(dbstring.c_str()))
     {
         outstring_log("QUADSCRIPT: QuadScript database initialized successfully.");
         outstring_log("");
@@ -54,7 +54,7 @@ void LoadDatabase()
         return;
     }
 
-    QScriptDB.HaltDelayThread();
+    TScriptDB.HaltDelayThread();
 
 }
 
@@ -98,7 +98,7 @@ outstring_log("_________________________________________________________________
     outstring_log("");
 
     //Get configuration file
-    if (!QScriptConfig.SetSource(cfg_file))
+    if (!TScriptConfig.SetSource(cfg_file))
         error_log("QUADSCRIPT: Unable to open configuration file. Database will be unaccessible. Configuration values will use default.");
     else
         outstring_log("QUADSCRIPT: Using configuration file %s",cfg_file);
@@ -134,7 +134,7 @@ outstring_log("_________________________________________________________________
 std::string GetConfigValueStr(char const* option)
 {
     //Get db string from file
-    std::string dbstring = QScriptConfig.GetStringDefault(option, "");
+    std::string dbstring = TScriptConfig.GetStringDefault(option, "");
 
     if (dbstring.empty())
     {
@@ -147,7 +147,7 @@ std::string GetConfigValueStr(char const* option)
 int32 GetConfigValueInt32(char const* option)
 {
     //Get db int from file
-    int32 dbint = QScriptConfig.GetIntDefault(option, 0);
+    int32 dbint = TScriptConfig.GetIntDefault(option, 0);
 
     return dbint;
 }
@@ -155,7 +155,7 @@ int32 GetConfigValueInt32(char const* option)
 float GetConfigValueFloat(char const* option)
 {
     //Get db int from file
-    float dbfloat = QScriptConfig.GetFloatDefault(option, 0);
+    float dbfloat = TScriptConfig.GetFloatDefault(option, 0);
 
     return dbfloat;
 }

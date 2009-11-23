@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef CORESERVER_VEHICLE_H
-#define CORESERVER_VEHICLE_H
+#ifndef MANGOSSERVER_VEHICLE_H
+#define MANGOSSERVER_VEHICLE_H
 
 #include "ObjectDefines.h"
 

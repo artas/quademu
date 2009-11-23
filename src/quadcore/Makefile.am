@@ -35,22 +35,22 @@ quad_worldd_SOURCES = \
     WorldRunnable.h
 
 ## Link world daemon against the shared library
-<<<<<<< HEAD:src/cored/Makefile.am
-quad_worldd_LDADD = ../bindings/scripts/libquadscript.la ../game/libcoregame.a ../shared/Database/libcoredatabase.a ../shared/Config/libcoreconfig.a ../shared/Auth/libcoreauth.a ../shared/libcoreshared.a ../shared/vmap/libcorevmaps.a ../framework/libcoreframework.a ../../dep/src/sockets/libcoresockets.a  ../../dep/src/zthread/libZThread.la ../../dep/src/g3dlite/libg3dlite.a
+<<<<<<< HEAD:src/mangosd/Makefile.am
+quad_worldd_LDADD = ../bindings/scripts/libquadscript.la ../game/libmangosgame.a ../shared/Database/libmangosdatabase.a ../shared/Config/libmangosconfig.a ../shared/Auth/libmangosauth.a ../shared/libmangosshared.a ../shared/vmap/libmangosvmaps.a ../framework/libmangosframework.a ../../dep/src/sockets/libmangossockets.a  ../../dep/src/zthread/libZThread.la ../../dep/src/g3dlite/libg3dlite.a
 quad_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/zthread -L../../dep/src/g3dlite -L../bindings/scripts/ -L$(libdir) $(TRINI_LIBS) -export-dynamic
 =======
-core_worldd_LDADD = ../bindings/universal/libcorescript.la ../game/libcoregame.a ../shared/Database/libcoredatabase.a ../shared/Config/libcoreconfig.a ../shared/Auth/libcoreauth.a ../shared/libcoreshared.a ../shared/vmap/libcorevmaps.a ../framework/libcoreframework.a ../../dep/src/sockets/libcoresockets.a  ../../dep/src/g3dlite/libg3dlite.a
-core_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L$(libdir) $(CORE_LIBS) -export-dynamic
->>>>>>> 00c7d15a78b1dcdbf888b768c55424183b2231e4:src/cored/Makefile.am
+mangos_worldd_LDADD = ../bindings/universal/libmangosscript.la ../game/libmangosgame.a ../shared/Database/libmangosdatabase.a ../shared/Config/libmangosconfig.a ../shared/Auth/libmangosauth.a ../shared/libmangosshared.a ../shared/vmap/libmangosvmaps.a ../framework/libmangosframework.a ../../dep/src/sockets/libmangossockets.a  ../../dep/src/g3dlite/libg3dlite.a
+mangos_worldd_LDFLAGS = -L../../dep/src/sockets -L../../dep/src/g3dlite -L../bindings/universal/ -L$(libdir) $(MANGOS_LIBS) -export-dynamic
+>>>>>>> 00c7d15a78b1dcdbf888b768c55424183b2231e4:src/mangosd/Makefile.am
 
 ## Additional files to include when running 'make dist'
 #  Include world daemon configuration
 EXTRA_DIST = \
-    cored.conf.dist
+    mangosd.conf.dist
 
 ## Additional files to install
 sysconf_DATA = \
-    cored.conf.dist
+    mangosd.conf.dist
 
 install-data-hook:
 	@list='$(sysconf_DATA)'; for p in $$list; do \

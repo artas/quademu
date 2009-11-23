@@ -107,7 +107,17 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!UpdateVictim())
+        if (!me->isInCombat())
+            return;
+
+        if (me->getThreatManager().isThreatListEmpty())
+        {
+            EnterEvadeMode();
+            return;
+        }
+
+        Unit *victim = me->SelectVictim();
+        if (victim == NULL)
             return;
 
         if(m_creature->GetPositionY() > -60 || m_creature->GetPositionX() < 450) // Not Blizzlike, anti-exploit to prevent players from pulling bosses to vehicles.
@@ -118,8 +128,12 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
             m_creature->GetMotionMaster()->MoveTargetedHome();
         }
 
-        if(!m_creature->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself()) // Victim is not controlled by a player (should never happen)
-            m_creature->getVictim()->CombatStop();                            // Forcibly stop combat with this victim
+        // Victim is not controlled by a player (should never happen)
+        if(m_creature->getVictim() && !m_creature->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself())
+        {
+            m_creature->getVictim()->CombatStop(false);                     // Force the unit to exit combat..
+            m_creature->getVictim()->GetMotionMaster()->MoveTargetedHome(); // and return home, so they don't just stand there.
+        }
 
         if ((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 99 && Phase == 1) // TODO: Only land (exit Phase 1) if brought down with harpoon guns! This is important!
         {
@@ -203,6 +217,8 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
                 } else FlameBuffetTimer -= diff;
             }
 
+            if (me->getVictim() != victim && (Phase != 3 || FlameBuffetTimer <= 15000)) // Not sure about this.
+                AttackStart(victim);
             DoMeleeAttackIfReady();
         }
         else if (Phase == 1) //Flying Phase
@@ -247,13 +263,15 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
         uint8 random = urand(1,4);
         for (uint8 i = 0; i < random; ++i)
         {
-            Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true);
-            float x = std::max(500.0f, std::min(650.0f, pTarget->GetPositionX() + irand(-20,20)));   // Safe range is between 500 and 650
-            float y = std::max(-235.0f, std::min(-145.0f, pTarget->GetPositionY() + irand(-20,20))); // Safe range is between -235 and -145
-            float z = m_creature->GetBaseMap()->GetHeight(x, y, MAX_HEIGHT);                         // Ground level
-            // TODO: Spawn drillers, then spawn adds 5 seconds later
-            if (Creature *pAdd = m_creature->SummonCreature(NPC_DARK_RUNE_SENTINEL, x, y, z, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000))
-                pAdd->AI()->AttackStart(pTarget);
+            if (Unit *pTarget = SelectTarget(SELECT_TARGET_RANDOM, 0, 200, true))
+            {
+                float x = std::max(500.0f, std::min(650.0f, pTarget->GetPositionX() + irand(-20,20)));   // Safe range is between 500 and 650
+                float y = std::max(-235.0f, std::min(-145.0f, pTarget->GetPositionY() + irand(-20,20))); // Safe range is between -235 and -145
+                float z = m_creature->GetBaseMap()->GetHeight(x, y, MAX_HEIGHT);                         // Ground level
+                // TODO: Spawn drillers, then spawn adds 5 seconds later
+                if (Creature *pAdd = m_creature->SummonCreature(NPC_DARK_RUNE_SENTINEL, x, y, z, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000))
+                    pAdd->AI()->AttackStart(pTarget);
+            }
         }
         SummonAddsTimer = 45000;
     }
@@ -270,15 +288,15 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
 
         m_creature->SetFlying(IsFlying);
         m_creature->SendMovementFlagUpdate();
+        m_creature->SetSpeed(MOVE_WALK, IsFlying ? 7.0f : 2.5f, IsFlying);
 
         if (Phase == 1) // Flying Phase
         {
             if (m_creature->GetPositionZ() > FlightHeight) // Correct height, stop moving
-                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_ROOT);
+                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
             else        // Incorrect height
             {
-                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ROOT);
-                // TODO: Move faster while flying
+                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
                 m_creature->GetMotionMaster()->MovePoint(0, x, y, FlightHeight + 0.5f); // Fly to slightly above (x, y, FlightHeight)
             }
         }
@@ -287,10 +305,9 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
             const float CurrentGroundLevel = m_creature->GetBaseMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), MAX_HEIGHT);
             //if (StunTimer == 30000) // Only fly around if not stunned.
             //{
-                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_ROOT);
+                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
                 if (IsFlying && m_creature->GetPositionZ() > CurrentGroundLevel) // Fly towards the ground
                     m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), CurrentGroundLevel);
-                    // TODO: Move faster while flying
                     // TODO: Swoop up just before landing
                 else
                     IsFlying = false; // Landed, no longer flying

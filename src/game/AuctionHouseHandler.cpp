@@ -293,7 +293,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
     if (!auctionId || !price)
         return;                                             //check for cheaters
 
-    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(auctioneer,UNIT_NPC_FLAG_AUCTIONEER);
+    Creature *pCreature = GetPlayer()->GetNPCIfCanInteractWith(auctioneer, UNIT_NPC_FLAG_AUCTIONEER);
     if (!pCreature)
     {
         sLog.outDebug("WORLD: HandleAuctionPlaceBid - Unit (GUID: %u) not found or you can't interact with him.", uint32(GUID_LOPART(auctioneer)));
@@ -304,7 +304,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
     if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
         GetPlayer()->RemoveAurasByType(SPELL_AURA_FEIGN_DEATH);
 
-    AuctionHouseObject* auctionHouse = auctionmgr.GetAuctionsMap(pCreature->getFaction());
+    AuctionHouseObject *auctionHouse = auctionmgr.GetAuctionsMap(pCreature->getFaction());
 
     AuctionEntry *auction = auctionHouse->GetAuction(auctionId);
     Player *pl = GetPlayer();
@@ -326,7 +326,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
     }
 
     // cheating
-    if (price <= auction->bid)
+    if (price <= auction->bid || price < auction->startbid)
         return;
 
     // price too low for next bid if not buyout
@@ -344,25 +344,22 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
         return;
     }
 
-    if ((price < auction->buyout) || (auction->buyout == 0))
+    if (price < auction->buyout || auction->buyout == 0)
     {
         if (auction->bidder > 0)
         {
             if (auction->bidder == pl->GetGUIDLow())
-            {
                 pl->ModifyMoney(-int32(price - auction->bid));
-            }
             else
             {
                 // mail to last bidder and return money
-                SendAuctionOutbiddedMail(auction , price);
+                SendAuctionOutbiddedMail(auction, price);
                 pl->ModifyMoney(-int32(price));
             }
         }
         else
-        {
             pl->ModifyMoney(-int32(price));
-        }
+
         auction->bidder = pl->GetGUIDLow();
         auction->bid = price;
         GetPlayer()->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_AUCTION_BID, price);
@@ -376,16 +373,12 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
     {
         //buyout:
         if (pl->GetGUIDLow() == auction->bidder)
-        {
             pl->ModifyMoney(-int32(auction->buyout - auction->bid));
-        }
         else
         {
             pl->ModifyMoney(-int32(auction->buyout));
             if (auction->bidder)                          //buyout for bidded auction ..
-            {
                 SendAuctionOutbiddedMail(auction, auction->buyout);
-            }
         }
         auction->bidder = pl->GetGUIDLow();
         auction->bid = auction->buyout;

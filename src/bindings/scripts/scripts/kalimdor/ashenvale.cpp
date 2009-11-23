@@ -131,7 +131,7 @@ bool QuestAccept_npc_torek(Player* pPlayer, Creature* pCreature, Quest const* qu
 {
     if (quest->GetQuestId() == QUEST_TOREK_ASSULT)
     {
-        //TODO: find companions, make them follow Torek, at any time (possibly done by core/database in future?)
+        //TODO: find companions, make them follow Torek, at any time (possibly done by mangos/database in future?)
         DoScriptText(SAY_READY, pCreature, pPlayer);
         pCreature->setFaction(113);
 

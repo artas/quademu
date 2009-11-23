@@ -20,7 +20,7 @@ struct TSpellSummary
 
 void SummonList::DoZoneInCombat(uint32 entry)
 {
-    for (iterator i = begin(); i != end(); )
+    for (iterator i = begin(); i != end();)
     {
         Creature *summon = Unit::GetCreature(*m_creature, *i);
         ++i;
@@ -32,7 +32,7 @@ void SummonList::DoZoneInCombat(uint32 entry)
 
 void SummonList::DoAction(uint32 entry, uint32 info)
 {
-    for (iterator i = begin(); i != end(); )
+    for (iterator i = begin(); i != end();)
     {
         Creature *summon = Unit::GetCreature(*m_creature, *i);
         ++i;
@@ -44,7 +44,7 @@ void SummonList::DoAction(uint32 entry, uint32 info)
 
 void SummonList::DespawnEntry(uint32 entry)
 {
-    for (iterator i = begin(); i != end(); )
+    for (iterator i = begin(); i != end();)
     {
         Creature *summon = Unit::GetCreature(*m_creature, *i);
         if(!summon)
@@ -540,7 +540,7 @@ enum eNPCs
 };
 
 // Hacklike storage used for misc creatures that are expected to evade of outside of a certain area.
-// It is assumed the information is found elswehere and can be handled by core. So far no luck finding such information/way to extract it.
+// It is assumed the information is found elswehere and can be handled by mangos. So far no luck finding such information/way to extract it.
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 {
     if (m_uiEvadeCheckCooldown <= uiDiff)
@@ -637,50 +637,50 @@ void BossAI::TeleportCheaters()
     float x, y, z;
     me->GetPosition(x, y, z);
     std::list<HostilReference*> &m_threatlist = me->getThreatManager().getThreatList();
-    for (std::list<HostilReference*>::iterator itr = m_threatlist.begin(); itr!= m_threatlist.end(); ++itr)
+    for (std::list<HostilReference*>::iterator itr = m_threatlist.begin(); itr != m_threatlist.end(); ++itr)
         if((*itr)->getTarget()->GetTypeId() == TYPEID_PLAYER && !CheckBoundary((*itr)->getTarget()))
             (*itr)->getTarget()->NearTeleportTo(x, y, z, 0);
 }
 
 bool BossAI::CheckBoundary(Unit *who)
 {
-    if(!boundary || !who)
+    if (!boundary || !who)
         return true;
 
     for (BossBoundaryMap::const_iterator itr = boundary->begin(); itr != boundary->end(); ++itr)
     {
-        switch(itr->first)
+        switch (itr->first)
         {
             case BOUNDARY_N:
-                if(me->GetPositionX() > itr->second)
+                if (me->GetPositionX() > itr->second)
                     return false;
                 break;
             case BOUNDARY_S:
-                if(me->GetPositionX() < itr->second)
+                if (me->GetPositionX() < itr->second)
                     return false;
                 break;
             case BOUNDARY_E:
-                if(me->GetPositionY() < itr->second)
+                if (me->GetPositionY() < itr->second)
                     return false;
                 break;
             case BOUNDARY_W:
-                if(me->GetPositionY() > itr->second)
+                if (me->GetPositionY() > itr->second)
                     return false;
                 break;
             case BOUNDARY_NW:
-                if(me->GetPositionX() + me->GetPositionY() > itr->second)
+                if (me->GetPositionX() + me->GetPositionY() > itr->second)
                     return false;
                 break;
             case BOUNDARY_SE:
-                if(me->GetPositionX() + me->GetPositionY() < itr->second)
+                if (me->GetPositionX() + me->GetPositionY() < itr->second)
                     return false;
                 break;
             case BOUNDARY_NE:
-                if(me->GetPositionX() - me->GetPositionY() > itr->second)
+                if (me->GetPositionX() - me->GetPositionY() > itr->second)
                     return false;
                 break;
             case BOUNDARY_SW:
-                if(me->GetPositionX() - me->GetPositionY() < itr->second)
+                if (me->GetPositionX() - me->GetPositionY() < itr->second)
                     return false;
                 break;
         }
@@ -752,22 +752,20 @@ void LoadOverridenDBCData()
     }
 }
 
-Creature* GetClosestCreatureWithEntry(WorldObject* pSource, uint32 Entry, float MaxSearchRange)
+// SD2 grid searchers.
+Creature *GetClosestCreatureWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange, bool bAlive)
 {
-    Creature* pCreature = NULL;
-
-    CellPair pair(Quad::ComputeCellPair(pSource->GetPositionX(), pSource->GetPositionY()));
-    Cell cell(pair);
-    cell.data.Part.reserved = ALL_DISTRICT;
-    cell.SetNoCreate();
-
-    Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck creature_check(*pSource, Entry, true, MaxSearchRange);
-    Quad::CreatureLastSearcher<Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(pSource, pCreature, creature_check);
-
-    TypeContainerVisitor<Quad::CreatureLastSearcher<Quad::NearestCreatureEntryWithLiveStateInObjectRangeCheck>, GridTypeMapContainer> creature_searcher(searcher);
-
-    CellLock<GridReadGuard> cell_lock(cell, pair);
-    cell_lock->Visit(cell_lock, creature_searcher,*(pSource->GetMap()));
-
-    return pCreature;
+    return pSource->FindNearestCreature(uiEntry, fMaxSearchRange, bAlive);
+}
+GameObject *GetClosestGameObjectWithEntry(WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange)
+{
+    return pSource->FindNearestGameObject(uiEntry, fMaxSearchRange);
+}
+void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange)
+{
+    return pSource->GetCreatureListWithEntryInGrid(lList, uiEntry, fMaxSearchRange);
+}
+void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, WorldObject *pSource, uint32 uiEntry, float fMaxSearchRange)
+{
+    return pSource->GetGameObjectListWithEntryInGrid(lList, uiEntry, fMaxSearchRange);
 }

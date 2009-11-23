@@ -1,7 +1,25 @@
-
+/*
+ * 
+ *
+ * 
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 /** \file
-    \ingroup Quad
+    \ingroup Quadd
 */
 
 #include <ace/OS_NS_signal.h>
@@ -259,7 +277,7 @@ int Master::Run()
 
                 if(!curAff )
                 {
-                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for Quad. Accessible processors bitmask (hex): %x",Aff,appAff);
+                    sLog.outError("Processors marked in UseProcessors bitmask (hex) %x not accessible for Quadd. Accessible processors bitmask (hex): %x",Aff,appAff);
                 }
                 else
                 {
@@ -280,7 +298,7 @@ int Master::Run()
             if(SetPriorityClass(hProcess,HIGH_PRIORITY_CLASS))
                 sLog.outString("QuadCore process priority class set to HIGH");
             else
-                sLog.outError("ERROR: Can't set Quad process priority class.");
+                sLog.outError("ERROR: Can't set Quadd process priority class.");
             sLog.outString("");
         }
     }

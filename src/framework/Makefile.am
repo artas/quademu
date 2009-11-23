@@ -25,8 +25,8 @@ AM_CPPFLAGS = $(TRINI_INCLUDES) -I$(srcdir)
 
 ## Build MaNGOS framework library as convenience library.
 #  libMaNGOSScript shared library will later be reused by world server daemon.
-noinst_LIBRARIES = libcoreframework.a
-libcoreframework_a_SOURCES = \
+noinst_LIBRARIES = libmangosframework.a
+libmangosframework_a_SOURCES = \
 	Policies/ObjectLifeTime.cpp \
 	Utilities/EventProcessor.cpp
 

@@ -144,7 +144,7 @@ struct  QUAD_DLL_DECL boss_vexallusAI : public ScriptedAI
                 else
                     DoCast(m_creature, SPELL_SUMMON_PURE_ENERGY, false);
 
-                //below are workaround summons, remove when summoning spells w/implicitTarget 73 implemented in Core
+                //below are workaround summons, remove when summoning spells w/implicitTarget 73 implemented in Mangos
                 m_creature->SummonCreature(NPC_PURE_ENERGY, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
                 if (Heroic)

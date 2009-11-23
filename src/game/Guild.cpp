@@ -110,11 +110,11 @@ void Guild::CreateDefaultGuildRanks(int locale_idx)
     CharacterDatabase.PExecute("DELETE FROM guild_rank WHERE guildid='%u'", m_Id);
     CharacterDatabase.PExecute("DELETE FROM guild_bank_right WHERE guildid = '%u'", m_Id);
 
-    CreateRank(objmgr.GetCoreString(LANG_GUILD_MASTER, locale_idx),   GR_RIGHT_ALL);
-    CreateRank(objmgr.GetCoreString(LANG_GUILD_OFFICER, locale_idx),  GR_RIGHT_ALL);
-    CreateRank(objmgr.GetCoreString(LANG_GUILD_VETERAN, locale_idx),  GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    CreateRank(objmgr.GetCoreString(LANG_GUILD_MEMBER, locale_idx),   GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
-    CreateRank(objmgr.GetCoreString(LANG_GUILD_INITIATE, locale_idx), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    CreateRank(objmgr.GetMangosString(LANG_GUILD_MASTER, locale_idx),   GR_RIGHT_ALL);
+    CreateRank(objmgr.GetMangosString(LANG_GUILD_OFFICER, locale_idx),  GR_RIGHT_ALL);
+    CreateRank(objmgr.GetMangosString(LANG_GUILD_VETERAN, locale_idx),  GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    CreateRank(objmgr.GetMangosString(LANG_GUILD_MEMBER, locale_idx),   GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
+    CreateRank(objmgr.GetMangosString(LANG_GUILD_INITIATE, locale_idx), GR_RIGHT_GCHATLISTEN | GR_RIGHT_GCHATSPEAK);
 }
 
 bool Guild::AddMember(uint64 plGuid, uint32 plRank)
@@ -902,7 +902,7 @@ void Guild::LoadGuildEventLogFromDB()
         NewEvent.TimeStamp = fields[5].GetUInt64();
 
         // There can be a problem if more events have same TimeStamp the ORDER can be broken when fields[0].GetUInt32() == configCount, but
-        // events with same timestamp can appear when there is lag, and we naivly suppose that core isn't laggy
+        // events with same timestamp can appear when there is lag, and we naivly suppose that mangos isn't laggy
         // but if problem appears, player will see set of guild events that have same timestamp in bad order
 
         // Add entry to list
@@ -1085,7 +1085,7 @@ void Guild::DisplayGuildBankTabsInfo(WorldSession *session)
 
     data << uint64(GetGuildBankMoney());
     data << uint8(0);                                       // TabInfo packet must be for TabId 0
-    //data << uint32(0xFFFFFFFF);                             // bit 9 must be set for this packet to work
+    //data << uint32(0xFFFFFFFF);                           // bit 9 must be set for this packet to work
     data << uint32(0);
     data << uint8(1);                                       // Tell Client this is a TabInfo packet
     data << uint8(m_PurchasedTabs);                         // here is the number of tabs
@@ -1720,7 +1720,7 @@ Item* Guild::StoreItem(uint8 tabId, GuildItemPosCountVec const& dest, Item* pIte
 
     Item* lastItem = pItem;
 
-    for (GuildItemPosCountVec::const_iterator itr = dest.begin(); itr != dest.end(); )
+    for (GuildItemPosCountVec::const_iterator itr = dest.begin(); itr != dest.end();)
     {
         uint8 slot = itr->Slot;
         uint32 count = itr->Count;
@@ -1739,7 +1739,7 @@ Item* Guild::StoreItem(uint8 tabId, GuildItemPosCountVec const& dest, Item* pIte
     return lastItem;
 }
 
-// Return stored item (if stored to stack, it can diff. from pItem). And pItem ca be deleted in this case.
+// Return stored item (if stored to stack, it can diff. from pItem). And pItem can be deleted in this case.
 Item* Guild::_StoreItem( uint8 tab, uint8 slot, Item *pItem, uint32 count, bool clone )
 {
     if (!pItem)
@@ -1765,15 +1765,15 @@ Item* Guild::_StoreItem( uint8 tab, uint8 slot, Item *pItem, uint32 count, bool 
         pItem->SetUInt64Value(ITEM_FIELD_OWNER, 0);
         AddGBankItemToDB(GetId(), tab, slot, pItem->GetGUIDLow(), pItem->GetEntry());
         pItem->FSetState(ITEM_NEW);
-        pItem->SaveToDB();                                  // not in onventory and can be save standalone
+        pItem->SaveToDB();                                  // not in inventory and can be save standalone
 
         return pItem;
     }
     else
     {
-        pItem2->SetCount( pItem2->GetCount() + count );
+        pItem2->SetCount(pItem2->GetCount() + count);
         pItem2->FSetState(ITEM_CHANGED);
-        pItem2->SaveToDB();                                 // not in onventory and can be save standalone
+        pItem2->SaveToDB();                                 // not in inventory and can be save standalone
 
         if (!clone)
         {
@@ -1981,7 +1981,7 @@ void Guild::SendGuildBankTabText(WorldSession *session, uint8 TabId)
         BroadcastPacket(&data);
 }
 
-void Guild::SwapItems(Player * pl, uint8 BankTab, uint8 BankTabSlot, uint8 BankTabDst, uint8 BankTabSlotDst, uint32 SplitedAmount )
+void Guild::SwapItems(Player * pl, uint8 BankTab, uint8 BankTabSlot, uint8 BankTabDst, uint8 BankTabSlotDst, uint32 SplitedAmount)
 {
     // empty operation
     if (BankTab == BankTabDst && BankTabSlot == BankTabSlotDst)
@@ -1991,9 +1991,14 @@ void Guild::SwapItems(Player * pl, uint8 BankTab, uint8 BankTabSlot, uint8 BankT
     if (!pItemSrc)                                      // may prevent crash
         return;
 
-    if (SplitedAmount > pItemSrc->GetCount())
-        return;                                         // cheating?
-    else if (SplitedAmount == pItemSrc->GetCount())
+    if (pItemSrc->GetCount() == 0)
+    {
+        sLog.outCrash("Guild::SwapItems: Player %s(GUIDLow: %u) tried to move item %u from tab %u slot %u to tab %u slot %u, but item %u has a stack of zero!",
+            pl->GetName(), pl->GetGUIDLow(), pItemSrc->GetEntry(), BankTab, BankTabSlot, BankTabDst, BankTabSlotDst, pItemSrc->GetEntry());
+        //return; // Commented out for now, uncomment when it's verified that this causes a crash!
+    }
+
+    if (SplitedAmount >= pItemSrc->GetCount())
         SplitedAmount = 0;                              // no split
 
     Item *pItemDst = GetItem(BankTabDst, BankTabSlotDst);

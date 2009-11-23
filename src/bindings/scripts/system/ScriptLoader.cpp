@@ -203,7 +203,11 @@ extern void AddSC_westfall();
 extern void AddSC_wetlands();
 
 //kalimdor
-extern void AddSC_instance_blackfathom_deeps();     //Blackfathom Depths
+extern void AddSC_blackfathom_deeps();              //Blackfathom Depths
+extern void AddSC_boss_gelihast();
+extern void AddSC_boss_kelris();
+extern void AddSC_boss_aku_mai();
+extern void AddSC_instance_blackfathom_deeps();
 extern void AddSC_hyjal();                          //CoT Battle for Mt. Hyjal
 extern void AddSC_boss_archimonde();
 extern void AddSC_instance_mount_hyjal();
@@ -360,6 +364,7 @@ extern void AddSC_boss_zuramat();
 extern void AddSC_instance_violet_hold();
 extern void AddSC_violet_hold();
 
+extern void AddSC_dalaran();
 extern void AddSC_borean_tundra();
 extern void AddSC_dragonblight();
 extern void AddSC_grizzly_hills();
@@ -654,7 +659,11 @@ void AddScripts()
     AddSC_wetlands();
 
     //kalimdor
-    AddSC_instance_blackfathom_deeps();     //Blackfathom Depths
+    AddSC_blackfathom_deeps();              //Blackfathom Depths
+    AddSC_boss_gelihast();
+    AddSC_boss_kelris();
+    AddSC_boss_aku_mai();
+    AddSC_instance_blackfathom_deeps();
     AddSC_hyjal();                          //CoT Battle for Mt. Hyjal
     AddSC_boss_archimonde();
     AddSC_instance_mount_hyjal();
@@ -811,6 +820,7 @@ void AddScripts()
     AddSC_instance_violet_hold();
     AddSC_violet_hold();
 
+    AddSC_dalaran();
     AddSC_borean_tundra();
     AddSC_dragonblight();
     AddSC_grizzly_hills();

@@ -138,20 +138,20 @@ typedef uint32      DWORD;
 typedef uint64 OBJECT_HANDLE;
 
 #define MaNGOS              Quad
-#define CORE_DLL_DECL     QUAD_DLL_DECL
-#define CORE_DLL_SPEC     QUAD_DLL_SPEC
-#define GetCoreString     GetQuadString
+#define MANGOS_DLL_DECL     QUAD_DLL_DECL
+#define MANGOS_DLL_SPEC     QUAD_DLL_SPEC
+#define GetMangosString     GetQuadString
 
-#if defined(CORE_DEBUG) || defined(QUAD_DEBUG)
+#if defined(MANGOS_DEBUG) || defined(QUAD_DEBUG)
 #  ifndef QUAD_DEBUG
 #    define QUAD_DEBUG
 #  endif
-#  ifndef CORE_DEBUG
-#    define CORE_DEBUG
+#  ifndef MANGOS_DEBUG
+#    define MANGOS_DEBUG
 #  endif
 #endif
 
-#if !defined(DEBUG) && !defined(CORE_DEBUG) && !defined(QUAD_DEBUG)
+#if !defined(DEBUG) && !defined(MANGOS_DEBUG) && !defined(QUAD_DEBUG)
 //#define MULTI_THREAD_MAP
 #endif
 

@@ -1,4 +1,9 @@
 /*
+ * 
+ *
+ * 
+ *
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +23,7 @@
 #define QUAD_SYSTEMCONFIG_H
 
 #ifndef _PACKAGENAME
-#define _PACKAGENAME "QuadCore "
+#define _PACKAGENAME "QuadCore2 "
 #endif
 
 #include "Platform/Define.h"
@@ -34,14 +39,14 @@
 
 // Format is YYYYMMDDRR where RR is the change in the conf file
 // for that day.
-#ifndef _COREDCONFVERSION
-# define _COREDCONFVERSION 2008022901
+#ifndef _MANGOSDCONFVERSION
+# define _MANGOSDCONFVERSION 2008022901
 #endif
 #ifndef _REALMDCONFVERSION
 # define _REALMDCONFVERSION 2007062001
 #endif
 
-#if CORE_ENDIAN == CORE_BIGENDIAN
+#if MANGOS_ENDIAN == MANGOS_BIGENDIAN
 # define _ENDIAN_STRING "big-endian"
 #else
 # define _ENDIAN_STRING "little-endian"
@@ -68,7 +73,7 @@
 # else
 #  define _ENDIAN_PLATFORM "Win32 (" _ENDIAN_STRING ")"
 # endif
-# define _CORED_CONFIG  SYSCONFDIR"cored.conf"
+# define _MANGOSD_CONFIG  SYSCONFDIR"mangosd.conf"
 # define _REALMD_CONFIG   SYSCONFDIR"realmd.conf"
 #else
 # if defined  (__FreeBSD__)
@@ -86,7 +91,7 @@
 # else
 #  define _ENDIAN_PLATFORM "Unix_"ARCHITECTURE" (" _ENDIAN_STRING ")"
 # endif
-# define _CORED_CONFIG  SYSCONFDIR"cored.conf"
+# define _MANGOSD_CONFIG  SYSCONFDIR"mangosd.conf"
 # define _REALMD_CONFIG  SYSCONFDIR"realmd.conf"
 #endif
 

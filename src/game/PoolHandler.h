@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2009 MaNGOS <http://www.coreproject.org/>
+ * Copyright (C) 2005-2009 MaNGOS <http://www.mangosproject.org/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef CORE_POOLHANDLER_H
-#define CORE_POOLHANDLER_H
+#ifndef MANGOS_POOLHANDLER_H
+#define MANGOS_POOLHANDLER_H
 
 #include "Platform/Define.h"
 #include "Policies/Singleton.h"

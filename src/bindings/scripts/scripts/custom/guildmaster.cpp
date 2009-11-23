@@ -1,6 +1,6 @@
 #include "precompiled.h"
  
-extern DatabaseType QScriptDB;
+extern DatabaseType TScriptDB;
  
 #define MSG_GOSSIP_TELE "Телепортироваться в ГХ"
 #define MSG_GOSSIP_BUY "Купить Гильд Хаус"
@@ -55,7 +55,7 @@ return false;
 }
  
 QueryResult *result;
-result = QScriptDB.PQuery("SELECT `x`, `y`, `z`, `map` FROM `guildhouses` WHERE `guildId` = %u", guildId);
+result = TScriptDB.PQuery("SELECT `x`, `y`, `z`, `map` FROM `guildhouses` WHERE `guildId` = %u", guildId);
 if(result)
 {
 Field *fields = result->Fetch();
@@ -103,7 +103,7 @@ bool showBuyList(Player *player, Creature *_creature, uint32 showFromId = 0)
 //show not occupied guildhouses
  
 QueryResult *result;
-result = QScriptDB.PQuery("SELECT `id`, `comment` FROM `guildhouses` WHERE `guildId` = 0 AND `id` > %u ORDER BY `id` ASC LIMIT %u",
+result = TScriptDB.PQuery("SELECT `id`, `comment` FROM `guildhouses` WHERE `guildId` = 0 AND `id` > %u ORDER BY `id` ASC LIMIT %u",
 showFromId, GOSSIP_COUNT_MAX);
  
 if (result)
@@ -161,7 +161,7 @@ bool isPlayerHasGuildhouse(Player *player, Creature *_creature, bool whisper = f
  
 QueryResult *result;
  
-result = QScriptDB.PQuery("SELECT `comment` FROM `guildhouses` WHERE `guildId` = %u",
+result = TScriptDB.PQuery("SELECT `comment` FROM `guildhouses` WHERE `guildId` = %u",
 player->GetGuildId());
  
 if (result)
@@ -202,7 +202,7 @@ return;
 QueryResult *result;
  
 //check if somebody already occupied this GH
-result = QScriptDB.PQuery("SELECT `id` FROM `guildhouses` WHERE `id` = %u AND `guildId` <> 0",
+result = TScriptDB.PQuery("SELECT `id` FROM `guildhouses` WHERE `id` = %u AND `guildId` <> 0",
 guildhouseId);
  
 if (result)
@@ -213,7 +213,7 @@ return;
 }
  
 //update DB
-result = QScriptDB.PQuery("UPDATE `guildhouses` SET `guildId` = %u WHERE `id` = %u",
+result = TScriptDB.PQuery("UPDATE `guildhouses` SET `guildId` = %u WHERE `id` = %u",
 player->GetGuildId(), guildhouseId);
  
 if (result)
@@ -230,7 +230,7 @@ if (isPlayerHasGuildhouse(player, _creature))
 {
 QueryResult *result;
  
-result = QScriptDB.PQuery("UPDATE `guildhouses` SET `guildId` = 0 WHERE `guildId` = %u",
+result = TScriptDB.PQuery("UPDATE `guildhouses` SET `guildId` = 0 WHERE `guildId` = %u",
 player->GetGuildId());
  
 if (result)

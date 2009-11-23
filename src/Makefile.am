@@ -1,6 +1,6 @@
 # 
 #
-# Thanks to the original authors: MaNGOS <http://getcore.com/>
+# Thanks to the original authors: MaNGOS <http://getmangos.com/>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 ## Process this file with automake to produce Makefile.in
 
 ## Sub-directories to parse
-SUBDIRS = tools framework shared realmd game bindings cored
+SUBDIRS = tools framework shared realmd game bindings mangosd
 
 ## Additional files to include when running 'make dist'
 #  Nothing yet.

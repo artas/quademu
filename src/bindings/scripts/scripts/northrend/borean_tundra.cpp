@@ -324,7 +324,7 @@ struct QUAD_DLL_DECL npc_khunok_the_behemothAI : public ScriptedAI
             {
                 if (owner->GetTypeId() == TYPEID_PLAYER)
                 {
-                    DoCast(owner, 46231, true);
+                    owner->CastSpell(owner, 46231, true);
                     CAST_CRE(who)->ForcedDespawn();
                 }
             }
@@ -881,13 +881,17 @@ enum eNexusDrakeHatchling
 
 struct QUAD_DLL_DECL npc_nexus_drake_hatchlingAI : public FollowerAI //The spell who makes the npc follow the player is missing, also we can use FollowerAI!
 {
-    npc_nexus_drake_hatchlingAI(Creature *c) : FollowerAI(c) { Reset(); }
+    npc_nexus_drake_hatchlingAI(Creature *c) : FollowerAI(c)
+    {
+          pHarpooner = NULL;
+    }
 
     Player *pHarpooner;
+    bool WithRedDragonBlood;
 
     void Reset()
     {
-       pHarpooner = NULL;
+       WithRedDragonBlood = false;
     }
 
     void EnterCombat(Unit* pWho)
@@ -903,6 +907,7 @@ struct QUAD_DLL_DECL npc_nexus_drake_hatchlingAI : public FollowerAI //The spell
             pHarpooner = CAST_PLR(caster);
             DoCast(m_creature, SPELL_RED_DRAGONBLOOD, true);
         }
+        WithRedDragonBlood = true;
     }
 
     void MoveInLineOfSight(Unit *pWho)
@@ -919,6 +924,7 @@ struct QUAD_DLL_DECL npc_nexus_drake_hatchlingAI : public FollowerAI //The spell
                 pHarpooner->KilledMonsterCredit(26175,0);
                 pHarpooner->RemoveAura(SPELL_DRAKE_HATCHLING_SUBDUED);
                 SetFollowComplete();
+                pHarpooner = NULL;
                 m_creature->DisappearAndDie();
             }
         }
@@ -926,7 +932,7 @@ struct QUAD_DLL_DECL npc_nexus_drake_hatchlingAI : public FollowerAI //The spell
 
     void UpdateAI(const uint32 diff)
     {
-        if (pHarpooner && pHarpooner->IsInWorld() && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
+        if (WithRedDragonBlood && pHarpooner && pHarpooner->IsInWorld() && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
         {
             if (npc_nexus_drake_hatchlingAI* pDrakeAI = CAST_AI(npc_nexus_drake_hatchlingAI, m_creature->AI()))
             {
@@ -938,7 +944,7 @@ struct QUAD_DLL_DECL npc_nexus_drake_hatchlingAI : public FollowerAI //The spell
             pHarpooner->CastSpell(pHarpooner, SPELL_DRAKE_HATCHLING_SUBDUED, true);
 
             m_creature->AttackStop();
-            pHarpooner = NULL;
+            WithRedDragonBlood = false;
         }
 
         if (!UpdateVictim())
@@ -1035,4 +1041,4 @@ void AddSC_borean_tundra()
     newscript->Name = "npc_nexus_drake_hatchling";
     newscript->GetAI = &GetAI_npc_nexus_drake_hatchling;
     newscript->RegisterSelf();
-}
+}

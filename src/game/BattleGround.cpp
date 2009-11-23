@@ -45,7 +45,7 @@ namespace MaNGOS
                 : i_msgtype(msgtype), i_textId(textId), i_source(source), i_args(args) {}
             void operator()(WorldPacket& data, int32 loc_idx)
             {
-                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
+                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
 
                 if (i_args)
                 {
@@ -90,9 +90,9 @@ namespace MaNGOS
                 : i_msgtype(msgtype), i_textId(textId), i_source(source), i_arg1(arg1), i_arg2(arg2) {}
             void operator()(WorldPacket& data, int32 loc_idx)
             {
-                char const* text = objmgr.GetCoreString(i_textId,loc_idx);
-                char const* arg1str = i_arg1 ? objmgr.GetCoreString(i_arg1,loc_idx) : "";
-                char const* arg2str = i_arg2 ? objmgr.GetCoreString(i_arg2,loc_idx) : "";
+                char const* text = objmgr.GetMangosString(i_textId,loc_idx);
+                char const* arg1str = i_arg1 ? objmgr.GetMangosString(i_arg1,loc_idx) : "";
+                char const* arg2str = i_arg2 ? objmgr.GetMangosString(i_arg2,loc_idx) : "";
 
                 char str [2048];
                 snprintf(str,2048,text, arg1str, arg2str );
@@ -428,16 +428,14 @@ void BattleGround::Update(uint32 diff)
                         plr->RemoveAurasDueToSpell(SPELL_ARENA_PREPARATION);
                         // remove auras with duration lower than 30s
                         Unit::AuraMap & aurMap = plr->GetAuras();
-                        for (Unit::AuraMap::iterator iter = aurMap.begin(); iter != aurMap.end(); )
+                        for (Unit::AuraMap::iterator iter = aurMap.begin(); iter != aurMap.end();)
                         {
                             if (!iter->second->IsPermanent()
                                 && iter->second->GetAuraDuration()<=30*IN_MILISECONDS
                                 && iter->second->IsPositive()
                                 && (!(iter->second->GetSpellProto()->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY))
                                 && (!iter->second->IsAuraType(SPELL_AURA_MOD_INVISIBILITY)))
-                            {
                                 plr->RemoveAura(iter);
-                            }
                             else
                                 ++iter;
                         }

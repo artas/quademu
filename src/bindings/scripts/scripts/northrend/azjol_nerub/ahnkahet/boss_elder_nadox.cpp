@@ -242,7 +242,7 @@ struct QUAD_DLL_DECL mob_ahnkahar_nerubianAI : public ScriptedAI
     }
 };
 
-struct CORE_DLL_DECL mob_nadox_eggsAI : public Scripted_NoMovementAI
+struct MANGOS_DLL_DECL mob_nadox_eggsAI : public Scripted_NoMovementAI
 {
     mob_nadox_eggsAI(Creature* c) : Scripted_NoMovementAI(c)
     {

@@ -408,6 +408,7 @@ struct QUAD_DLL_SPEC Position
     float GetAngle(const Position *pos) const;
     float GetAngle(float x, float y) const;
     float GetRelativeAngle(const Position *pos) const { return GetAngle(pos) - m_orientation; }
+    float GetRelativeAngle(float x, float y) const { return GetAngle(x, y) - m_orientation; }
     void GetSinCos(float x, float y, float &vsin, float &vcos) const;
 
     bool IsInDist2d(float x, float y, float dist) const
@@ -609,11 +610,11 @@ class QUAD_DLL_SPEC WorldObject : public Object, public WorldLocation
         GameObject* SummonGameObject(uint32 entry, float x, float y, float z, float ang, float rotation0, float rotation1, float rotation2, float rotation3, uint32 respawnTime);
         Creature*   SummonTrigger(float x, float y, float z, float ang, uint32 dur, CreatureAI* (*GetAI)(Creature*) = NULL);
 
-        Creature*   FindNearestCreature(uint32 entry, float range, bool alive = true);
-        GameObject* FindNearestGameObject(uint32 entry, float range);
+        Creature*   FindNearestCreature(uint32 uiEntry, float fMaxSearchRange, bool bAlive = true);
+        GameObject* FindNearestGameObject(uint32 uiEntry, float fMaxSearchRange);
 
-        void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, uint32 uiEntry, float fMaxSearchRange);
         void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, uint32 uiEntry, float fMaxSearchRange);
+        void GetGameObjectListWithEntryInGrid(std::list<GameObject*>& lList, uint32 uiEntry, float fMaxSearchRange);
 
         void DestroyForNearbyPlayers();
 

@@ -426,7 +426,7 @@ namespace Quad
     };
 
     template<class Do>
-    struct CORE_DLL_DECL CreatureWorker
+    struct MANGOS_DLL_DECL CreatureWorker
     {
         uint32 i_phaseMask;
         Do& i_do;
@@ -792,7 +792,7 @@ namespace Quad
                 if(!u->isAlive())
                     return false;
 
-                if(u->GetTypeId()==TYPEID_UNIT && ((Creature*)u)->isTotem())
+                if(u->GetTypeId() == TYPEID_UNIT && ((Creature*)u)->isTotem())
                     return false;
 
                 return i_obj->IsWithinDistInMap(u, i_range) && !i_funit->IsFriendlyTo(u);
@@ -910,7 +910,7 @@ namespace Quad
                 // Check contains checks for: live, non-selectable, non-attackable flags, flight check and GM check, ignore totems
                 if (!u->isTargetableForAttack())
                     return false;
-                if(u->GetTypeId()==TYPEID_UNIT && ((Creature*)u)->isTotem())
+                if(u->GetTypeId() == TYPEID_UNIT && ((Creature*)u)->isTotem())
                     return false;
 
                 if(( i_targetForPlayer ? !i_funit->IsFriendlyTo(u) : i_funit->IsHostileTo(u) )&& i_obj->IsWithinDistInMap(u, i_range))
@@ -1072,12 +1072,12 @@ namespace Quad
     class NearestCreatureEntryWithLiveStateInObjectRangeCheck
     {
         public:
-            NearestCreatureEntryWithLiveStateInObjectRangeCheck(WorldObject const& obj,uint32 entry, bool alive, float range)
+            NearestCreatureEntryWithLiveStateInObjectRangeCheck(WorldObject const& obj, uint32 entry, bool alive, float range)
                 : i_obj(obj), i_entry(entry), i_alive(alive), i_range(range) {}
 
             bool operator()(Creature* u)
             {
-                if(u->GetEntry() == i_entry && u->isAlive()==i_alive && i_obj.IsWithinDistInMap(u, i_range))
+                if (u->GetEntry() == i_entry && u->isAlive() == i_alive && i_obj.IsWithinDistInMap(u, i_range))
                 {
                     i_range = i_obj.GetDistance(u);         // use found unit range as new range limit for next check
                     return true;

@@ -65,7 +65,7 @@ enum SpellModType
     SPELLMOD_PCT          = 108                             // SPELL_AURA_ADD_PCT_MODIFIER
 };
 
-// 2^n values, Player::m_isunderwater is a bitmask. These are core internal values, they are never send to any client
+// 2^n values, Player::m_isunderwater is a bitmask. These are mangos internal values, they are never send to any client
 enum PlayerUnderwaterState
 {
     UNDERWATER_NONE                     = 0x00,
@@ -921,7 +921,7 @@ struct BGData
     bool HasTaxiPath() const { return taxiPath[0] && taxiPath[1]; }
 };
 
-class CORE_DLL_SPEC Player : public Unit
+class MANGOS_DLL_SPEC Player : public Unit
 {
     friend class WorldSession;
     friend void Item::AddToUpdateQueueOf(Player *player);
@@ -1211,7 +1211,7 @@ class CORE_DLL_SPEC Player : public Unit
         /***                    QUEST SYSTEM                   ***/
         /*********************************************************/
 
-        uint32 GetQuestLevel( Quest const* pQuest ) const { return pQuest && pQuest->GetQuestLevel() ? pQuest->GetQuestLevel() : getLevel(); }
+        int32 GetQuestLevel( Quest const* pQuest ) const { return pQuest && pQuest->GetQuestLevel() ? pQuest->GetQuestLevel() : getLevel(); }
 
         void PrepareQuestMenu( uint64 guid );
         void SendPreparedQuest( uint64 guid );
@@ -2529,7 +2529,7 @@ template <class T> T Player::ApplySpellMod(uint32 spellId, SpellModOp op, T &bas
 
         // Charges can be set only for mods with auras
         if (!mod->ownerAura)
-            assert(mod->charges==0);
+            assert(mod->charges == 0);
 
         if(!IsAffectedBySpellmod(spellInfo,mod,spell))
             continue;

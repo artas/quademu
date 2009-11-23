@@ -26,10 +26,10 @@ AM_CPPFLAGS = $(TRINI_INCLUDES) -I$(top_builddir)/src/shared -I$(srcdir) -I$(src
 ## Build MaNGOS game library as convenience library.
 #  All libraries will be convenience libraries. Might be changed to shared
 #  later.
-noinst_LIBRARIES = libcoregame.a
+noinst_LIBRARIES = libmangosgame.a
 
-#  libcoresgame library will later be reused by ...
-libcoregame_a_SOURCES = \
+#  libmangossgame library will later be reused by ...
+libmangosgame_a_SOURCES = \
 <<<<<<< HEAD:src/game/Makefile.am
 <<<<<<< HEAD:src/game/Makefile.am
     AccountMgr.cpp \

@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2005-2008,2007 MaNGOS <http://getcore.com/>
+* Copyright (C) 2005-2008,2007 MaNGOS <http://getmangos.com/>
 *
 * 
 *
@@ -171,7 +171,7 @@ class ReactorRunnable : protected ACE_Task_Base
 
                 AddNewSockets ();
 
-                for (i = m_Sockets.begin (); i != m_Sockets.end (); )
+                for (i = m_Sockets.begin (); i != m_Sockets.end ();)
                 {
                     if ((*i)->Update () == -1)
                     {

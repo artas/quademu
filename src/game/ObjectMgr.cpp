@@ -3088,7 +3088,7 @@ void ObjectMgr::LoadPlayerInfo()
                     sLog.outErrorDb("Wrong (> %u) level %u in `player_xp_for_level` table, ignoring.", STRONG_MAX_LEVEL,current_level);
                 else
                 {
-                    sLog.outDetail("Unused (> MaxPlayerLevel in cored.conf) level %u in `player_xp_for_levels` table, ignoring.",current_level);
+                    sLog.outDetail("Unused (> MaxPlayerLevel in mangosd.conf) level %u in `player_xp_for_levels` table, ignoring.",current_level);
                     ++count;                                // make result loading percent "expected" correct in case disabled detail mode for example.
                 }
                 continue;
@@ -3399,7 +3399,7 @@ void ObjectMgr::LoadGroups()
 
     // clean groups
     // TODO: maybe delete from the DB before loading in this case
-    for (GroupSet::iterator itr = mGroupSet.begin(); itr != mGroupSet.end(); )
+    for (GroupSet::iterator itr = mGroupSet.begin(); itr != mGroupSet.end();)
     {
         if((*itr)->GetMembersCount() < 2)
         {
@@ -4320,7 +4320,7 @@ void ObjectMgr::LoadScripts(ScriptMapMap& scripts, char const* tablename)
                     continue;
                 }
 
-                // if(!objmgr.GetCoreStringLocale(tmp.dataint)) will checked after db_script_string loading
+                // if(!objmgr.GetMangosStringLocale(tmp.dataint)) will checked after db_script_string loading
                 break;
             }
 
@@ -5314,14 +5314,13 @@ uint32 ObjectMgr::GetTaxiMountDisplayId( uint32 id, uint32 team, bool allowed_al
         else
             mount_entry = node->MountCreatureID[0];
 
-    	// Fix for Alliance not being able to use Acherus taxi
-    	// only one mount type for both sides
-    	if (mount_entry == 0 && allowed_alt_team)
-    	{
-    		// Simply reverse the selection. At least one team in theory should
-    		//  have a valid mount ID to choose
-    		mount_entry = (team == ALLIANCE) ? node->MountCreatureID[0] : node->MountCreatureID[1];
-    	}
+        // Fix for Alliance not being able to use Acherus taxi
+        // only one mount type for both sides
+        if (mount_entry == 0 && allowed_alt_team)
+        {
+            // Simply reverse the selection. At least one team in theory should have a valid mount ID to choose.
+            mount_entry = team == ALLIANCE ? node->MountCreatureID[0] : node->MountCreatureID[1];
+        }
 
         CreatureInfo const *mount_info = GetCreatureTemplate(mount_entry);
         if (mount_info)
@@ -7373,7 +7372,7 @@ bool ObjectMgr::LoadQuadStrings(DatabaseType& db, char const* table, int32 min_v
     }
 
     // cleanup affected map part for reloading case
-    for (QuadStringLocaleMap::iterator itr = mQuadStringLocaleMap.begin(); itr != mQuadStringLocaleMap.end(); )
+    for (QuadStringLocaleMap::iterator itr = mQuadStringLocaleMap.begin(); itr != mQuadStringLocaleMap.end();)
     {
         if (itr->first >= start_value && itr->first < end_value)
             mQuadStringLocaleMap.erase(itr++);
@@ -8470,7 +8469,7 @@ bool LoadQuadStrings(DatabaseType& db, char const* table,int32 start_value, int3
     // start/end reversed for negative values
     if (start_value > MAX_DB_SCRIPT_STRING_ID || end_value >= start_value)
     {
-        sLog.outErrorDb("Table '%s' attempt loaded with reserved by core range (%d - %d), strings not loaded.",table,start_value,end_value+1);
+        sLog.outErrorDb("Table '%s' attempt loaded with reserved by mangos range (%d - %d), strings not loaded.",table,start_value,end_value+1);
         return false;
     }
 

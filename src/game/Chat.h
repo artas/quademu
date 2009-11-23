@@ -63,7 +63,7 @@ class QUAD_DLL_SPEC ChatHandler
         static char* LineFromMessage(char*& pos) { char* start = strtok(pos,"\n"); pos = NULL; return start; }
 
         // function with different implementation for chat/console
-        virtual const char *GetCoreString(int32 entry) const;
+        virtual const char *GetMangosString(int32 entry) const;
         virtual void SendSysMessage(  const char *str);
 
         void SendSysMessage(          int32     entry);

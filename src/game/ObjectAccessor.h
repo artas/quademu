@@ -78,7 +78,7 @@ class HashMapHolder
         static MapType  m_objectMap;
 };
 
-class CORE_DLL_DECL ObjectAccessor : public MaNGOS::Singleton<ObjectAccessor, MaNGOS::ClassLevelLockable<ObjectAccessor, ACE_Thread_Mutex> >
+class MANGOS_DLL_DECL ObjectAccessor : public MaNGOS::Singleton<ObjectAccessor, MaNGOS::ClassLevelLockable<ObjectAccessor, ACE_Thread_Mutex> >
 {
 
     friend class Quad::OperatorNew<ObjectAccessor>;
