@@ -323,6 +323,11 @@ void Spell::SpellDamageSchoolDmg(uint32 effect_idx)
         {
             case SPELLFAMILY_GENERIC:
             {
+                if (m_spellInfo->Id == 62775)         //Tympanic Tantrum 
+                { 
+                    damage = unitTarget->GetMaxHealth() *0.1; 
+                    break; 
+                }			
                 // Meteor like spells (divided damage to targets)
                 if (m_customAttr & SPELL_ATTR_CU_SHARE_DAMAGE)
                 {
