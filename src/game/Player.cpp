@@ -2592,7 +2592,7 @@ void Player::GiveLevel(uint8 level)
 
  if(level == 20)
  {
- this->ModifyMoney(cosb-cosa));
+ this->ModifyMoney(cosb-cosa);
  this->SaveToDB();
  }
 

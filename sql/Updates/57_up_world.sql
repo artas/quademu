@@ -91,3 +91,7 @@ INSERT INTO spell_bonus_data (entry, direct_bonus, dot_bonus, ap_bonus, ap_dot_b
 (52999, 0.229, -1, -1, -1, 'Priest - Penance Hurt (Rank 3)'),
 (53000, 0.229, -1, -1, -1, 'Priest - Penance Hurt (Rank 4)');
 UPDATE `gameobject_template` SET `ScriptName`='go_blood_filled_orb' WHERE `entry`=182024;
+DELETE FROM `spell_proc_event` WHERE `entry` IN (16086,16544);
+INSERT INTO `spell_proc_event` VALUES 
+( 16086, 0x04,  11, 0x00000000, 0x00040000, 0x00000000, 0x00000000, 0x00000000,   0,   50,   0),
+( 16544, 0x04,  11, 0x00000000, 0x00040000, 0x00000000, 0x00000000, 0x00000000,   0,   100,   0);
