@@ -752,6 +752,14 @@ void Spell::EffectDummy(uint32 i)
                                 m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
                         }
                 }
+                case 58984:             // Shadowmeld
+                {
+                    m_caster->InterruptSpell(CURRENT_AUTOREPEAT_SPELL); // break Auto Shot and autohit
+                    m_caster->InterruptSpell(CURRENT_CHANNELED_SPELL);  // break channeled spells
+                    m_caster->AttackStop();
+                    ((Player*)m_caster)->SendAttackSwingCancelAttack();
+                    return;
+                }				
                 case 8063:                                  // Deviate Fish
                 {
                     if(m_caster->GetTypeId() != TYPEID_PLAYER)
