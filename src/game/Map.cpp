@@ -217,12 +217,12 @@ Map::Map(uint32 id, time_t expiry, uint32 InstanceId, uint8 SpawnMode, Map* _par
 {
     m_notifyTimer.SetInterval(IN_MILISECONDS/2);
 
-    for (unsigned int idx=0; idx < MAX_NUMBER_OF_GRIDS; ++idx)
+    for (uint8 idx = 0; idx < MAX_NUMBER_OF_GRIDS; ++idx)
     {
-        for (unsigned int j=0; j < MAX_NUMBER_OF_GRIDS; ++j)
+        for (uint8 j = 0; j < MAX_NUMBER_OF_GRIDS; ++j)
         {
             //z code
-            GridMaps[idx][j] =NULL;
+            GridMaps[idx][j] = NULL;
             setNGrid(NULL, idx, j);
         }
     }
@@ -234,7 +234,7 @@ Map::Map(uint32 id, time_t expiry, uint32 InstanceId, uint8 SpawnMode, Map* _par
 void Map::InitVisibilityDistance()
 {
     //init visibility for continents
-    m_VisibleDistance = sWorld.GetMaxVisibleDistanceOnContinents();
+    m_VisibleDistance = World::GetMaxVisibleDistanceOnContinents();
 }
 
 // Template specialization of utility methods
@@ -2396,8 +2396,8 @@ bool Map::ActiveObjectsNearGrid(uint32 x, uint32 y) const
         Player* plr = iter->getSource();
 
         CellPair p = Quad::ComputeCellPair(plr->GetPositionX(), plr->GetPositionY());
-        if( (cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
-            (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord) )
+        if ((cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
+            (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord))
             return true;
     }
 
@@ -2406,8 +2406,8 @@ bool Map::ActiveObjectsNearGrid(uint32 x, uint32 y) const
         WorldObject* obj = *iter;
 
         CellPair p = Quad::ComputeCellPair(obj->GetPositionX(), obj->GetPositionY());
-        if( (cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
-            (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord) )
+        if ((cell_min.x_coord <= p.x_coord && p.x_coord <= cell_max.x_coord) &&
+            (cell_min.y_coord <= p.y_coord && p.y_coord <= cell_max.y_coord))
             return true;
     }
 
@@ -2493,7 +2493,7 @@ InstanceMap::~InstanceMap()
 void InstanceMap::InitVisibilityDistance()
 {
     //init visibility distance for instances
-    m_VisibleDistance = sWorld.GetMaxVisibleDistanceInInstances();
+    m_VisibleDistance = World::GetMaxVisibleDistanceInInstances();
 }
 
 /*
@@ -2823,7 +2823,7 @@ BattleGroundMap::~BattleGroundMap()
 void BattleGroundMap::InitVisibilityDistance()
 {
     //init visibility distance for BG/Arenas
-    m_VisibleDistance = sWorld.GetMaxVisibleDistanceInBGArenas();
+    m_VisibleDistance = World::GetMaxVisibleDistanceInBGArenas();
 }
 
 bool BattleGroundMap::CanEnter(Player * player)

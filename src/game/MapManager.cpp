@@ -67,10 +67,9 @@ MapManager::Initialize()
 
     // debugging code, should be deleted some day
     {
-        for (int i=0; i<MAX_GRID_STATE; i++)
-        {
+        for (uint8 i = 0; i < MAX_GRID_STATE; ++i)
             i_GridStates[i] = si_GridStates[i];
-        }
+
         i_GridStateErrorCount = 0;
     }
 
@@ -79,7 +78,7 @@ MapManager::Initialize()
 
 void MapManager::InitializeVisibilityDistanceInfo()
 {
-    for (MapMapType::iterator iter=i_maps.begin(); iter != i_maps.end(); ++iter)
+    for (MapMapType::iterator iter = i_maps.begin(); iter != i_maps.end(); ++iter)
         (*iter).second->InitVisibilityDistance();
 }
 
@@ -87,9 +86,9 @@ void MapManager::InitializeVisibilityDistanceInfo()
 void MapManager::checkAndCorrectGridStatesArray()
 {
     bool ok = true;
-    for (int i=0; i<MAX_GRID_STATE; i++)
+    for (uint8 i = 0; i < MAX_GRID_STATE; ++i)
     {
-        if(i_GridStates[i] != si_GridStates[i])
+        if (i_GridStates[i] != si_GridStates[i])
         {
             sLog.outError("MapManager::checkGridStates(), GridState: si_GridStates is currupt !!!");
             ok = false;
@@ -104,9 +103,9 @@ void MapManager::checkAndCorrectGridStatesArray()
         }
         #endif
     }
-    if(!ok)
+    if (!ok)
         ++i_GridStateErrorCount;
-    if(i_GridStateErrorCount > 2)
+    if (i_GridStateErrorCount > 2)
         assert(false);                                      // force a crash. Too many errors
 }
 
