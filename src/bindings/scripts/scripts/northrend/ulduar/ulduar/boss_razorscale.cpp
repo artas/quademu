@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 - 2009 Quad <http://www.quadcore.org/>
+ * Copyright (C) 2008 - 2009 Trinity <http://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ enum Mobs
     NPC_DARK_RUNE_SENTINEL = 33846
 };
 
-struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
+struct TRINITY_DLL_DECL boss_razorscaleAI : public BossAI
 {
     boss_razorscaleAI(Creature *pCreature) : BossAI(pCreature, TYPE_RAZORSCALE) {}
 
@@ -107,17 +107,7 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!me->isInCombat())
-            return;
-
-        if (me->getThreatManager().isThreatListEmpty())
-        {
-            EnterEvadeMode();
-            return;
-        }
-
-        Unit *victim = me->SelectVictim();
-        if (victim == NULL)
+        if (!UpdateVictim())
             return;
 
         if(m_creature->GetPositionY() > -60 || m_creature->GetPositionX() < 450) // Not Blizzlike, anti-exploit to prevent players from pulling bosses to vehicles.
@@ -129,11 +119,8 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
         }
 
         // Victim is not controlled by a player (should never happen)
-        if(m_creature->getVictim() && !m_creature->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself())
-        {
-            m_creature->getVictim()->CombatStop(false);                     // Force the unit to exit combat..
-            m_creature->getVictim()->GetMotionMaster()->MoveTargetedHome(); // and return home, so they don't just stand there.
-        }
+        if (m_creature->getVictim() && !m_creature->getVictim()->GetCharmerOrOwnerPlayerOrPlayerItself())
+            m_creature->Kill(m_creature->getVictim());
 
         if ((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 99 && Phase == 1) // TODO: Only land (exit Phase 1) if brought down with harpoon guns! This is important!
         {
@@ -217,8 +204,6 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
                 } else FlameBuffetTimer -= diff;
             }
 
-            if (me->getVictim() != victim && (Phase != 3 || FlameBuffetTimer <= 15000)) // Not sure about this.
-                AttackStart(victim);
             DoMeleeAttackIfReady();
         }
         else if (Phase == 1) //Flying Phase
@@ -293,10 +278,10 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
         if (Phase == 1) // Flying Phase
         {
             if (m_creature->GetPositionZ() > FlightHeight) // Correct height, stop moving
-                m_creature->RemoveUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
+                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
             else        // Incorrect height
             {
-                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 m_creature->GetMotionMaster()->MovePoint(0, x, y, FlightHeight + 0.5f); // Fly to slightly above (x, y, FlightHeight)
             }
         }
@@ -305,7 +290,7 @@ struct QUAD_DLL_DECL boss_razorscaleAI : public BossAI
             const float CurrentGroundLevel = m_creature->GetBaseMap()->GetHeight(m_creature->GetPositionX(), m_creature->GetPositionY(), MAX_HEIGHT);
             //if (StunTimer == 30000) // Only fly around if not stunned.
             //{
-                m_creature->AddUnitMovementFlag(MOVEMENTFLAG_WALK_MODE);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 if (IsFlying && m_creature->GetPositionZ() > CurrentGroundLevel) // Fly towards the ground
                     m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), CurrentGroundLevel);
                     // TODO: Swoop up just before landing
