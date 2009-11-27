@@ -8669,6 +8669,16 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
             break;
         case 3703:                                          // Shattrath City
             break;
+        case 4406:                                          // Ring of Valor
+            if (bg && bg->GetTypeID() == BATTLEGROUND_RV)
+                bg->FillInitialWorldStates(data);
+            else
+            {
+                data << uint32(0xe10) << uint32(0x0);           // 7 gold
+                data << uint32(0xe11) << uint32(0x0);           // 8 green
+                data << uint32(0xe1a) << uint32(0x0);           // 9 show
+            }
+            break;			
         default:
             data << uint32(0x914) << uint32(0x0);           // 7
             data << uint32(0x913) << uint32(0x0);           // 8
@@ -15889,7 +15899,7 @@ void Player::_LoadQuestStatus(QueryResult *result)
                     ((questStatusData.m_status == QUEST_STATUS_INCOMPLETE ||
                     questStatusData.m_status == QUEST_STATUS_COMPLETE ||
                     questStatusData.m_status == QUEST_STATUS_FAILED) &&
-                    (!questStatusData.m_rewarded || pQuest->IsDaily())))
+                    (!questStatusData.m_rewarded || pQuest->IsRepeatable())))
                 {
                     SetQuestSlot(slot, quest_id, quest_time);
 

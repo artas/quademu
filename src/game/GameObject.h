@@ -47,7 +47,7 @@ struct GameObjectInfo
     uint32  faction;
     uint32  flags;
     float   size;
-    uint32  questItems[4];
+    uint32  questItems[6];
     union                                                   // different GO types have different data field
     {
         //0 GAMEOBJECT_TYPE_DOOR
@@ -590,6 +590,7 @@ class QUAD_DLL_SPEC GameObject : public WorldObject
         GameObjectValue * GetGOValue() const { return m_goValue; }
 
         bool IsTransport() const;
+        bool IsDynTransport() const;
 
         uint32 GetDBTableGUIDLow() const { return m_DBTableGuid; }
 
