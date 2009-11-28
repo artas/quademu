@@ -323,11 +323,6 @@ void Spell::SpellDamageSchoolDmg(uint32 effect_idx)
         {
             case SPELLFAMILY_GENERIC:
             {
-                if (m_spellInfo->Id == 62775)         //Tympanic Tantrum 
-                { 
-                    damage = unitTarget->GetMaxHealth() *0.1; 
-                    break; 
-                }			
                 // Meteor like spells (divided damage to targets)
                 if (m_customAttr & SPELL_ATTR_CU_SHARE_DAMAGE)
                 {
@@ -455,17 +450,6 @@ void Spell::SpellDamageSchoolDmg(uint32 effect_idx)
             }
             case SPELLFAMILY_WARLOCK:
             {
-			    if (m_spellInfo->Id == 47897)                    //shadowflame rank1
-				{
-				    m_caster->CastSpell(unitTarget,47960,true) ;        
-				    break;
-				}
-				if (m_spellInfo->Id == 61290)                    //shadowflame rank2
-				{
-				    m_caster->CastSpell(unitTarget,61291,true) ;        
-				    break;
-				}
-			
                 // Incinerate Rank 1 & 2
                 if((m_spellInfo->SpellFamilyFlags[1] & 0x000040) && m_spellInfo->SpellIconID==2128)
                 {
@@ -752,14 +736,6 @@ void Spell::EffectDummy(uint32 i)
                                 m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
                         }
                 }
-                case 58984:             // Shadowmeld
-                {
-                    m_caster->InterruptSpell(CURRENT_AUTOREPEAT_SPELL); // break Auto Shot and autohit
-                    m_caster->InterruptSpell(CURRENT_CHANNELED_SPELL);  // break channeled spells
-                    m_caster->AttackStop();
-                    ((Player*)m_caster)->SendAttackSwingCancelAttack();
-                    return;
-                }				
                 case 8063:                                  // Deviate Fish
                 {
                     if(m_caster->GetTypeId() != TYPEID_PLAYER)

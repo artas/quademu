@@ -7624,15 +7624,7 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, AuraEffect* trig
             if (pVictim->GetEntry() != 19457) // Proc only if you target is Grillok
                 return false;
             break;
-        }	
-        // Blessing of Ancient Kings (Val'anyr, Hammer of Ancient Kings)
-        case 64411:  
-        {
-            basepoints0 = damage * 15 / 100;
-            target = pVictim;
-            trigger_spell_id = 26470;
-            break;
-        }			
+        }
         // Deflection
         case 52420:
         {

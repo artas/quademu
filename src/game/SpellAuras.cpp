@@ -3165,9 +3165,6 @@ void AuraEffect::HandleAuraDummy(bool apply, bool Real, bool changeAmount)
                     ((Player*)m_target)->AddSpellMod(m_spellmod, apply);
                     return;
                 }
-	            case 48384: if (apply) m_target->CastSpell(m_target,50170,true); return;			//Rank 1
-                case 48395: if (apply) m_target->CastSpell(m_target,50171,true); return;			//Rank 2
-                case 48396: if (apply) m_target->CastSpell(m_target,50172,true); return;			//Rank 3				
                 case 61336:                                 // Survival Instincts
                 {
                     if (!Real)
@@ -3185,16 +3182,6 @@ void AuraEffect::HandleAuraDummy(bool apply, bool Real, bool changeAmount)
                     return;
                 }
             }
-            // Savage Roar
-            if (GetId() == 52610 && m_target->GetTypeId()==TYPEID_PLAYER)
-            {
-                if (apply)
-                {
-                    m_target->CastSpell(m_target, 62071, true, NULL);
-                }
-                else
-                    m_target->RemoveAurasDueToSpell(62071);
-            }			
             // Predatory Strikes
             if(m_target->GetTypeId() == TYPEID_PLAYER && GetSpellProto()->SpellIconID == 1563)
             {
@@ -4004,23 +3991,6 @@ void AuraEffect::HandleModFear(bool apply, bool Real, bool /*changeAmount*/)
 
     //m_target->SetFeared(apply, GetCasterGUID(), GetId());
     m_target->SetControlled(apply, UNIT_STAT_FLEEING);
-	// fix Physhic Horror
-    if(!apply && m_spellProto->SpellFamilyName == SPELLFAMILY_PRIEST)
-    {
-        Unit* caster = GetCaster();
-        int32 spell_id = 0;
-        if(!caster || caster->GetTypeId() != TYPEID_PLAYER)
-            return;
-        else
-        {
-            if(caster->HasAura(47571, 0))
-                spell_id = 59980;
-            else if(caster->HasAura(47572, 0))
-                spell_id = 59981;
-        }
-        if(spell_id)
-            m_target->CastSpell(m_target, spell_id, false);
-    } // end	
 }
 
 void AuraEffect::HandleFeignDeath(bool apply, bool Real, bool /*changeAmount*/)
@@ -6681,9 +6651,6 @@ void AuraEffect::PeriodicDummyTick()
                     std::list<Unit*>::const_iterator itr = targets.begin();
                     std::advance(itr, rand()%targets.size());
                     Unit* target = *itr;
-					
-                    if(!target->isAlive())
-                        return;
 
                     caster->CastSpell(target, 57840, true);
                     caster->CastSpell(target, 57841, true);

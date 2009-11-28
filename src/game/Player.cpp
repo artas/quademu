@@ -2567,58 +2567,6 @@ void Player::GiveLevel(uint8 level)
         pet->SynchronizeLevelWithOwner();
 
     GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_REACH_LEVEL);
-    // Bonus system
- uint32 level = getLevel();
- // int vir
- int cosa;
- int cosb;
- int cosc;
- int cosd;
- int cose;
- int cosf;
- // == money
- cosa = 100000;
- cosb = 1000000;
- cosc = 2500000;
- cosd = 5000000;
- cose = 7500000;
- cosf = 30000000;
-
- if(level == 10)
-  {
- this->ModifyMoney(cosa);
- this->SaveToDB();
-  }
-
- if(level == 20)
- {
- this->ModifyMoney(cosb-cosa);
- this->SaveToDB();
- }
-
- if(level == 30)
- {
-this->ModifyMoney(cosc-(cosb+cosa));
-this->SaveToDB();
- }
-
-if(level == 40)
- {
-this->ModifyMoney(cosd-(cosc+cosb+cosa));
-this->SaveToDB();
- }
-
-if(level == 50)
- {
-this->ModifyMoney(cose-(cosd+cosc+cosb+cosa));
-this->SaveToDB();
-  }
-
-if(level == 80)
-   {
-this->ModifyMoney(cosf-(cose+cosd+cosc+cosb+cosa));
-this->SaveToDB();
-   }			
 }
 
 void Player::InitTalentForLevel()
@@ -6002,7 +5950,7 @@ void Player::SendMessageToSet(WorldPacket *data, bool self)
 
     // we use World::GetMaxVisibleDistance() because i cannot see why not use a distance
     // update: replaced by GetMap()->GetVisibilityDistance()
-	
+
     Quad::MessageDistDeliverer notifier(this, data, GetMap()->GetVisibilityDistance());
     VisitNearbyWorldObject(GetMap()->GetVisibilityDistance(), notifier);
 }
@@ -6326,44 +6274,7 @@ void Player::UpdateHonorFields()
             SetUInt32Value(PLAYER_FIELD_KILLS, 0);
         }
     }
-	
-      // Rank show over the player.
-    uint32 HonorKills = GetUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS);
-    uint32 victim_rank = 0;
- 
-    if (HonorKills >= 10 && HonorKills < 50)
-        victim_rank = 1;
-    else if (HonorKills >= 50 && HonorKills < 100)
-        victim_rank = 2;
-    else if (HonorKills >= 100 && HonorKills < 150)
-        victim_rank = 3;
-    else if (HonorKills >= 150 && HonorKills < 250)
-        victim_rank = 4;
-    else if (HonorKills >= 250 && HonorKills < 500)
-        victim_rank = 5;
-    else if (HonorKills >= 500 && HonorKills < 750)
-        victim_rank = 6;
-    else if (HonorKills >= 750 && HonorKills < 1000)
-        victim_rank = 7;
-    else if (HonorKills >= 1000 && HonorKills < 1500)
-        victim_rank = 8;
-    else if (HonorKills >= 1500 && HonorKills < 2500)
-        victim_rank = 9;
-    else if (HonorKills >= 2500 && HonorKills < 5000)
-        victim_rank = 10;
-    else if (HonorKills >= 5000 && HonorKills < 7500)
-        victim_rank = 11;
-    else if (HonorKills >= 7500 && HonorKills < 10000)
-        victim_rank = 12;
-    else if (HonorKills >= 10000 && HonorKills < 15000)
-        victim_rank = 13;
-    else if (HonorKills >= 15000)
-        victim_rank = 14;
-    if (GetTeam() == HORDE && victim_rank != 0)
-        victim_rank += 14;
 
-    SetUInt32Value(PLAYER_CHOSEN_TITLE,victim_rank);
-	
     m_lastHonorUpdateTime = now;
 }
 
@@ -6468,7 +6379,7 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, float honor, bool pvpt
             if (!cVictim->isRacialLeader())
                 return false;
 
-            honor = 2000;                                    // ??? need more info
+            honor = 100;                                    // ??? need more info
             victim_rank = 19;                               // HK: Leader
         }
     }
@@ -8678,7 +8589,7 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
                 data << uint32(0xe11) << uint32(0x0);           // 8 green
                 data << uint32(0xe1a) << uint32(0x0);           // 9 show
             }
-            break;			
+            break;
         default:
             data << uint32(0x914) << uint32(0x0);           // 7
             data << uint32(0x913) << uint32(0x0);           // 8
